@@ -1,40 +1,38 @@
-import PropTypes from "prop-types";
 import React from "react";
+import MessagesList from "./messages_list";
+import MessageForm from "./message_form";
 
 export default class ChatRoom extends React.Component {
-  static propTypes = {
-    name: PropTypes.string.isRequired // this is passed from the Rails view
-  };
-
-  /**
-   * @param props - Comes from your rails view.
-   */
   constructor(props) {
     super(props);
-
-    // How to set initial state in ES6 class syntax
-    // https://reactjs.org/docs/state-and-lifecycle.html#adding-local-state-to-a-class
-    this.state = { name: this.props.name };
+    this.state = {
+      messages: props.messages
+    };
   }
 
-  updateName = name => {
-    this.setState({ name });
-  };
+  updateMessages(message) {
+    const messages = [...this.state.messages, message];
+    this.setState({ messages });
+  }
+
+  componentDidMount() {
+    App.room = App.cable.subscriptions.create("RoomChannel", {
+      connected: function() {},
+      disconnected: function() {},
+      received: data => {
+        this.updateMessages(data.message);
+      },
+      speak: function(message) {
+        return this.perform("speak", { message });
+      }
+    });
+  }
 
   render() {
     return (
       <div>
-        <h3>Hellos, {this.state.name}!</h3>
-        <hr />
-        <form>
-          <label htmlFor="name">Say hello to:</label>
-          <input
-            id="name"
-            type="text"
-            value={this.state.name}
-            onChange={e => this.updateName(e.target.value)}
-          />
-        </form>
+        <MessagesList messages={this.state.messages} />
+        <MessageForm />
       </div>
     );
   }

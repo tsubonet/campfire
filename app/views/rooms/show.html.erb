@@ -1,13 +1,2 @@
 <h1>Rooms#show</h1>
-<p>Find me in app/views/rooms/show.html.erb</p>
-
-<div id="messages">
-  <%= render @messages %>
-</div>
-
-<form>
-  <label>Say something:</label><br>
-  <input type="text" data-behavior="room_speaker">
-</form>
-
-<%= react_component("ChatRoom", props: @hello_world_props, prerender: false) %>
+<%= react_component("ChatRoom", props: { messages: @messages } , prerender: false) %>
