@@ -6,6 +6,7 @@ export default class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      rooms: props.rooms,
       messages: props.messages,
       roomId: props.room.id
     };
@@ -35,6 +36,7 @@ export default class ChatRoom extends React.Component {
   render() {
     return (
       <div>
+        Room Name:{this.props.room.name}
         <MessagesList messages={this.state.messages} />
         <MessageForm roomId={this.state.roomId} />
       </div>

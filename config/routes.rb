@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root to: 'rooms#index'
+  root to: 'rooms#show'
 
   resources :rooms do
     resources :messages

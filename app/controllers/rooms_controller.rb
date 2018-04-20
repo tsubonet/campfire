@@ -5,7 +5,8 @@ class RoomsController < ApplicationController
   end
 
   def show
-    @room = Room.find(params[:id])
+    @rooms = Room.all
+    @room = Room.find(params[:id] || 1)
     @messages = @room.messages
 
     respond_to do |format|

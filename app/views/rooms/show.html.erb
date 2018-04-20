@@ -1,3 +1,1 @@
-<h1>Rooms#show</h1>
-RoomName: <%= @room.name %>
-<%= react_component("ChatRoom", props: { room: @room, messages: @messages } , prerender: false) %>
+<%= react_component("ChatRoom", props: { room: @room, messages: @messages, rooms: @rooms } , prerender: false) %>
