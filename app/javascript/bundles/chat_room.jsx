@@ -20,7 +20,7 @@ export default class ChatRoom extends React.Component {
     App.room = App.cable.subscriptions.create(
       {
         channel: "RoomChannel",
-        id: this.state.roomId
+        room_id: this.state.roomId
       },
       {
         connected: function() {},
