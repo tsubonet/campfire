@@ -6,7 +6,8 @@ export default class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: props.messages
+      messages: props.messages,
+      roomId: props.room.id
     };
   }
 
@@ -16,23 +17,26 @@ export default class ChatRoom extends React.Component {
   }
 
   componentDidMount() {
-    App.room = App.cable.subscriptions.create("RoomChannel", {
-      connected: function() {},
-      disconnected: function() {},
-      received: data => {
-        this.updateMessages(data.message);
+    App.room = App.cable.subscriptions.create(
+      {
+        channel: "RoomChannel",
+        id: this.state.roomId
       },
-      speak: function(message) {
-        return this.perform("speak", { message });
+      {
+        connected: function() {},
+        disconnected: function() {},
+        received: data => {
+          this.updateMessages(data.message);
+        }
       }
-    });
+    );
   }
 
   render() {
     return (
       <div>
         <MessagesList messages={this.state.messages} />
-        <MessageForm />
+        <MessageForm roomId={this.state.roomId} />
       </div>
     );
   }

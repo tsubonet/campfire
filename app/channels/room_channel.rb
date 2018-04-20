@@ -1,7 +1,15 @@
 class RoomChannel < ApplicationCable::Channel
   def subscribed
-    # stream_from "some_channel"
-    stream_from "room_channel"
+    # stream_from "room_channel"
+    #stream_for "room_channel_#{params[:id]}"
+    puts "########################"
+    puts params
+    room = Room.find(params[:id])
+    stream_for room
+    # RoomChannel.broadcast_to(
+    #   room,
+    #   { content: " joined"}
+    # )
   end
 
   def unsubscribed
@@ -9,7 +17,7 @@ class RoomChannel < ApplicationCable::Channel
   end
 
   def speak(data)
-    Message.create! content: data['message']
+    #Message.create! content: data['message']
     #ActionCable.server.broadcast 'room_channel', message: data['message']
   end
 end

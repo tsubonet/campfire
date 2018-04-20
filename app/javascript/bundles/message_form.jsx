@@ -1,13 +1,23 @@
 import React from "react";
 
 export default class MessageForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.inputRef = React.createRef();
+  }
   handleSubmit = e => {
     if (e.keyCode === 13) {
-      if (typeof App !== "undefined") {
-        App.room.speak(e.target.value);
-      }
       e.preventDefault();
-      e.target.value = "";
+      fetch(`/rooms/${this.props.roomId}/messages`, {
+        method: "POST",
+        body: JSON.stringify({ message: { content: e.target.value } }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(response => {
+        this.inputRef.current.value = "";
+        this.inputRef.current.focus();
+      });
     }
   };
 
@@ -19,7 +29,7 @@ export default class MessageForm extends React.Component {
         <input
           onKeyDown={this.handleSubmit.bind(this)}
           type="text"
-          data-behavior="room_speaker"
+          ref={this.inputRef}
         />
       </form>
     );
