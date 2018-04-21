@@ -1,8 +1,8 @@
 import ReactOnRails from "react-on-rails";
 
-import ChatRoom from "../bundles/chat_room";
+import App from "../bundles/router";
 
 // This is how react_on_rails can see the HelloWorld in the browser.
 ReactOnRails.register({
-  ChatRoom
+  App
 });

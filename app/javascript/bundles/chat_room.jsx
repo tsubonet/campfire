@@ -33,10 +33,14 @@ export default class ChatRoom extends React.Component {
     );
   }
 
+  componentWillMount() {
+    if (App.room) App.cable.subscriptions.remove(App.room);
+  }
+
   render() {
     return (
       <div>
-        Room Name:{this.props.room.name}
+        <p>Room Name: {this.props.room.name}</p>
         <MessagesList messages={this.state.messages} />
         <MessageForm roomId={this.state.roomId} />
       </div>
