@@ -17,7 +17,7 @@ export default class App extends React.Component {
           </div>
           <GlobalNav {...this.props} />
           <Switch>
-            <Route exact path="/" render={props => <ChatRoom {...props} />} />
+            <Route exact path="/" render={() => <ChatRoom {...this.props} />} />
             <Route
               exact
               path="/rooms/:id"
