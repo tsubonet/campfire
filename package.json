@@ -4,11 +4,15 @@
   "dependencies": {
     "@rails/webpacker": "3.4",
     "babel-preset-react": "^6.24.1",
+    "history": "^4.7.2",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-on-rails": "^10.1.4",
-    "react-router-dom": "^4.2.2"
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.9",
+    "redux": "^4.0.0"
   },
   "devDependencies": {
     "webpack-dev-server": "2.11.2"
