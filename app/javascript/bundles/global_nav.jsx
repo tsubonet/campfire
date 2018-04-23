@@ -1,7 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-export default class GlobalNav extends React.Component {
+class GlobalNav extends React.Component {
   render() {
     return (
       <div>
@@ -18,3 +19,15 @@ export default class GlobalNav extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    rooms: state.rooms
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(GlobalNav);

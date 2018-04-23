@@ -17,7 +17,7 @@ class Router extends React.Component {
           <div>
             <a href="/">テスト</a>
           </div>
-          <GlobalNav {...this.props} />
+          <GlobalNav />
           <Switch>
             <Route exact path="/" render={() => <ChatRoom {...this.props} />} />
             <Route

@@ -1,12 +1,12 @@
 import React from "react";
+import { connect } from "react-redux";
 import MessagesList from "./messages_list";
 import MessageForm from "./message_form";
 
-export default class ChatRoom extends React.Component {
+class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rooms: props.rooms,
       messages: props.messages,
       roomId: props.room.id
     };
@@ -47,3 +47,16 @@ export default class ChatRoom extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    messages: state.messages,
+    room: state.room
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatRoom);
