@@ -1,9 +1,11 @@
 import React from "react";
+import { connect } from "react-redux";
+
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ChatRoom from "./chat_room";
 import GlobalNav from "./global_nav";
 
-export default class App extends React.Component {
+class Router extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -29,3 +31,13 @@ export default class App extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return { ...state };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Router);
