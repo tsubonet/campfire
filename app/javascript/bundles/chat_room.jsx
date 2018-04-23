@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
 import MessagesList from "./messages_list";
 import MessageForm from "./message_form";
 
@@ -59,4 +60,6 @@ const mapDispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChatRoom);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(ChatRoom)
+);

@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ChatRoom from "./chat_room";
@@ -19,12 +20,8 @@ class Router extends React.Component {
           </div>
           <GlobalNav />
           <Switch>
-            <Route exact path="/" render={() => <ChatRoom {...this.props} />} />
-            <Route
-              exact
-              path="/rooms/:id"
-              render={() => <ChatRoom {...this.props} />}
-            />
+            <Route exact path="/" component={ChatRoom} />
+            <Route exact path="/rooms/:id" component={ChatRoom} />
           </Switch>
         </div>
       </BrowserRouter>
@@ -40,4 +37,4 @@ const mapDispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Router);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Router));
