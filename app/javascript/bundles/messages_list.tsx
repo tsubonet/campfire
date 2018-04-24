@@ -1,11 +1,11 @@
-import * as React from "react";
+import * as React from 'react'
 
 const MessagesList = ({ messages }) => (
   <div>
     {messages.map((message, i) => {
-      return <div key={i}>{message.content}</div>;
+      return <div key={i}>{message.content}</div>
     })}
   </div>
-);
+)
 
-export default MessagesList;
+export default MessagesList
