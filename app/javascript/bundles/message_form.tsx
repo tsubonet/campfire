@@ -1,7 +1,8 @@
 import * as React from 'react'
+import { Room } from '../types'
 
 interface Props {
-  room
+  room: Room
 }
 export default class MessageForm extends React.Component<Props> {
   private inputRef

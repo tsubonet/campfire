@@ -3,15 +3,18 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import MessagesList from './messages_list'
 import MessageForm from './message_form'
+import { Room, Message } from '../types'
+import { addMessage } from '../modules/messages'
 
 interface Props {
-  messages
-  room
+  messages: Message[]
+  room: Room
   match
+  dispatch
 }
 interface State {
-  messages
-  room
+  messages: Message[]
+  room: Room
 }
 declare let App: any
 
@@ -24,25 +27,24 @@ class ChatRoom extends React.Component<Props, State> {
     }
   }
 
-  updateMessages(message) {
-    const messages = [...this.state.messages, message]
-    this.setState({ messages })
-  }
-
-  componentDidMount() {
+  connectActionCable(room_id) {
     App.room = App.cable.subscriptions.create(
       {
         channel: 'RoomChannel',
-        room_id: this.state.room.id,
+        room_id,
       },
       {
         connected: function() {},
         disconnected: function() {},
         received: data => {
-          this.updateMessages(data.message)
+          this.props.dispatch(addMessage(data.message))
         },
       }
     )
+  }
+
+  componentDidMount() {
+    this.connectActionCable(this.state.room.id)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -60,19 +62,7 @@ class ChatRoom extends React.Component<Props, State> {
         })
 
         if (App.room) App.cable.subscriptions.remove(App.room)
-        App.room = App.cable.subscriptions.create(
-          {
-            channel: 'RoomChannel',
-            room_id: res.room.id,
-          },
-          {
-            connected: function() {},
-            disconnected: function() {},
-            received: data => {
-              this.updateMessages(data.message)
-            },
-          }
-        )
+        this.connectActionCable(res.room.id)
       })
   }
 
@@ -98,8 +88,4 @@ const mapStateToProps = ({ messages, room }) => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {}
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ChatRoom))
+export default withRouter(connect(mapStateToProps)(ChatRoom))
