@@ -4,7 +4,7 @@ class RoomsController < ApplicationController
     @rooms = Room.all
 
     @room = Room.find(params[:id] || 1)
-    @messages = @room.messages.last(5)
+    @messages = @room.messages.limit(5)
 
     #puts "#######################"
     #puts @room.as_json(:include => @messages)

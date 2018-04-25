@@ -35,6 +35,7 @@ gem 'jbuilder', '~> 2.5'
 gem "react_on_rails", "10.1.4"
 gem "webpacker", "~> 3.0"
 gem "foreman"
+gem "kaminari"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false

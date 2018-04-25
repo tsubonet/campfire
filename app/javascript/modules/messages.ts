@@ -6,7 +6,7 @@ export const SET_MESSAGES = 'SET_MESSAGES'
 export default function reducer(state = [], action) {
   switch (action.type) {
     case ADD_MESSAGE:
-      return [...state, action.message]
+      return [action.message, ...state]
     case SET_MESSAGES:
       return action.messages
     default:
