@@ -16,6 +16,4 @@ class RoomsController < ApplicationController
     end
   end
 
-  def old
-  end
 end

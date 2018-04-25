@@ -13,6 +13,7 @@ interface Props {
   match
   dispatch
 }
+
 declare let App: any
 
 class ChatRoom extends React.Component<Props> {
