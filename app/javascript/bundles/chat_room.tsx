@@ -72,6 +72,7 @@ class ChatRoom extends React.Component<Props> {
     return (
       <div>
         <p>Room Name: {this.props.room.name}</p>
+        <button>前の記事を読み込む</button>
         <MessagesList messages={this.props.messages} />
         <MessageForm room={this.props.room} />
       </div>
