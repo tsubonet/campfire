@@ -1,8 +1,20 @@
+// Actions
+export const SET_ROOM = 'SET_ROOM'
+
+// Reducer
 export default function reducer(state = {}, action) {
   switch (action.type) {
-    case "GET_DATE":
-      return Object.assign({}, state, action.date);
+    case SET_ROOM:
+      return action.room
     default:
-      return state;
+      return state
+  }
+}
+
+// Action Creators
+export function setRoom(room) {
+  return {
+    type: SET_ROOM,
+    room,
   }
 }

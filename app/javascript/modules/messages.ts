@@ -18,13 +18,13 @@ export default function reducer(state = [], action) {
 export function setMessages(messages) {
   return {
     type: SET_MESSAGES,
-    messages: messages,
+    messages,
   }
 }
 
 export function addMessage(message) {
   return {
     type: ADD_MESSAGE,
-    message: message,
+    message,
   }
 }

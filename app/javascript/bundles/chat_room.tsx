@@ -3,49 +3,46 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import MessagesList from './messages_list'
 import MessageForm from './message_form'
+import { Room, Message, StoreState } from '../types'
+import { addMessage, setMessages } from '../modules/messages'
+import { setRoom } from '../modules/room'
 
 interface Props {
-  messages
-  room
+  messages: Message[]
+  room: Room
   match
-}
-interface State {
-  messages
-  room
+  dispatch
 }
 declare let App: any
 
-class ChatRoom extends React.Component<Props, State> {
-  constructor(props) {
-    super(props)
-    this.state = {
-      messages: props.messages,
-      room: props.room,
-    }
-  }
-
-  updateMessages(message) {
-    const messages = [...this.state.messages, message]
-    this.setState({ messages })
-  }
-
-  componentDidMount() {
+class ChatRoom extends React.Component<Props> {
+  connectActionCable(room_id) {
     App.room = App.cable.subscriptions.create(
       {
         channel: 'RoomChannel',
-        room_id: this.state.room.id,
+        room_id,
       },
       {
         connected: function() {},
         disconnected: function() {},
         received: data => {
-          this.updateMessages(data.message)
+          this.props.dispatch(addMessage(data.message))
         },
       }
     )
   }
 
+  disconnectActionCable() {
+    if (App.room) App.cable.subscriptions.remove(App.room)
+  }
+
+  componentDidMount() {
+    this.connectActionCable(this.props.room.id)
+  }
+
   componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params.id === this.props.match.params.id) return
+
     fetch(`/rooms/${nextProps.match.params.id}`, {
       headers: {
         'Content-Type': 'application/json',
@@ -54,52 +51,34 @@ class ChatRoom extends React.Component<Props, State> {
     })
       .then(res => res.json())
       .then(res => {
-        this.setState({
-          messages: res.messages,
-          room: res.room,
-        })
+        this.props.dispatch(setMessages(res.messages))
+        this.props.dispatch(setRoom(res.room))
 
-        if (App.room) App.cable.subscriptions.remove(App.room)
-        App.room = App.cable.subscriptions.create(
-          {
-            channel: 'RoomChannel',
-            room_id: res.room.id,
-          },
-          {
-            connected: function() {},
-            disconnected: function() {},
-            received: data => {
-              this.updateMessages(data.message)
-            },
-          }
-        )
+        this.disconnectActionCable()
+        this.connectActionCable(res.room.id)
       })
   }
 
   componentWillMount() {
-    if (App.room) App.cable.subscriptions.remove(App.room)
+    this.disconnectActionCable()
   }
 
   render() {
     return (
       <div>
-        <p>Room Name: {this.state.room.name}</p>
-        <MessagesList messages={this.state.messages} />
-        <MessageForm room={this.state.room} />
+        <p>Room Name: {this.props.room.name}</p>
+        <MessagesList messages={this.props.messages} />
+        <MessageForm room={this.props.room} />
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ messages, room }) => {
+const mapStateToProps = ({ messages, room }: StoreState) => {
   return {
     messages,
     room,
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {}
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ChatRoom))
+export default withRouter(connect(mapStateToProps)(ChatRoom))
