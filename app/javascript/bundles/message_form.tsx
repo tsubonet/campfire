@@ -11,19 +11,18 @@ export default class MessageForm extends React.Component<Props> {
     super(props)
     this.inputRef = React.createRef()
   }
-  handleSubmit = e => {
+  async handleSubmit(e) {
     if (e.keyCode === 13) {
       e.preventDefault()
-      fetch(`/rooms/${this.props.room.id}/messages`, {
+      const response = await fetch(`/rooms/${this.props.room.id}/messages`, {
         method: 'POST',
         body: JSON.stringify({ message: { content: e.target.value } }),
         headers: {
           'Content-Type': 'application/json',
         },
-      }).then(response => {
-        this.inputRef.current.value = ''
-        this.inputRef.current.focus()
       })
+      this.inputRef.current.value = ''
+      this.inputRef.current.focus()
     }
   }
 
