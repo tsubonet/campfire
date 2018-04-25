@@ -37,8 +37,8 @@ class ChatRoom extends React.Component<Props> {
     if (App.room) App.cable.subscriptions.remove(App.room)
   }
 
-  async fetchProps(nextProps) {
-    const res = await fetch(`/rooms/${nextProps.match.params.id}`, {
+  async fetchProps(props) {
+    const res = await fetch(`/rooms/${props.match.params.id}`, {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
