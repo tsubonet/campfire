@@ -36,27 +36,32 @@ class ChatRoom extends React.Component<Props> {
     if (App.room) App.cable.subscriptions.remove(App.room)
   }
 
-  componentDidMount() {
-    this.connectActionCable(this.props.room.id)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.match.params.id === this.props.match.params.id) return
-
-    fetch(`/rooms/${nextProps.match.params.id}`, {
+  async fetchProps(nextProps) {
+    const res = await fetch(`/rooms/${nextProps.match.params.id}`, {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
     })
-      .then(res => res.json())
-      .then(res => {
-        this.props.dispatch(setMessages(res.messages))
-        this.props.dispatch(setRoom(res.room))
+    const json = await res.json()
+    this.props.dispatch(setMessages(json.messages))
+    this.props.dispatch(setRoom(json.room))
+    this.disconnectActionCable()
+    this.connectActionCable(json.room.id)
+  }
 
-        this.disconnectActionCable()
-        this.connectActionCable(res.room.id)
-      })
+  componentDidMount() {
+    this.connectActionCable(this.props.room.id)
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log('prevProps', prevProps.match.params.id)
+    console.log('this.props', this.props.match.params.id)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params.id === this.props.match.params.id) return
+    this.fetchProps(nextProps)
   }
 
   componentWillMount() {
