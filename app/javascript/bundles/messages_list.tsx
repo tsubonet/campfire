@@ -1,11 +1,15 @@
 import * as React from 'react'
+import { Message } from '../types'
 
-const MessagesList = ({ messages }) => (
-  <div>
+interface Props {
+  messages: Message[]
+}
+const MessagesList = ({ messages }: Props) => (
+  <ul>
     {messages.map((message, i) => {
-      return <div key={i}>{message.content}</div>
+      return <li key={i}>{message.content}</li>
     })}
-  </div>
+  </ul>
 )
 
 export default MessagesList

@@ -1,21 +1,24 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Room } from '../types'
 
 interface Props {
-  rooms
+  rooms: Room[]
 }
 const GlobalNav = (props: Props) => {
   return (
-    <div>
+    <ul>
       {props.rooms.map((room, i) => {
         return (
-          <Link key={i} to={`/rooms/${room.id}`}>
-            {room.name}
-          </Link>
+          <li>
+            <Link key={i} to={`/rooms/${room.id}`}>
+              {room.name}
+            </Link>
+          </li>
         )
       })}
-    </div>
+    </ul>
   )
 }
 
