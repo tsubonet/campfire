@@ -1,4 +1,6 @@
 import * as React from 'react'
+import { Route } from 'react-router-dom'
+import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Room } from '../modules/room'
@@ -12,7 +14,7 @@ const GlobalNav = (props: Props) => {
       {props.rooms.map((room, i) => {
         return (
           <li key={i}>
-            <Link to={`/rooms/${room.id}`}>{room.name}</Link>
+            <MenuLink to={`/rooms/${room.id}`} label={room.name} />
           </li>
         )
       })}
@@ -20,8 +22,26 @@ const GlobalNav = (props: Props) => {
   )
 }
 
+interface MenuProps {
+  label: string
+  to: string
+  activeOnlyWhenExact?: boolean
+}
+const MenuLink = ({ label, to, activeOnlyWhenExact }: MenuProps) => (
+  <Route
+    path={to}
+    exact={activeOnlyWhenExact}
+    children={({ match }) => (
+      <div className={match ? 'active' : ''}>
+        {match ? '> ' : ''}
+        <Link to={to}>{label}</Link>
+      </div>
+    )}
+  />
+)
+
 const mapStateToProps = ({ rooms }) => {
   return { rooms }
 }
 
-export default connect(mapStateToProps)(GlobalNav)
+export default withRouter(connect(mapStateToProps)(GlobalNav))
