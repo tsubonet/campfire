@@ -1,13 +1,13 @@
 import * as React from 'react'
-import { Message } from '../types'
+import { Messages } from '../types'
 import styled from 'styled-components'
 
 interface Props {
-  messages: Message[]
+  messages: Messages
 }
 const MessagesList = ({ messages }: Props) => (
   <List>
-    {messages.map((message, i) => {
+    {messages.items.map((message, i) => {
       return <li key={i}>{message.content}</li>
     })}
   </List>

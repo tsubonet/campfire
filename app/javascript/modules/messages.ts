@@ -3,10 +3,16 @@ export const ADD_MESSAGE = 'ADD_MESSAGE'
 export const SET_MESSAGES = 'SET_MESSAGES'
 
 // Reducer
-export default function reducer(state = [], action) {
+const initialState = {
+  items: [],
+  hasNext: false,
+}
+export default function reducer(state = initialState, action) {
   switch (action.type) {
     case ADD_MESSAGE:
-      return [action.message, ...state]
+      return Object.assign({}, state, {
+        items: [action.message, ...state.items],
+      })
     case SET_MESSAGES:
       return action.messages
     default:

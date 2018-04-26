@@ -3,14 +3,19 @@ export interface Room {
   name: string
 }
 
-export interface Message {
+export interface Item {
   id: number
   content: string
   room_id: number
 }
 
+export interface Messages {
+  hasNext: boolean
+  items: Item[]
+}
+
 export interface StoreState {
   room: Room
   rooms: Room[]
-  messages: Message[]
+  messages: Messages
 }

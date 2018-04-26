@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import MessagesList from './messages_list'
 import MessageForm from './message_form'
-import { Room, Message, StoreState } from '../types'
+import { Room, Messages, StoreState } from '../types'
 import { addMessage, setMessages } from '../modules/messages'
 import { setRoom } from '../modules/room'
 
 interface Props {
-  messages: Message[]
+  messages: Messages
   room: Room
   match
   dispatch
@@ -52,6 +52,7 @@ class ChatRoom extends React.Component<Props> {
   }
 
   componentDidMount() {
+    console.log(this.props)
     this.connectActionCable(this.props.room.id)
   }
 

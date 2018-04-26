@@ -11,10 +11,8 @@ const GlobalNav = (props: Props) => {
     <ul>
       {props.rooms.map((room, i) => {
         return (
-          <li>
-            <Link key={i} to={`/rooms/${room.id}`}>
-              {room.name}
-            </Link>
+          <li key={i}>
+            <Link to={`/rooms/${room.id}`}>{room.name}</Link>
           </li>
         )
       })}
