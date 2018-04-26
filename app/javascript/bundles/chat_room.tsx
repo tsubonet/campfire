@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import MessagesList from './messages_list'
 import MessageForm from './message_form'
-import { Room, Messages, StoreState } from '../types'
-import { addMessage, setMessages, getOldMessages } from '../modules/messages'
-import { setRoom } from '../modules/room'
+import { RootState } from '../packs/entry'
+import { Messages, addMessage, setMessages, getOldMessages } from '../modules/messages'
+import { Room, setRoom } from '../modules/room'
 
 interface Props {
   messages: Messages
@@ -97,7 +97,7 @@ class ChatRoom extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = ({ messages, room }: StoreState) => {
+const mapStateToProps = ({ messages, room }: RootState) => {
   return {
     messages,
     room,

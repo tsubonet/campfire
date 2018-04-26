@@ -2,7 +2,11 @@
 export const SET_ROOM = 'SET_ROOM'
 
 // Reducer
-export default function reducer(state = {}, action) {
+export interface Room {
+  id?: number
+  name?: string
+}
+export default function reducer(state: Room = {}, action): Room {
   switch (action.type) {
     case SET_ROOM:
       return action.room

@@ -4,12 +4,23 @@ export const SET_MESSAGES = 'SET_MESSAGES'
 export const GET_OLD_MESSAGES = 'GET_OLD_MESSAGES'
 
 // Reducer
+export interface Item {
+  id: number
+  content: string
+  room_id: number
+}
+export interface Messages {
+  items: Array<Item>
+  hasNext: boolean
+  currentPage: number
+}
+
 const initialState = {
   items: [],
   hasNext: false,
   currentPage: 1,
 }
-export default function reducer(state = initialState, action) {
+export default function reducer(state: Messages = initialState, action): Messages {
   switch (action.type) {
     case ADD_MESSAGE:
       return Object.assign({}, state, {

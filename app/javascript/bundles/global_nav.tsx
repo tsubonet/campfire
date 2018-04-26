@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Room } from '../types'
+import { Room } from '../modules/room'
 
 interface Props {
-  rooms: Room[]
+  rooms: Array<Room>
 }
 const GlobalNav = (props: Props) => {
   return (

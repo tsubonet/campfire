@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Messages } from '../types'
+import { Messages } from '../modules/messages'
 import styled from 'styled-components'
 
 interface Props {

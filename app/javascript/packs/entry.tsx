@@ -10,9 +10,15 @@ import { compose, createStore, combineReducers, applyMiddleware } from 'redux'
 // import createSagaMiddleware from 'redux-saga'
 // import mySaga from '../sagas'
 
-import messages from '../modules/messages'
+import messages, { Messages } from '../modules/messages'
 import rooms from '../modules/rooms'
-import room from '../modules/room'
+import room, { Room } from '../modules/room'
+
+export interface RootState {
+  room: Room
+  rooms: Room[]
+  messages: Messages
+}
 
 const history = createHistory()
 

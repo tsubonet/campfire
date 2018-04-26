@@ -1,8 +1,8 @@
-export default function reducer(state = [], action) {
+import { Room } from '../modules/room'
+
+export default function reducer(state: Array<Room> = [], action): Array<Room> {
   switch (action.type) {
-    case "GET_DATE":
-      return Object.assign({}, state, action.date);
     default:
-      return state;
+      return state
   }
 }
