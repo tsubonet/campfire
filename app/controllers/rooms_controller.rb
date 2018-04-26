@@ -1,20 +1,12 @@
 class RoomsController < ApplicationController
 
+  include GetMessages
+
   def show
     @rooms = Room.all
 
     @room = Room.find(params[:id] || 1)
-
-    page_per = 5
-    current_page = 1
-    has_next = true
-    items = @room.messages
-    all_items = items.count
-    if all_items < page_per
-      has_next = false
-    end
-    items = items.page(current_page).per(page_per)
-    @messages = { items: items, hasNext: has_next, currentPage: current_page }
+    @messages = module_get_messages(@room)
 
     #puts "#######################"
     #puts @room.as_json(:include => @messages)

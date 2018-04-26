@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :rooms do
     resources :messages do
-      member do
+      collection do
         get 'old'
       end
     end

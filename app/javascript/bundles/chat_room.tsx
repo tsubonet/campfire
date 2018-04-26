@@ -45,6 +45,7 @@ class ChatRoom extends React.Component<Props> {
       },
     })
     const json = await res.json()
+    console.log(json)
     this.props.dispatch(setMessages(json.messages))
     this.props.dispatch(setRoom(json.room))
     this.disconnectActionCable()
@@ -53,7 +54,7 @@ class ChatRoom extends React.Component<Props> {
 
   async fetchOldMessages() {
     const res = await fetch(
-      `/rooms/${this.props.match.params.id}/messages/${this.props.messages.currentPage + 1}/old`,
+      `/rooms/${this.props.match.params.id}/messages/old/?page=${this.props.messages.currentPage + 1}`,
       {
         headers: {
           'Content-Type': 'application/json',
