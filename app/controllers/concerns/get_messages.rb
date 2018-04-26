@@ -17,7 +17,7 @@ module GetMessages
     has_next = true
     items = room.messages
     all_items = items.count
-    if all_items < page_per * current_page
+    if all_items <= page_per * current_page
       has_next = false
     end
     items = items.page(current_page).per(page_per)
