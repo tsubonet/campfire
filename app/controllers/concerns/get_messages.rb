@@ -8,7 +8,12 @@ module GetMessages
 
   def module_get_messages room
     page_per = 10
-    current_page = params[:page].to_i || 1
+    current_page = 
+      if params[:page].nil? 
+        1
+      else
+        params[:page].to_i
+      end
     has_next = true
     items = room.messages
     all_items = items.count
