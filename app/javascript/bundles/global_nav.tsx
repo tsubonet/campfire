@@ -4,6 +4,7 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Room } from '../modules/room'
+import styled from 'styled-components'
 
 interface Props {
   rooms: Array<Room>
@@ -32,9 +33,11 @@ const MenuLink = ({ label, to, activeOnlyWhenExact }: MenuProps) => (
     path={to}
     exact={activeOnlyWhenExact}
     children={({ match }) => (
-      <div className={match ? 'active' : ''}>
+      <div>
         {match ? '> ' : ''}
-        <Link to={to}>{label}</Link>
+        <StyledLink to={to} className={match ? 'active' : ''}>
+          {label}
+        </StyledLink>
       </div>
     )}
   />
@@ -45,3 +48,10 @@ const mapStateToProps = ({ rooms }) => {
 }
 
 export default withRouter(connect(mapStateToProps)(GlobalNav))
+
+const StyledLink = styled(Link)`
+  color: #ccc;
+  &.active {
+    color: red;
+  }
+`
