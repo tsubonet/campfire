@@ -11,6 +11,7 @@ export interface Item {
 
 export interface Messages {
   hasNext: boolean
+  currentPage: number
   items: Item[]
 }
 

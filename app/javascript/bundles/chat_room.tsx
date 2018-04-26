@@ -4,7 +4,7 @@ import { withRouter } from 'react-router'
 import MessagesList from './messages_list'
 import MessageForm from './message_form'
 import { Room, Messages, StoreState } from '../types'
-import { addMessage, setMessages } from '../modules/messages'
+import { addMessage, setMessages, getOldMessages } from '../modules/messages'
 import { setRoom } from '../modules/room'
 
 interface Props {
@@ -51,6 +51,20 @@ class ChatRoom extends React.Component<Props> {
     this.connectActionCable(json.room.id)
   }
 
+  async fetchOldMessages() {
+    const res = await fetch(
+      `/rooms/${this.props.match.params.id}/messages/${this.props.messages.currentPage + 1}/old`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      }
+    )
+    const json = await res.json()
+    this.props.dispatch(getOldMessages(json.messages))
+  }
+
   componentDidMount() {
     console.log(this.props)
     this.connectActionCable(this.props.room.id)
@@ -74,7 +88,7 @@ class ChatRoom extends React.Component<Props> {
     return (
       <div>
         <p>Room Name: {this.props.room.name}</p>
-        <button>前の記事を読み込む</button>
+        {this.props.messages.hasNext && <button onClick={this.fetchOldMessages.bind(this)}>前の記事を読み込む</button>}
         <MessagesList messages={this.props.messages} />
         <MessageForm room={this.props.room} />
       </div>

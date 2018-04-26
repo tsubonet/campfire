@@ -6,14 +6,15 @@ class RoomsController < ApplicationController
     @room = Room.find(params[:id] || 1)
 
     page_per = 5
-    hasNext = true
+    current_page = 1
+    has_next = true
     items = @room.messages
     all_items = items.count
     if all_items < page_per
-      hasNext = false
+      has_next = false
     end
-    items = items.page(1).per(page_per)
-    @messages = { items: items, hasNext: hasNext }
+    items = items.page(current_page).per(page_per)
+    @messages = { items: items, hasNext: has_next, currentPage: current_page }
 
     #puts "#######################"
     #puts @room.as_json(:include => @messages)
