@@ -10,8 +10,8 @@ class MessagesController < ApplicationController
 
   def old
     room = Room.find(params[:room_id])
-    @messages = module_get_messages(room)
-    render json: {messages: @messages}, status: :ok
+    messages = module_get_messages(room)
+    render json: {messages: messages}, status: :ok
   end
 
   private
