@@ -24,8 +24,12 @@ class ChatRoom extends React.Component<Props> {
         room_id,
       },
       {
-        connected: function() {},
-        disconnected: function() {},
+        connected: function() {
+          console.log('connected')
+        },
+        disconnected: function() {
+          console.log('disconnected')
+        },
         received: data => {
           this.props.dispatch(addMessage(data.message))
         },

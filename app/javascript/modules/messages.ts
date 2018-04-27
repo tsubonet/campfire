@@ -1,3 +1,5 @@
+import { Action } from '../actions'
+
 // Actions
 export const ADD_MESSAGE = 'ADD_MESSAGE'
 export const SET_MESSAGES = 'SET_MESSAGES'
@@ -20,20 +22,20 @@ const initialState = {
   hasNext: false,
   currentPage: 1,
 }
-export default function reducer(state: Messages = initialState, action): Messages {
+export default function reducer(state: Messages = initialState, action: Action): Messages {
   switch (action.type) {
     case ADD_MESSAGE:
       return Object.assign({}, state, {
-        items: [action.message, ...state.items],
+        items: [action.payload.message, ...state.items],
       })
     case SET_MESSAGES:
-      return action.messages
+      return action.payload.messages
 
     case GET_OLD_MESSAGES:
       return Object.assign({}, state, {
-        items: [...state.items, ...action.messages.items],
-        hasNext: action.messages.hasNext,
-        currentPage: action.messages.currentPage,
+        items: [...state.items, ...action.payload.messages.items],
+        hasNext: action.payload.messages.hasNext,
+        currentPage: action.payload.messages.currentPage,
       })
     default:
       return state
@@ -44,19 +46,25 @@ export default function reducer(state: Messages = initialState, action): Message
 export function setMessages(messages) {
   return {
     type: SET_MESSAGES,
-    messages,
+    payload: {
+      messages,
+    },
   }
 }
 
 export function addMessage(message) {
   return {
     type: ADD_MESSAGE,
-    message,
+    payload: {
+      message,
+    },
   }
 }
 export function getOldMessages(messages) {
   return {
     type: GET_OLD_MESSAGES,
-    messages,
+    payload: {
+      messages,
+    },
   }
 }

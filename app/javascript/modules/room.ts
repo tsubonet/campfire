@@ -1,3 +1,5 @@
+import { Action } from '../actions'
+
 // Actions
 export const SET_ROOM = 'SET_ROOM'
 
@@ -6,10 +8,10 @@ export interface Room {
   id?: number
   name?: string
 }
-export default function reducer(state: Room = {}, action): Room {
+export default function reducer(state: Room = {}, action: Action): Room {
   switch (action.type) {
     case SET_ROOM:
-      return action.room
+      return action.payload.room
     default:
       return state
   }
@@ -19,6 +21,8 @@ export default function reducer(state: Room = {}, action): Room {
 export function setRoom(room) {
   return {
     type: SET_ROOM,
-    room,
+    payload: {
+      room,
+    },
   }
 }
