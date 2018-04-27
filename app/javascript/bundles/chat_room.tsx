@@ -49,7 +49,6 @@ class ChatRoom extends React.Component<Props> {
       },
     })
     const json = await res.json()
-    console.log(json)
     this.props.dispatch(setMessages(json.messages))
     this.props.dispatch(setRoom(json.room))
     this.disconnectActionCable()

@@ -6,16 +6,41 @@ interface Props {
   messages: Messages
   fetchOldMessages
 }
-const MessagesList = ({ messages, fetchOldMessages }: Props) => (
-  <Wrap>
-    {messages.hasNext && <button onClick={fetchOldMessages}>前の記事を読み込む</button>}
-    <List>
-      {messages.items.map((message, i) => {
-        return <li key={i}>{message.content}</li>
-      })}
-    </List>
-  </Wrap>
-)
+class MessagesList extends React.Component<Props> {
+  private messageBox
+
+  constructor(props) {
+    super(props)
+    this.messageBox = React.createRef()
+  }
+  componentDidMount() {
+    this.messageBox.current.scrollTop = this.messageBox.current.scrollHeight
+    this.messageBox.current.addEventListener('scroll', () => {
+      console.log(this.messageBox.current.scrollTop)
+      if (this.messageBox.current.scrollTop === 0) {
+        this.props.fetchOldMessages()
+      }
+    })
+  }
+
+  componentDidUpdate() {
+    //this.messageBox.current.scrollTop = this.messageBox.current.scrollHeight
+  }
+
+  render() {
+    const { messages, fetchOldMessages } = this.props
+    return (
+      <Wrap innerRef={this.messageBox}>
+        {messages.hasNext && <button onClick={fetchOldMessages}>前の記事を読み込む</button>}
+        <List>
+          {messages.items.map((message, i) => {
+            return <li key={i}>{message.content}</li>
+          })}
+        </List>
+      </Wrap>
+    )
+  }
+}
 
 export default MessagesList
 
