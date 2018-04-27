@@ -4,14 +4,14 @@ import { withRouter } from 'react-router'
 import MessagesList from './messages_list'
 import MessageForm from './message_form'
 import { RootState } from '../packs/entry'
-import { Messages, addMessage, setMessages, getOldMessages } from '../modules/messages'
+import { Messages, addMessage, setMessages } from '../modules/messages'
 import { Room, setRoom } from '../modules/room'
 
 interface Props {
   messages: Messages
   room: Room
-  match
-  dispatch
+  match: any
+  dispatch: any
 }
 
 declare let App: any
@@ -55,36 +55,16 @@ class ChatRoom extends React.Component<Props> {
     this.connectActionCable(json.room.id)
   }
 
-  async fetchOldMessages() {
-    const res = await fetch(
-      `/rooms/${this.props.match.params.id}/messages/old/?page=${this.props.messages.currentPage + 1}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      }
-    )
-    const json = await res.json()
-    this.props.dispatch(getOldMessages(json.messages))
-  }
-
   componentDidMount() {
-    console.log(this.props)
     this.connectActionCable(this.props.room.id)
   }
 
   componentDidUpdate(prevProps) {
-    console.log('prevProps', prevProps.match.params.id)
-    console.log('this.props', this.props.match.params.id)
+    if (prevProps.match.params.id === this.props.match.params.id) return
+    this.fetchProps(this.props)
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.match.params.id === this.props.match.params.id) return
-    this.fetchProps(nextProps)
-  }
-
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.disconnectActionCable()
   }
 
@@ -92,7 +72,7 @@ class ChatRoom extends React.Component<Props> {
     return (
       <div>
         <p>Room Name: {this.props.room.name}</p>
-        <MessagesList messages={this.props.messages} fetchOldMessages={this.fetchOldMessages.bind(this)} />
+        <MessagesList />
         <MessageForm room={this.props.room} />
       </div>
     )
