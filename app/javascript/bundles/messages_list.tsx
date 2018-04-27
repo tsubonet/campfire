@@ -19,7 +19,7 @@ class MessagesList extends React.Component<Props> {
   }
 
   async fetchOldMessages() {
-    const { messages, match } = this.props
+    const { messages, match, dispatch } = this.props
     if (!messages.hasNext) return
     const res = await fetch(`/rooms/${match.params.id}/messages/old/?page=${messages.currentPage + 1}`, {
       headers: {
@@ -28,31 +28,30 @@ class MessagesList extends React.Component<Props> {
       },
     })
     const json = await res.json()
-    this.props.dispatch(getOldMessages(json.messages))
+    dispatch(getOldMessages(json.messages))
   }
 
   componentDidMount() {
     this.messageBox.current.scrollTop = this.messageBox.current.scrollHeight
     this.messageBox.current.addEventListener('scroll', () => {
-      console.log(this.messageBox.current.scrollTop)
       if (this.messageBox.current.scrollTop === 0) {
         this.fetchOldMessages()
-        //this.messageBox.current.scrollTop = 100
       }
     })
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.match.params.id === this.props.match.params.id) return
-
-    //this.messageBox.current.scrollTop = this.messageBox.current.scrollHeight
+    if (prevProps.messages.currentPage !== this.props.messages.currentPage) return
+    this.messageBox.current.scrollTop = this.messageBox.current.scrollHeight
   }
 
   render() {
     const { messages, fetchOldMessages } = this.props
     return (
       <Wrap innerRef={this.messageBox}>
-        {messages.hasNext && <button onClick={this.fetchOldMessages.bind(this)}>前の記事を読み込む</button>}
+        {
+          //messages.hasNext && <button onClick={this.fetchOldMessages.bind(this)}>前の記事を読み込む</button>
+        }
         <List>
           {messages.items.map((message, i) => {
             return <li key={i}>{message.content}</li>
