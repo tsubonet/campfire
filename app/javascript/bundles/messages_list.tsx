@@ -33,11 +33,14 @@ class MessagesList extends React.Component<Props> {
 
   componentDidMount() {
     this.messageBox.current.scrollTop = this.messageBox.current.scrollHeight
-    this.messageBox.current.addEventListener('scroll', () => {
-      if (this.messageBox.current.scrollTop === 0) {
-        this.fetchOldMessages()
-      }
-    })
+    //   this.messageBox.current.addEventListener('scroll', () => {
+    //     if (this.messageBox.current.scrollTop === 0) {
+    //       this.fetchOldMessages()
+    //     }
+    //     //const list = Array.from(this.messageBox.current.querySelectorAll('ul').lastChild)
+    //     console.log(this.messageBox.current.querySelector('ul').lastChild)
+    //     this.messageBox.current.querySelector('ul').lastChild.scrollIntoView()
+    //   })
   }
 
   componentDidUpdate(prevProps) {
@@ -53,8 +56,12 @@ class MessagesList extends React.Component<Props> {
           //messages.hasNext && <button onClick={this.fetchOldMessages.bind(this)}>前の記事を読み込む</button>
         }
         <List>
-          {messages.items.map((message, i) => {
-            return <li key={i}>{message.content}</li>
+          {messages.items.map((item, i) => {
+            return (
+              <li key={i} id={`_${item.id}`}>
+                {item.content}
+              </li>
+            )
           })}
         </List>
       </Wrap>

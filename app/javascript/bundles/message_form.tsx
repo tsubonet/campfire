@@ -17,6 +17,8 @@ export default class MessageForm extends React.Component<Props> {
       e.preventDefault()
       const content = this.inputRef.current.value
       if (content === '') return
+      this.inputRef.current.value = ''
+      this.inputRef.current.focus()
       const response = await fetch(`/rooms/${this.props.room.id}/messages`, {
         method: 'POST',
         body: JSON.stringify({ message: { content } }),
@@ -24,8 +26,6 @@ export default class MessageForm extends React.Component<Props> {
           'Content-Type': 'application/json',
         },
       })
-      this.inputRef.current.value = ''
-      this.inputRef.current.focus()
     }
   }
 
