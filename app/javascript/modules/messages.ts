@@ -12,12 +12,14 @@ export interface Item {
   room_id: number
 }
 export interface Messages {
+  isFetching: boolean
   items: Array<Item>
   hasNext: boolean
   currentPage: number
 }
 
 const initialState = {
+  isFetching: false,
   items: [],
   hasNext: false,
   currentPage: 1,
