@@ -11,12 +11,18 @@ interface Props {
   match: any
   dispatch: any
 }
-class MessagesList extends React.Component<Props> {
+interface State {
+  loading: boolean
+}
+class MessagesList extends React.Component<Props, State> {
   private messageBox
 
   constructor(props) {
     super(props)
     this.messageBox = React.createRef()
+    this.state = {
+      loading: false,
+    }
   }
 
   async fetchOldMessages() {
@@ -29,6 +35,8 @@ class MessagesList extends React.Component<Props> {
       },
     })
     const json = await res.json()
+    this.messageBox.current.scrollTop = this.messageBox.current.querySelector('ul').lastChild.scrollHeight - 20
+    //this.messageBox.current.querySelector('ul').lastChild.scrollIntoView()
     dispatch(getOldMessages(json.messages))
   }
 
@@ -40,8 +48,11 @@ class MessagesList extends React.Component<Props> {
       debounce(() => {
         if (!this.props.messages.items.length) return
         if (this.props.messages.hasNext && this.messageBox.current.scrollTop === 0) {
-          this.fetchOldMessages()
-          this.messageBox.current.querySelector('ul').lastChild.scrollIntoView()
+          this.setState({ loading: true })
+          setTimeout(() => {
+            this.fetchOldMessages()
+            this.setState({ loading: false })
+          }, 2000)
         }
       }),
       1000
@@ -50,6 +61,7 @@ class MessagesList extends React.Component<Props> {
 
   componentDidUpdate(prevProps) {
     if (prevProps.messages.currentPage !== this.props.messages.currentPage) return
+    if (this.state.loading) return
     this.messageBox.current.scrollTop = this.messageBox.current.scrollHeight
   }
 
@@ -57,6 +69,7 @@ class MessagesList extends React.Component<Props> {
     const { messages, fetchOldMessages } = this.props
     return (
       <Wrap innerRef={this.messageBox}>
+        {this.state.loading && <div>loading....</div>}
         {!messages.hasNext && <div>メッセージはありません</div>}
         {
           //messages.hasNext && <button onClick={this.fetchOldMessages.bind(this)}>前の記事を読み込む</button>
