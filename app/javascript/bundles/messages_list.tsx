@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { Messages, getOldMessages } from '../modules/messages'
 import styled from 'styled-components'
+import debounce from 'lodash/debounce'
 
 interface Props {
   messages: Messages
@@ -34,13 +35,17 @@ class MessagesList extends React.Component<Props> {
   componentDidMount() {
     this.messageBox.current.scrollTop = this.messageBox.current.scrollHeight
 
-    this.messageBox.current.addEventListener('scroll', () => {
-      if (!this.props.messages.items.length) return
-      if (this.props.messages.hasNext && this.messageBox.current.scrollTop === 0) {
-        this.fetchOldMessages()
-        this.messageBox.current.querySelector('ul').lastChild.scrollIntoView()
-      }
-    })
+    this.messageBox.current.addEventListener(
+      'scroll',
+      debounce(() => {
+        if (!this.props.messages.items.length) return
+        if (this.props.messages.hasNext && this.messageBox.current.scrollTop === 0) {
+          this.fetchOldMessages()
+          this.messageBox.current.querySelector('ul').lastChild.scrollIntoView()
+        }
+      }),
+      1000
+    )
   }
 
   componentDidUpdate(prevProps) {
@@ -52,6 +57,7 @@ class MessagesList extends React.Component<Props> {
     const { messages, fetchOldMessages } = this.props
     return (
       <Wrap innerRef={this.messageBox}>
+        {!messages.hasNext && <div>メッセージはありません</div>}
         {
           //messages.hasNext && <button onClick={this.fetchOldMessages.bind(this)}>前の記事を読み込む</button>
         }

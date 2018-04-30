@@ -11,6 +11,7 @@ export interface Item {
   content: string
   room_id: number
 }
+
 export interface Messages {
   isFetching: boolean
   items: Array<Item>
