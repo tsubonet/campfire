@@ -32,10 +32,10 @@ const MenuLink = ({ label, to, activeOnlyWhenExact }: MenuProps) => (
   <Route
     path={to}
     exact={activeOnlyWhenExact}
-    children={({ match }) => (
+    children={({ match, location }) => (
       <div>
         {match ? '> ' : ''}
-        <StyledLink to={to} className={match ? 'active' : ''}>
+        <StyledLink to={to} className={match || (location.pathname === '/' && to === '/rooms/1') ? 'active' : ''}>
           {label}
         </StyledLink>
       </div>
