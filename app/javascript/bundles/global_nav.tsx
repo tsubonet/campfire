@@ -34,7 +34,7 @@ const MenuLink = ({ label, to, activeOnlyWhenExact }: MenuProps) => (
     exact={activeOnlyWhenExact}
     children={({ match, location }) => (
       <div>
-        {match ? '> ' : ''}
+        {match || (location.pathname === '/' && to === '/rooms/1') ? '> ' : ''}
         <StyledLink to={to} className={match || (location.pathname === '/' && to === '/rooms/1') ? 'active' : ''}>
           {label}
         </StyledLink>
