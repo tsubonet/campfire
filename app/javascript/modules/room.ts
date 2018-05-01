@@ -1,4 +1,5 @@
 import { Action } from '../actions'
+import { setMessages } from '../modules/messages'
 
 // Actions
 export const SET_ROOM = 'SET_ROOM'
@@ -24,5 +25,19 @@ export function setRoom(room) {
     payload: {
       room,
     },
+  }
+}
+
+export function setRoomAsync(id) {
+  return async dispatch => {
+    const res = await fetch(`/rooms/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
+    const json = await res.json()
+    dispatch(setMessages(json.messages))
+    dispatch(setRoom(json.room))
   }
 }

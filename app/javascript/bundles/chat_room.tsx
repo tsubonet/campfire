@@ -4,8 +4,8 @@ import { withRouter } from 'react-router'
 import MessagesList from './messages_list'
 import MessageForm from './message_form'
 import { RootState } from '../packs/entry'
-import { Messages, addMessage, setMessages } from '../modules/messages'
-import { Room, setRoom } from '../modules/room'
+import { Messages, addMessage } from '../modules/messages'
+import { Room, setRoomAsync } from '../modules/room'
 
 interface Props {
   messages: Messages
@@ -41,27 +41,15 @@ class ChatRoom extends React.Component<Props> {
     if (App.room) App.cable.subscriptions.remove(App.room)
   }
 
-  async fetchProps(props) {
-    const res = await fetch(`/rooms/${props.match.params.id}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    })
-    const json = await res.json()
-    this.props.dispatch(setMessages(json.messages))
-    this.props.dispatch(setRoom(json.room))
-    this.disconnectActionCable()
-    this.connectActionCable(json.room.id)
-  }
-
   componentDidMount() {
     this.connectActionCable(this.props.room.id)
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.id === this.props.match.params.id) return
-    this.fetchProps(this.props)
+    this.props.dispatch(setRoomAsync(this.props.match.params.id))
+    this.disconnectActionCable()
+    this.connectActionCable(this.props.match.params.id)
   }
 
   UNSAFE_componentWillMount() {

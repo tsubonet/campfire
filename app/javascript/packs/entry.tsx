@@ -9,6 +9,7 @@ import { compose, createStore, combineReducers, applyMiddleware } from 'redux'
 // import persistState from 'redux-localstorage'
 // import createSagaMiddleware from 'redux-saga'
 // import mySaga from '../sagas'
+import thunk from 'redux-thunk'
 
 import messages, { Messages } from '../modules/messages'
 import rooms from '../modules/rooms'
@@ -25,7 +26,7 @@ const history = createHistory()
 const App = (props, railsContext) => {
   console.log(props)
   //const sagaMiddleware = createSagaMiddleware();
-  const middlewares = [routerMiddleware(history)]
+  const middlewares = [routerMiddleware(history), thunk]
   if (process.env.NODE_ENV === 'development') {
     const { logger } = require('redux-logger')
     middlewares.push(logger)
