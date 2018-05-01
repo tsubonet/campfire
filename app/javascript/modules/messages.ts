@@ -54,7 +54,6 @@ export function setMessages(messages) {
     },
   }
 }
-
 export function addMessage(message) {
   return {
     type: ADD_MESSAGE,
@@ -69,5 +68,18 @@ export function getOldMessages(messages) {
     payload: {
       messages,
     },
+  }
+}
+
+export function getOldMessagesAsync(id, messages) {
+  return async dispatch => {
+    const res = await fetch(`/rooms/${id}/messages/old/?page=${messages.currentPage + 1}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
+    const json = await res.json()
+    dispatch(getOldMessages(json.messages))
   }
 }
