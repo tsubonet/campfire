@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { Messages, getOldMessagesAsync } from '../modules/messages'
+import { Messages, getOldMessagesAction } from '../modules/messages'
 import { Room } from '../modules/room'
 import styled from 'styled-components'
 import debounce from 'lodash/debounce'
@@ -38,9 +38,7 @@ class MessagesList extends React.Component<Props> {
         if (!triggerFlag && messages.hasNext && this.messageBox.current.scrollTop === 0) {
           triggerFlag = true
           const elm = this.messageBox.current.querySelector('ul').lastChild
-
-          await dispatch(getOldMessagesAsync(room.id, messages))
-
+          dispatch(getOldMessagesAction(room.id, messages))
           // const scrollY = elm.getBoundingClientRect().top
           // console.log('elm.getBoundingClientRect().top', scrollY)
           // const scrollY2 = elm.scrollHeight
@@ -48,7 +46,9 @@ class MessagesList extends React.Component<Props> {
           const scrollY3 = elm.offsetTop - this.messageBox.current.offsetTop - this.messageBox.current.clientHeight + 24
           //console.log('elm.offsetTop', scrollY3)
           this.messageBox.current.scrollTop = scrollY3
+          console.log('aaaaaaaaaaaaaaaaaaa')
         }
+
         if (this.messageBox.current.scrollTop > 20) {
           triggerFlag = false
         }

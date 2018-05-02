@@ -3,12 +3,16 @@ import { Action } from '../actions'
 import 'rxjs/add/operator/mapTo'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/delay'
+import 'rxjs/add/operator/mergeMap'
+import 'rxjs/add/operator/do'
+import 'rxjs/add/operator/map'
 
 // Actions
 export const ADD_MESSAGE = 'ADD_MESSAGE'
 export const SET_MESSAGES = 'SET_MESSAGES'
-export const GET_OLD_MESSAGES = 'GET_OLD_MESSAGES'
 export const REQUEST_MESSAGES = 'REQUEST_MESSAGES'
+export const GET_OLD_MESSAGES = 'GET_OLD_MESSAGES'
+export const REQUEST_OLD_MESSAGES = 'REQUEST_OLD_MESSAGES'
 
 // Reducer
 export interface Item {
@@ -42,6 +46,7 @@ export default function reducer(state: Messages = initialState, action: Action):
     case SET_MESSAGES:
       return Object.assign({}, state, action.payload.messages)
 
+    case REQUEST_OLD_MESSAGES:
     case REQUEST_MESSAGES:
       return Object.assign({}, state, {
         loading: true,
@@ -91,26 +96,42 @@ export function requestMessages() {
   }
 }
 
-export function getOldMessagesAsync(id, messages) {
-  return async dispatch => {
-    dispatch(requestMessages())
-    await sleep(1000)
-    const res = await fetch(`/rooms/${id}/messages/old/?page=${messages.currentPage + 1}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    })
-    const json = await res.json()
-    dispatch(getOldMessages(json.messages))
+export function getOldMessagesAction(id, messages) {
+  return {
+    type: 'REQUEST_OLD_MESSAGES',
+    payload: {
+      id,
+      messages,
+    },
   }
+  // return async dispatch => {
+  //   dispatch(requestMessages())
+  //   await sleep(1000)
+  //   const res = await fetch(`/rooms/${id}/messages/old/?page=${messages.currentPage + 1}`, {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Accept: 'application/json',
+  //     },
+  //   })
+  //   const json = await res.json()
+  //   dispatch(getOldMessages(json.messages))
+  // }
 }
 
 const sleep = msec => new Promise(resolve => setTimeout(resolve, msec))
 
 export function messagesEpic(action$) {
   return action$
-    .filter(action => action.type === 'PING')
+    .ofType('REQUEST_OLD_MESSAGES')
     .delay(1000)
-    .mapTo({ type: 'PONG' })
+    .mergeMap(action => {
+      return fetch(`/rooms/${action.payload.id}/messages/old/?page=${action.payload.messages.currentPage + 1}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      }).then(response => response.json())
+    })
+    .map(action => getOldMessages(action.messages))
+    .do(action => console.log(action))
 }
