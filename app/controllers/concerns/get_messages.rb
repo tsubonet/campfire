@@ -21,7 +21,7 @@ module GetMessages
       has_next = false
     end
     items = items.page(current_page).per(page_per)
-    { items: items, hasNext: has_next, currentPage: current_page }
+    { items: items, hasNext: has_next, currentPage: current_page, loading: false }
   end
 
  end
