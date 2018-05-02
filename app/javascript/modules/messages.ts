@@ -124,14 +124,18 @@ export function messagesEpic(action$) {
   return action$
     .ofType('REQUEST_OLD_MESSAGES')
     .delay(1000)
-    .mergeMap(action => {
-      return fetch(`/rooms/${action.payload.id}/messages/old/?page=${action.payload.messages.currentPage + 1}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      }).then(response => response.json())
+    .mergeMap(async action => {
+      const res = await fetch(
+        `/rooms/${action.payload.id}/messages/old/?page=${action.payload.messages.currentPage + 1}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+        }
+      )
+      return res.json()
     })
     .map(action => getOldMessages(action.messages))
-    .do(action => console.log(action))
+  //.do(action => console.log(action))
 }

@@ -14,6 +14,7 @@ interface Props {
 
 class MessagesList extends React.Component<Props> {
   private messageBox
+  private savedElm
 
   constructor(props) {
     super(props)
@@ -37,16 +38,17 @@ class MessagesList extends React.Component<Props> {
         if (!messages.items.length) return
         if (!triggerFlag && messages.hasNext && this.messageBox.current.scrollTop === 0) {
           triggerFlag = true
-          const elm = this.messageBox.current.querySelector('ul').lastChild
+          this.savedElm = this.messageBox.current.querySelector('ul').lastChild
           dispatch(getOldMessagesAction(room.id, messages))
           // const scrollY = elm.getBoundingClientRect().top
           // console.log('elm.getBoundingClientRect().top', scrollY)
           // const scrollY2 = elm.scrollHeight
           // console.log('elm.scrollHeight', scrollY2)
-          const scrollY3 = elm.offsetTop - this.messageBox.current.offsetTop - this.messageBox.current.clientHeight + 24
+          //const scrollY3 =
+          //  this.savedElm.offsetTop - this.messageBox.current.offsetTop - this.messageBox.current.clientHeight + 24
           //console.log('elm.offsetTop', scrollY3)
-          this.messageBox.current.scrollTop = scrollY3
-          console.log('aaaaaaaaaaaaaaaaaaa')
+          //this.messageBox.current.scrollTop = scrollY3
+          //console.log('aaaaaaaaaaaaaaaaaaa')
         }
 
         if (this.messageBox.current.scrollTop > 20) {
@@ -59,7 +61,12 @@ class MessagesList extends React.Component<Props> {
 
   componentDidUpdate(prevProps) {
     const { messages } = this.props
-    if (prevProps.messages.currentPage !== messages.currentPage) return
+    if (prevProps.messages.currentPage !== messages.currentPage) {
+      const scrollY3 =
+        this.savedElm.offsetTop - this.messageBox.current.offsetTop - this.messageBox.current.clientHeight + 24
+      this.messageBox.current.scrollTop = scrollY3
+      return
+    }
     if (prevProps.messages.loading !== messages.loading) return
     this.messageBox.current.scrollTop = this.messageBox.current.scrollHeight
   }
