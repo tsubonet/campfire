@@ -1,5 +1,9 @@
 import { Action } from '../actions'
 
+import 'rxjs/add/operator/mapTo'
+import 'rxjs/add/operator/filter'
+import 'rxjs/add/operator/delay'
+
 // Actions
 export const ADD_MESSAGE = 'ADD_MESSAGE'
 export const SET_MESSAGES = 'SET_MESSAGES'
@@ -103,3 +107,10 @@ export function getOldMessagesAsync(id, messages) {
 }
 
 const sleep = msec => new Promise(resolve => setTimeout(resolve, msec))
+
+export function messagesEpic(action$) {
+  return action$
+    .filter(action => action.type === 'PING')
+    .delay(1000)
+    .mapTo({ type: 'PONG' })
+}

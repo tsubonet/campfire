@@ -1,4 +1,3 @@
-import 'babel-polyfill'
 import * as React from 'react'
 import { Provider } from 'react-redux'
 import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux'
@@ -6,14 +5,13 @@ import ReactOnRails from 'react-on-rails'
 import createHistory from 'history/createBrowserHistory'
 import Router from '../bundles/router'
 import { compose, createStore, combineReducers, applyMiddleware } from 'redux'
-// import persistState from 'redux-localstorage'
-// import createSagaMiddleware from 'redux-saga'
-// import mySaga from '../sagas'
 import thunk from 'redux-thunk'
+import { createEpicMiddleware } from 'redux-observable'
+import epics from '../epics'
 
-import messages, { Messages } from '../modules/messages'
-import rooms from '../modules/rooms'
 import room, { Room } from '../modules/room'
+import rooms from '../modules/rooms'
+import messages, { Messages } from '../modules/messages'
 
 export interface RootState {
   room: Room
@@ -24,9 +22,7 @@ export interface RootState {
 const history = createHistory()
 
 const App = (props, railsContext) => {
-  console.log(props)
-  //const sagaMiddleware = createSagaMiddleware();
-  const middlewares = [routerMiddleware(history), thunk]
+  const middlewares = [routerMiddleware(history), thunk, createEpicMiddleware(epics)]
   if (process.env.NODE_ENV === 'development') {
     const { logger } = require('redux-logger')
     middlewares.push(logger)
@@ -37,12 +33,8 @@ const App = (props, railsContext) => {
     room,
     router: routerReducer,
   })
-  const enhancer = compose(
-    applyMiddleware(...middlewares)
-    //persistState("auth", { key: "auth" })
-  )
+  const enhancer = compose(applyMiddleware(...middlewares))
   const store = createStore(rootReducer, props, enhancer)
-  //sagaMiddleware.run(mySaga);
 
   return (
     <Provider store={store}>
