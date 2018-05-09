@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Room } from '../modules/room'
+import { Room } from '../../modules/room'
 
 interface Props {
   room: Room

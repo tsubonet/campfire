@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import MessagesList from './messages_list'
-import MessageForm from './message_form'
-import { RootState } from '../packs/entry'
-import { Messages, addMessage } from '../modules/messages'
-import { Room, setRoomAsync } from '../modules/room'
+import MessagesList from '../organisms/messages_list'
+import MessageForm from '../organisms/message_form'
+import { RootState } from '../../packs/entry'
+import { Messages, addMessage } from '../../modules/messages'
+import { Room, setRoomAsync } from '../../modules/room'
 
 interface Props {
   messages: Messages

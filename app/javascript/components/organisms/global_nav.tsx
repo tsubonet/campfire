@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Room } from '../modules/room'
+import { Room } from '../../modules/room'
 import styled from 'styled-components'
 
 interface Props {

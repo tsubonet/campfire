@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { Messages, getOldMessagesAction } from '../modules/messages'
-import { Room } from '../modules/room'
+import { Messages, getOldMessagesAction } from '../../modules/messages'
+import { Room } from '../../modules/room'
 import styled from 'styled-components'
 import debounce from 'lodash/debounce'
 

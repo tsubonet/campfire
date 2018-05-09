@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import ChatRoom from './chat_room'
-import GlobalNav from './global_nav'
-import Sandbox from './sandbox'
+import GlobalNav from './organisms/global_nav'
+import ChatRoom from './pages/chat_room'
+import Sandbox from './pages/sandbox'
 
 const Router = props => {
   return (
