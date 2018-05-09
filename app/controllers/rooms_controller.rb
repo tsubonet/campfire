@@ -18,4 +18,8 @@ class RoomsController < ApplicationController
     end
   end
 
+  def dummy
+    @rooms = Room.all
+  end
+
 end

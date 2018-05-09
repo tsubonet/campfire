@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root to: 'rooms#show'
-  get "sandbox" => 'rooms#show'
+  get "sandbox" => 'rooms#dummy'
 
   resources :rooms do
     resources :messages do
