@@ -3,12 +3,12 @@ import { Route } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-interface MenuProps {
+interface Props {
   label: string
   to: string
   activeOnlyWhenExact?: boolean
 }
-const NavLink = ({ label, to, activeOnlyWhenExact }: MenuProps) => (
+const NavLink = ({ label, to, activeOnlyWhenExact }: Props) => (
   <Route
     path={to}
     exact={activeOnlyWhenExact}
@@ -27,7 +27,11 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   padding: 15px;
   display: block;
+  transition: background 0.2s linear 0s;
   &.active {
     background: #ccc;
+  }
+  &:hover:not(.active) {
+    background: #fff;
   }
 `

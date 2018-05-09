@@ -1,6 +1,4 @@
 import * as React from 'react'
-import { withRouter } from 'react-router'
-import { connect } from 'react-redux'
 import { Room } from '../../modules/room'
 import NavLink from '../atoms/nav_link'
 import styled from 'styled-components'
@@ -23,11 +21,7 @@ const GlobalNav = ({ rooms, className }: Props) => {
   )
 }
 
-const mapStateToProps = ({ rooms }) => {
-  return { rooms }
-}
-
-export default withRouter(connect(mapStateToProps)(GlobalNav))
+export default GlobalNav
 
 const NavList = styled.li`
   border-bottom: 1px solid #ccc;

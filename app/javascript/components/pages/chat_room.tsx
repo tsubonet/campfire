@@ -13,6 +13,7 @@ import debounce from 'lodash/debounce'
 interface Props {
   messages: Messages
   room: Room
+  rooms: Array<Room>
   match: any
   dispatch: any
 }
@@ -76,7 +77,7 @@ class ChatRoomPage extends React.Component<Props, State> {
   render() {
     return (
       <Wrapper style={{ height: this.state.windowH }}>
-        <StyledGlobalNav />
+        <StyledGlobalNav rooms={this.props.rooms} className />
         <Main>
           <div>
             <p>Room Name: {this.props.room.name}</p>
@@ -89,10 +90,11 @@ class ChatRoomPage extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = ({ messages, room }: RootState) => {
+const mapStateToProps = ({ messages, room, rooms }: RootState) => {
   return {
     messages,
     room,
+    rooms,
   }
 }
 
