@@ -6,6 +6,8 @@ import MessageForm from '../organisms/message_form'
 import { RootState } from '../../packs/entry'
 import { Messages, addMessage } from '../../modules/messages'
 import { Room, setRoomAsync } from '../../modules/room'
+import GlobalNav from '../organisms/global_nav'
+import styled from 'styled-components'
 
 interface Props {
   messages: Messages
@@ -16,7 +18,7 @@ interface Props {
 
 declare let App: any
 
-class ChatRoom extends React.Component<Props> {
+class ChatRoomPage extends React.Component<Props> {
   connectActionCable(room_id) {
     App.room = App.cable.subscriptions.create(
       {
@@ -58,11 +60,16 @@ class ChatRoom extends React.Component<Props> {
 
   render() {
     return (
-      <div>
-        <p>Room Name: {this.props.room.name}</p>
-        <MessagesList />
-        <MessageForm room={this.props.room} />
-      </div>
+      <Wrapper>
+        <StyledGlobalNav />
+        <Main>
+          <div>
+            <p>Room Name: {this.props.room.name}</p>
+            <MessagesList />
+            <MessageForm room={this.props.room} />
+          </div>
+        </Main>
+      </Wrapper>
     )
   }
 }
@@ -74,4 +81,18 @@ const mapStateToProps = ({ messages, room }: RootState) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(ChatRoom))
+export default withRouter(connect(mapStateToProps)(ChatRoomPage))
+
+const Wrapper = styled.div`
+  display: flex;
+`
+const StyledGlobalNav = styled(GlobalNav)`
+  width: 200px;
+  background: #f2f2f2;
+}
+`
+const Main = styled.div`
+  width: calc(100% - 200px);
+  background: #fff;
+  padding: 10px;
+`
