@@ -28,14 +28,13 @@ const Wrapper = styled.div`
   display: flex;
 `
 const StyledGlobalNav = styled(GlobalNav)`
-  width: 100px;
-  background: #999;
-  padding: 10px;
+  width: 200px;
+  background: #f2f2f2;
 }
 `
 const Main = styled.div`
-  width: calc(100% - 100px);
-  background: #eee;
+  width: calc(100% - 200px);
+  background: #fff;
   padding: 10px;
 `
 // const StyledLink = styled(Link)`

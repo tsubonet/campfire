@@ -13,12 +13,9 @@ const NavLink = ({ label, to, activeOnlyWhenExact }: MenuProps) => (
     path={to}
     exact={activeOnlyWhenExact}
     children={({ match, location }) => (
-      <div>
-        {match || (location.pathname === '/' && to === '/rooms/1') ? '> ' : ''}
-        <StyledLink to={to} className={match || (location.pathname === '/' && to === '/rooms/1') ? 'active' : ''}>
-          {label}
-        </StyledLink>
-      </div>
+      <StyledLink to={to} className={match || (location.pathname === '/' && to === '/rooms/1') ? 'active' : ''}>
+        {label}
+      </StyledLink>
     )}
   />
 )
@@ -26,8 +23,11 @@ const NavLink = ({ label, to, activeOnlyWhenExact }: MenuProps) => (
 export default NavLink
 
 const StyledLink = styled(Link)`
-  color: #ccc;
+  color: #1a1a1a;
+  text-decoration: none;
+  padding: 15px;
+  display: block;
   &.active {
-    color: red;
+    background: #ccc;
   }
 `

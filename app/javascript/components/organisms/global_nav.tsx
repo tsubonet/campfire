@@ -14,9 +14,9 @@ const GlobalNav = ({ rooms, className }: Props) => {
     <ul className={className}>
       {rooms.map((room, i) => {
         return (
-          <li key={i}>
+          <NavList key={i}>
             <NavLink to={`/rooms/${room.id}`} label={room.name} />
-          </li>
+          </NavList>
         )
       })}
     </ul>
@@ -28,3 +28,7 @@ const mapStateToProps = ({ rooms }) => {
 }
 
 export default withRouter(connect(mapStateToProps)(GlobalNav))
+
+const NavList = styled.li`
+  border-bottom: 1px solid #ccc;
+`
