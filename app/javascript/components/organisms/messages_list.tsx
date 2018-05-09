@@ -104,7 +104,7 @@ const mapStateToProps = ({ messages, room }) => {
 export default withRouter(connect(mapStateToProps)(MessagesList))
 
 const Wrap = styled.div`
-  height: 200px;
+  height: 100px;
   overflow-y: auto;
   border: 1px solid #ccc;
 `
