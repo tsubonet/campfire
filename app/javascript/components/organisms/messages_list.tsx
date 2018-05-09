@@ -1,6 +1,4 @@
 import * as React from 'react'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
 import { Messages, getOldMessagesAction } from '../../modules/messages'
 import { Room } from '../../modules/room'
 import styled from 'styled-components'
@@ -12,7 +10,7 @@ interface Props {
   dispatch: any
 }
 
-class MessagesList extends React.Component<Props> {
+export default class MessagesList extends React.Component<Props> {
   private messageBox
   private savedElm
 
@@ -93,15 +91,6 @@ class MessagesList extends React.Component<Props> {
     )
   }
 }
-
-const mapStateToProps = ({ messages, room }) => {
-  return {
-    messages,
-    room,
-  }
-}
-
-export default withRouter(connect(mapStateToProps)(MessagesList))
 
 const Wrap = styled.div`
   height: 100px;

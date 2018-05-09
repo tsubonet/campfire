@@ -80,7 +80,7 @@ class ChatRoomPage extends React.Component<Props, State> {
         <Main>
           <div>
             <p>Room Name: {this.props.room.name}</p>
-            <MessagesList />
+            <MessagesList room={this.props.room} messages={this.props.messages} dispatch={this.props.dispatch} />
             <MessageForm room={this.props.room} />
           </div>
         </Main>
