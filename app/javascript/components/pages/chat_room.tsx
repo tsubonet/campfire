@@ -8,6 +8,7 @@ import { Messages, addMessage } from '../../modules/messages'
 import { Room, setRoomAsync } from '../../modules/room'
 import GlobalNav from '../organisms/global_nav'
 import styled from 'styled-components'
+import debounce from 'lodash/debounce'
 
 interface Props {
   messages: Messages
@@ -15,10 +16,18 @@ interface Props {
   match: any
   dispatch: any
 }
-
+interface State {
+  windowH
+}
 declare let App: any
 
-class ChatRoomPage extends React.Component<Props> {
+class ChatRoomPage extends React.Component<Props, State> {
+  constructor(props) {
+    super(props)
+    this.state = {
+      windowH: window.innerHeight,
+    }
+  }
   connectActionCable(room_id) {
     App.room = App.cable.subscriptions.create(
       {
@@ -45,6 +54,12 @@ class ChatRoomPage extends React.Component<Props> {
 
   componentDidMount() {
     this.connectActionCable(this.props.room.id)
+    window.addEventListener(
+      'resize',
+      debounce(() => {
+        this.setState({ windowH: window.innerHeight })
+      }, 1000)
+    )
   }
 
   componentDidUpdate(prevProps) {
@@ -60,7 +75,7 @@ class ChatRoomPage extends React.Component<Props> {
 
   render() {
     return (
-      <Wrapper>
+      <Wrapper style={{ height: this.state.windowH }}>
         <StyledGlobalNav />
         <Main>
           <div>
