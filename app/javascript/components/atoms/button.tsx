@@ -9,4 +9,5 @@ export default Button
 
 const StyledButton = styled.button`
   padding: 3px 10px;
+  cursor: pointer;
 `

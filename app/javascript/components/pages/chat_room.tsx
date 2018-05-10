@@ -24,13 +24,16 @@ interface State {
 declare let App: any
 
 class ChatRoomPage extends React.Component<Props, State> {
-  private inputElement
+  private inputMessageElement
+  private inputRoomElement
+
   constructor(props) {
     super(props)
     this.state = {
       windowH: window.innerHeight,
     }
   }
+
   connectActionCable(room_id) {
     App.room = App.cable.subscriptions.create(
       {
@@ -76,13 +79,13 @@ class ChatRoomPage extends React.Component<Props, State> {
     this.disconnectActionCable()
   }
 
-  async handleSubmit(e) {
+  async postMessage(e) {
     if (e.keyCode === 13) {
       e.preventDefault()
-      const content = this.inputElement.value
+      const content = this.inputMessageElement.value
       if (content === '') return
-      this.inputElement.value = ''
-      this.inputElement.focus()
+      this.inputMessageElement.value = ''
+      this.inputMessageElement.focus()
       const response = await fetch(`/rooms/${this.props.room.id}/messages`, {
         method: 'POST',
         body: JSON.stringify({ message: { content } }),
@@ -93,17 +96,35 @@ class ChatRoomPage extends React.Component<Props, State> {
     }
   }
 
+  async postRoom(e) {
+    if (e.keyCode === 13) {
+      e.preventDefault()
+      const content = this.inputRoomElement.value
+      if (content === '') return
+      this.inputRoomElement.value = ''
+      this.inputRoomElement.focus()
+    }
+  }
+
   render() {
     return (
       <Root style={{ height: this.state.windowH }}>
-        <Side rooms={this.props.rooms} />
+        <Side
+          rooms={this.props.rooms}
+          handleSubmit={this.postRoom.bind(this)}
+          inputRef={el => (this.inputRoomElement = el)}
+        />
         <Main>
           <RoomName>ルーム名: {this.props.room.name}</RoomName>
-          <MessagesList room={this.props.room} messages={this.props.messages} dispatch={this.props.dispatch} />
+          <MessagesList
+            room={this.props.room}
+            messages={this.props.messages}
+            dispatch={this.props.dispatch}
+          />
           <MessageForm
             room={this.props.room}
-            handleSubmit={this.handleSubmit.bind(this)}
-            inputRef={el => (this.inputElement = el)}
+            handleSubmit={this.postMessage.bind(this)}
+            inputRef={el => (this.inputMessageElement = el)}
           />
         </Main>
       </Root>
