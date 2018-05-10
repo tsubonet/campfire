@@ -1,15 +1,15 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import styled from 'styled-components'
+import debounce from 'lodash/debounce'
+
+import Side from '../organisms/side'
 import MessagesList from '../organisms/messages_list'
 import MessageForm from '../organisms/message_form'
 import { RootState } from '../../packs/entry'
 import { Messages, addMessage } from '../../modules/messages'
 import { Room, setRoomAsync } from '../../modules/room'
-
-import Side from '../organisms/side'
-import styled from 'styled-components'
-import debounce from 'lodash/debounce'
 
 interface Props {
   messages: Messages
@@ -102,7 +102,6 @@ export default withRouter(connect(mapStateToProps)(ChatRoomPage))
 const Wrapper = styled.div`
   display: flex;
 `
-
 const Main = styled.div`
   width: calc(100% - 200px);
   background: #fff;

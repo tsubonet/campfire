@@ -2,7 +2,9 @@ import * as React from 'react'
 import styled from 'styled-components'
 
 interface Props {}
-const Textarea = () => <StyledTextarea />
+const Textarea = ({ handleSubmit, ...props }) => {
+  return <StyledTextarea onKeyDown={handleSubmit} innerRef={props.inputRef} />
+}
 
 export default Textarea
 

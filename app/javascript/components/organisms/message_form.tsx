@@ -7,20 +7,20 @@ interface Props {
   room: Room
 }
 export default class MessageForm extends React.Component<Props> {
-  private inputRef
+  private inputElement
 
   constructor(props) {
     super(props)
-    this.inputRef = React.createRef()
+    //this.inputRef = React.createRef()
   }
 
   async handleSubmit(e) {
     if (e.keyCode === 13) {
       e.preventDefault()
-      const content = this.inputRef.current.value
+      const content = this.inputElement.value
       if (content === '') return
-      this.inputRef.current.value = ''
-      this.inputRef.current.focus()
+      this.inputElement.value = ''
+      this.inputElement.focus()
       const response = await fetch(`/rooms/${this.props.room.id}/messages`, {
         method: 'POST',
         body: JSON.stringify({ message: { content } }),
@@ -34,7 +34,7 @@ export default class MessageForm extends React.Component<Props> {
   render() {
     return (
       <Form>
-        <textarea onKeyDown={this.handleSubmit.bind(this)} ref={this.inputRef} />
+        <Textarea handleSubmit={this.handleSubmit.bind(this)} inputRef={el => (this.inputElement = el)} />
       </Form>
     )
   }
