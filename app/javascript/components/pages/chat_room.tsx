@@ -6,7 +6,8 @@ import MessageForm from '../organisms/message_form'
 import { RootState } from '../../packs/entry'
 import { Messages, addMessage } from '../../modules/messages'
 import { Room, setRoomAsync } from '../../modules/room'
-import GlobalNav from '../organisms/global_nav'
+
+import Side from '../organisms/side'
 import styled from 'styled-components'
 import debounce from 'lodash/debounce'
 
@@ -77,13 +78,11 @@ class ChatRoomPage extends React.Component<Props, State> {
   render() {
     return (
       <Wrapper style={{ height: this.state.windowH }}>
-        <StyledGlobalNav rooms={this.props.rooms} className />
+        <Side rooms={this.props.rooms} />
         <Main>
-          <div>
-            <p>Room Name: {this.props.room.name}</p>
-            <MessagesList room={this.props.room} messages={this.props.messages} dispatch={this.props.dispatch} />
-            <MessageForm room={this.props.room} />
-          </div>
+          <p>Room Name: {this.props.room.name}</p>
+          <MessagesList room={this.props.room} messages={this.props.messages} dispatch={this.props.dispatch} />
+          <MessageForm room={this.props.room} />
         </Main>
       </Wrapper>
     )
@@ -103,11 +102,7 @@ export default withRouter(connect(mapStateToProps)(ChatRoomPage))
 const Wrapper = styled.div`
   display: flex;
 `
-const StyledGlobalNav = styled(GlobalNav)`
-  width: 200px;
-  background: #f2f2f2;
-}
-`
+
 const Main = styled.div`
   width: calc(100% - 200px);
   background: #fff;

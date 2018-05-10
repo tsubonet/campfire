@@ -1,15 +1,14 @@
 import * as React from 'react'
+import styled from 'styled-components'
 import { Room } from '../../modules/room'
 import NavLink from '../atoms/nav_link'
-import styled from 'styled-components'
 
 interface Props {
   rooms: Array<Room>
-  className
 }
-const GlobalNav = ({ rooms, className }: Props) => {
+const RoomList = ({ rooms }: Props) => {
   return (
-    <ul className={className}>
+    <ul>
       {rooms.map((room, i) => {
         return (
           <NavList key={i}>
@@ -21,7 +20,7 @@ const GlobalNav = ({ rooms, className }: Props) => {
   )
 }
 
-export default GlobalNav
+export default RoomList
 
 const NavList = styled.li`
   border-bottom: 1px solid #ccc;
