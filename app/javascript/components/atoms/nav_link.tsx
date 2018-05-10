@@ -1,7 +1,7 @@
 import * as React from 'react'
+import styled from 'styled-components'
 import { Route } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import styled from 'styled-components'
 
 interface Props {
   label: string

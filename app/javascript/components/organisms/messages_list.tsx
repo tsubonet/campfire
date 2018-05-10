@@ -1,8 +1,9 @@
 import * as React from 'react'
+import styled from 'styled-components'
 import { Messages, getOldMessagesAction } from '../../modules/messages'
 import { Room } from '../../modules/room'
-import styled from 'styled-components'
 import debounce from 'lodash/debounce'
+import Message from './message'
 
 interface Props {
   messages: Messages
@@ -81,9 +82,9 @@ export default class MessagesList extends React.Component<Props> {
         <List>
           {messages.items.map((item, i) => {
             return (
-              <li key={i} id={`_${item.id}`}>
+              <Message key={i} id={`_${item.id}`}>
                 {item.content}
-              </li>
+              </Message>
             )
           })}
         </List>
