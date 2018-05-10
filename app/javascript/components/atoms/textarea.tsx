@@ -1,9 +1,8 @@
 import * as React from 'react'
 import styled from 'styled-components'
 
-interface Props {}
-const Textarea = ({ handleSubmit, ...props }) => {
-  return <StyledTextarea onKeyDown={handleSubmit} innerRef={props.inputRef} />
+const Textarea = ({ handleSubmit, inputRef, ...props }) => {
+  return <StyledTextarea onKeyDown={handleSubmit} innerRef={inputRef} />
 }
 
 export default Textarea

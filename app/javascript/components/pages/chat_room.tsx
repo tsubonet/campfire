@@ -16,14 +16,15 @@ interface Props {
   room: Room
   rooms: Array<Room>
   match: any
-  dispatch: any
+  dispatch: Function
 }
 interface State {
-  windowH
+  windowH: number
 }
 declare let App: any
 
 class ChatRoomPage extends React.Component<Props, State> {
+  private inputElement
   constructor(props) {
     super(props)
     this.state = {
@@ -75,6 +76,23 @@ class ChatRoomPage extends React.Component<Props, State> {
     this.disconnectActionCable()
   }
 
+  async handleSubmit(e) {
+    if (e.keyCode === 13) {
+      e.preventDefault()
+      const content = this.inputElement.value
+      if (content === '') return
+      this.inputElement.value = ''
+      this.inputElement.focus()
+      const response = await fetch(`/rooms/${this.props.room.id}/messages`, {
+        method: 'POST',
+        body: JSON.stringify({ message: { content } }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+    }
+  }
+
   render() {
     return (
       <Wrapper style={{ height: this.state.windowH }}>
@@ -82,7 +100,11 @@ class ChatRoomPage extends React.Component<Props, State> {
         <Main>
           <RoomName>ルーム名: {this.props.room.name}</RoomName>
           <MessagesList room={this.props.room} messages={this.props.messages} dispatch={this.props.dispatch} />
-          <MessageForm room={this.props.room} />
+          <MessageForm
+            room={this.props.room}
+            handleSubmit={this.handleSubmit.bind(this)}
+            inputRef={el => (this.inputElement = el)}
+          />
         </Main>
       </Wrapper>
     )
