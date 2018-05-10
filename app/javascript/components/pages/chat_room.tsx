@@ -95,7 +95,7 @@ class ChatRoomPage extends React.Component<Props, State> {
 
   render() {
     return (
-      <Wrapper style={{ height: this.state.windowH }}>
+      <Root style={{ height: this.state.windowH }}>
         <Side rooms={this.props.rooms} />
         <Main>
           <RoomName>ルーム名: {this.props.room.name}</RoomName>
@@ -106,7 +106,7 @@ class ChatRoomPage extends React.Component<Props, State> {
             inputRef={el => (this.inputElement = el)}
           />
         </Main>
-      </Wrapper>
+      </Root>
     )
   }
 }
@@ -121,7 +121,7 @@ const mapStateToProps = ({ messages, room, rooms }: RootState) => {
 
 export default withRouter(connect(mapStateToProps)(ChatRoomPage))
 
-const Wrapper = styled.div`
+const Root = styled.div`
   display: flex;
 `
 const Main = styled.div`
