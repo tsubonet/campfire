@@ -2,12 +2,13 @@ import * as React from 'react'
 import styled from 'styled-components'
 
 const Txt = ({ children, ...props }) => {
-  return <StyledLoading>{children}</StyledLoading>
+  return <StyledTxt {...props}>{children}</StyledTxt>
 }
 
 export default Txt
 
-const StyledLoading = styled.div`
-  text-align: center;
-  padding: 30px 10px;
+const StyledTxt = styled.div`
+  &.center {
+    text-align: center;
+  }
 `

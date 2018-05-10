@@ -88,8 +88,16 @@ export default class MessagesList extends React.Component<Props, State> {
     const { messages } = this.props
     return (
       <Root innerRef={this.messageBox} style={{ height: this.state.windowH - 40 - 102 }}>
-        {messages.loading && <Txt>loading....</Txt>}
-        {!messages.hasNext && <div>メッセージはありません</div>}
+        {!messages.items.length && (
+          <Txt className="center" style={{ padding: '30px 0' }}>
+            メッセージはありません
+          </Txt>
+        )}
+        {messages.loading && (
+          <Txt className="center" style={{ padding: '30px 0' }}>
+            loading....
+          </Txt>
+        )}
         {
           //messages.hasNext && <button onClick={this.fetchOldMessages.bind(this)}>前の記事を読み込む</button>
         }
