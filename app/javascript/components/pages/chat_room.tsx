@@ -10,6 +10,7 @@ import MessageForm from '../organisms/message_form'
 import { RootState } from '../../packs/entry'
 import { Messages, addMessage } from '../../modules/messages'
 import { Room, setRoomAsync } from '../../modules/room'
+import { postRoomAsync } from '../../modules/rooms'
 
 interface Props {
   messages: Messages
@@ -103,6 +104,7 @@ class ChatRoomPage extends React.Component<Props, State> {
       if (content === '') return
       this.inputRoomElement.value = ''
       this.inputRoomElement.focus()
+      this.props.dispatch(postRoomAsync(content))
     }
   }
 

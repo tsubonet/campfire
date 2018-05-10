@@ -13,5 +13,6 @@ const MessageForm = props => {
 export default MessageForm
 
 const Form = styled.form`
+  border-top: 1px solid #ccc;
   padding: 10px;
 `

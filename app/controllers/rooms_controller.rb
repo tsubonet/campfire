@@ -1,6 +1,24 @@
 class RoomsController < ApplicationController
 
   include GetMessages
+  
+  # POST /rooms
+  # POST /rooms.json
+  def create
+    room = Room.new(room_params)
+    if room.save
+      response_data = {
+        room: room,
+        txt: ['投稿しました！'],
+      }
+      render json: response_data, status: :created
+    else
+      response_data = {
+        txt: record.errors.full_messages,
+      }
+      render json: response_data, status: :unprocessable_entity
+    end
+  end
 
   def show
     @rooms = Room.all
@@ -20,6 +38,11 @@ class RoomsController < ApplicationController
 
   def dummy
     @rooms = Room.all
+  end
+
+  private
+  def room_params
+    params.permit(:name)
   end
 
 end
