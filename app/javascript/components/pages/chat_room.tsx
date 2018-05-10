@@ -12,6 +12,8 @@ import { Messages, addMessage } from '../../modules/messages'
 import { Room, setRoomAsync } from '../../modules/room'
 import { postRoomAsync } from '../../modules/rooms'
 
+import Modal from '../organisms/modal'
+
 interface Props {
   messages: Messages
   room: Room
@@ -129,6 +131,7 @@ class ChatRoomPage extends React.Component<Props, State> {
             inputRef={el => (this.inputMessageElement = el)}
           />
         </Main>
+        <Modal />
       </Root>
     )
   }
