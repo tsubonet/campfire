@@ -1,9 +1,10 @@
 import * as React from 'react'
 import styled from 'styled-components'
+import debounce from 'lodash/debounce'
 import { Messages, getOldMessagesAction } from '../../modules/messages'
 import { Room } from '../../modules/room'
-import debounce from 'lodash/debounce'
 import Message from './message'
+import Txt from '../atoms/txt'
 
 interface Props {
   messages: Messages
@@ -87,7 +88,7 @@ export default class MessagesList extends React.Component<Props, State> {
     const { messages } = this.props
     return (
       <Root innerRef={this.messageBox} style={{ height: this.state.windowH - 40 - 102 }}>
-        {messages.loading && <div>loading....</div>}
+        {messages.loading && <Txt>loading....</Txt>}
         {!messages.hasNext && <div>メッセージはありません</div>}
         {
           //messages.hasNext && <button onClick={this.fetchOldMessages.bind(this)}>前の記事を読み込む</button>
