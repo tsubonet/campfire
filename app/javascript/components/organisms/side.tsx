@@ -6,13 +6,13 @@ import RoomList from '../molecules/room_list'
 interface Props {
   rooms: Array<Room>
 }
-const Side = ({ rooms }: Props) => {
+const Side = (props: Props) => {
   return (
     <Root>
       <Heading>
         <button>+</button>
       </Heading>
-      <RoomList rooms={rooms} />
+      <RoomList {...props} />
     </Root>
   )
 }

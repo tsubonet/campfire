@@ -80,7 +80,7 @@ class ChatRoomPage extends React.Component<Props, State> {
       <Wrapper style={{ height: this.state.windowH }}>
         <Side rooms={this.props.rooms} />
         <Main>
-          <p>Room Name: {this.props.room.name}</p>
+          <RoomName>ルーム名: {this.props.room.name}</RoomName>
           <MessagesList room={this.props.room} messages={this.props.messages} dispatch={this.props.dispatch} />
           <MessageForm room={this.props.room} />
         </Main>
@@ -106,5 +106,10 @@ const Wrapper = styled.div`
 const Main = styled.div`
   width: calc(100% - 200px);
   background: #fff;
+`
+const RoomName = styled.div`
+  border-bottom: 1px solid #cccccc;
   padding: 10px;
+  height: 40px;
+  font-weight: bold;
 `

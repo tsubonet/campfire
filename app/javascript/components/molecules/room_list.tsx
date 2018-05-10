@@ -9,9 +9,9 @@ interface Props {
 const RoomList = ({ rooms }: Props) => {
   return (
     <ul>
-      {rooms.map((room, i) => {
+      {rooms.map((room, idx) => {
         return (
-          <NavList key={i}>
+          <NavList key={idx}>
             <NavLink to={`/rooms/${room.id}`} label={room.name} />
           </NavList>
         )

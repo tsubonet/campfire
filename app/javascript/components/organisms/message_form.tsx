@@ -1,4 +1,5 @@
 import * as React from 'react'
+import styled from 'styled-components'
 import { Room } from '../../modules/room'
 
 interface Props {
@@ -31,11 +32,18 @@ export default class MessageForm extends React.Component<Props> {
 
   render() {
     return (
-      <form>
-        <label>Say something:</label>
-        <br />
-        <input onKeyDown={this.handleSubmit.bind(this)} type="text" ref={this.inputRef} />
-      </form>
+      <Form>
+        <Textarea onKeyDown={this.handleSubmit.bind(this)} ref={this.inputRef} />
+      </Form>
     )
   }
 }
+
+const Textarea = styled.textarea`
+  width: 100%;
+  height: 80px;
+`
+
+const Form = styled.form`
+  padding: 10px;
+`

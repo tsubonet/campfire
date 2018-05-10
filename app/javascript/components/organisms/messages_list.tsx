@@ -93,11 +93,15 @@ export default class MessagesList extends React.Component<Props> {
 }
 
 const Wrap = styled.div`
-  height: 100px;
+  height: 400px;
   overflow-y: auto;
-  border: 1px solid #ccc;
+  padding: 10px;
 `
 const List = styled.ul`
   display: flex;
   flex-direction: column-reverse;
+  li {
+    border-top: 1px solid #e6e6e6;
+    padding: 10px 0;
+  }
 `
