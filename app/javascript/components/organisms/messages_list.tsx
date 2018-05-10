@@ -8,19 +8,32 @@ import Message from './message'
 interface Props {
   messages: Messages
   room: Room
-  dispatch: any
+  dispatch: Function
+}
+interface State {
+  windowH: number
 }
 
-export default class MessagesList extends React.Component<Props> {
+export default class MessagesList extends React.Component<Props, State> {
   private messageBox
   private savedElm
 
   constructor(props) {
     super(props)
     this.messageBox = React.createRef()
+    this.state = {
+      windowH: window.innerHeight,
+    }
   }
 
   componentDidMount() {
+    window.addEventListener(
+      'resize',
+      debounce(() => {
+        this.setState({ windowH: window.innerHeight })
+      }, 1000)
+    )
+
     let triggerFlag = false
     this.messageBox.current.scrollTop = this.messageBox.current.scrollHeight
 
@@ -73,7 +86,7 @@ export default class MessagesList extends React.Component<Props> {
   render() {
     const { messages } = this.props
     return (
-      <Wrap innerRef={this.messageBox}>
+      <Root innerRef={this.messageBox} style={{ height: this.state.windowH - 40 - 102 }}>
         {messages.loading && <div>loading....</div>}
         {!messages.hasNext && <div>メッセージはありません</div>}
         {
@@ -88,12 +101,12 @@ export default class MessagesList extends React.Component<Props> {
             )
           })}
         </List>
-      </Wrap>
+      </Root>
     )
   }
 }
 
-const Wrap = styled.div`
+const Root = styled.div`
   height: 400px;
   overflow-y: auto;
   padding: 10px;
@@ -101,8 +114,4 @@ const Wrap = styled.div`
 const List = styled.ul`
   display: flex;
   flex-direction: column-reverse;
-  li {
-    border-top: 1px solid #e6e6e6;
-    padding: 10px 0;
-  }
 `

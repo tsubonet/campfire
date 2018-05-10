@@ -8,20 +8,24 @@ interface Props {
 }
 const RoomList = ({ rooms }: Props) => {
   return (
-    <ul>
+    <Root>
       {rooms.map((room, idx) => {
         return (
-          <NavList key={idx}>
+          <Li key={idx}>
             <NavLink to={`/rooms/${room.id}`} label={room.name} />
-          </NavList>
+          </Li>
         )
       })}
-    </ul>
+    </Root>
   )
 }
 
 export default RoomList
 
-const NavList = styled.li`
+const Root = styled.ul`
+  height: calc(100% - 40px);
+  overflow: auto;
+`
+const Li = styled.li`
   border-bottom: 1px solid #ccc;
 `
