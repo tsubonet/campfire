@@ -22,6 +22,13 @@ class Side extends React.Component<Props, State> {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.isOpen === this.state.isOpen) return
+    if (this.state.isOpen) {
+      this.inputRoomElement.focus()
+    }
+  }
+
   openModal() {
     this.setState(prev => {
       return { isOpen: true }
@@ -39,7 +46,7 @@ class Side extends React.Component<Props, State> {
       e.preventDefault()
       const content = this.inputRoomElement.value
       if (content === '') return
-      this.inputRoomElement.value = ''
+      //this.inputRoomElement.value = ''
       this.inputRoomElement.focus()
       this.props.postRoomAsync(content)
       this.closeModal()

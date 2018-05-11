@@ -8,6 +8,7 @@ import Side from '../organisms/side'
 import MessagesList from '../organisms/messages_list'
 import MessageForm from '../organisms/message_form'
 import { RootState } from '../../packs/entry'
+
 import { Messages, addMessage, getOldMessagesSync } from '../../modules/messages'
 import { Room, setRoomAsync } from '../../modules/room'
 import { postRoomAsync } from '../../modules/rooms'

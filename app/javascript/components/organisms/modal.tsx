@@ -24,6 +24,7 @@ const Modal = ({ closeModal, label, ...props }: Props) => {
           e.stopPropagation()
         }}
       >
+        {console.log(props.inputRef())}
         <Txt style={{ marginBottom: 10 }}>{label}</Txt>
         <Input {...props} />
         <Button
@@ -44,6 +45,7 @@ const Modal = ({ closeModal, label, ...props }: Props) => {
 export default Modal
 
 const Root = styled.div`
+  cursor: pointer;
   padding-top: 60px;
   padding-bottom: 60px;
   position: fixed;
@@ -59,6 +61,7 @@ const Root = styled.div`
   z-index: 9999;
   background-color: rgba(0, 0, 0, 0.6);
   .contents {
+    cursor: default;
     position: relative;
     background-color: rgb(255, 255, 255);
     width: 50%;
