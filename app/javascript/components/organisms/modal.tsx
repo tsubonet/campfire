@@ -24,7 +24,6 @@ const Modal = ({ closeModal, label, ...props }: Props) => {
           e.stopPropagation()
         }}
       >
-        {console.log(props.inputRef())}
         <Txt style={{ marginBottom: 10 }}>{label}</Txt>
         <Input {...props} />
         <Button

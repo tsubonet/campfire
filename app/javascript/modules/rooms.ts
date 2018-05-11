@@ -23,7 +23,7 @@ export function addRoom(room) {
   }
 }
 
-export function postRoomAsync(name) {
+export function postRoomAsync(name, history) {
   return async dispatch => {
     const res = await fetch(`/rooms/`, {
       method: 'POST',
@@ -35,5 +35,6 @@ export function postRoomAsync(name) {
     })
     const json = await res.json()
     dispatch(addRoom(json.room))
+    history.push(`/rooms/${json.room.id}`)
   }
 }

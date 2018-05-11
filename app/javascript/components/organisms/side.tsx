@@ -7,7 +7,8 @@ import Modal from '../organisms/modal'
 
 interface Props {
   rooms: Array<Room>
-  postRoomAsync(content: string): void
+  history: any
+  postRoomAsync(content: string, history): void
 }
 interface State {
   isOpen: boolean
@@ -46,9 +47,7 @@ class Side extends React.Component<Props, State> {
       e.preventDefault()
       const content = this.inputRoomElement.value
       if (content === '') return
-      //this.inputRoomElement.value = ''
-      this.inputRoomElement.focus()
-      this.props.postRoomAsync(content)
+      this.props.postRoomAsync(content, this.props.history)
       this.closeModal()
     }
   }
