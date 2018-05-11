@@ -113,11 +113,7 @@ class ChatRoomPage extends React.Component<Props, State> {
   render() {
     return (
       <Root style={{ height: this.state.windowH }}>
-        <Side
-          rooms={this.props.rooms}
-          handleSubmit={this.postRoom.bind(this)}
-          inputRef={el => (this.inputRoomElement = el)}
-        />
+        <Side rooms={this.props.rooms} />
         <Main>
           <RoomName>ルーム名: {this.props.room.name}</RoomName>
           <MessagesList
@@ -131,7 +127,10 @@ class ChatRoomPage extends React.Component<Props, State> {
             inputRef={el => (this.inputMessageElement = el)}
           />
         </Main>
-        <Modal />
+        <Modal
+          handleSubmit={this.postRoom.bind(this)}
+          inputRef={el => (this.inputRoomElement = el)}
+        />
       </Root>
     )
   }

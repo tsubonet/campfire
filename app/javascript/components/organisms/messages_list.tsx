@@ -76,7 +76,10 @@ export default class MessagesList extends React.Component<Props, State> {
     const { messages } = this.props
     if (prevProps.messages.currentPage !== messages.currentPage) {
       const scrollY3 =
-        this.savedElm.offsetTop - this.messageBox.current.offsetTop - this.messageBox.current.clientHeight + 24
+        this.savedElm.offsetTop -
+        this.messageBox.current.offsetTop -
+        this.messageBox.current.clientHeight +
+        24
       this.messageBox.current.scrollTop = scrollY3
       return
     }
@@ -87,7 +90,7 @@ export default class MessagesList extends React.Component<Props, State> {
   render() {
     const { messages } = this.props
     return (
-      <Root innerRef={this.messageBox} style={{ height: this.state.windowH - 40 - 102 }}>
+      <Root innerRef={this.messageBox} style={{ height: this.state.windowH - 40 - 103 }}>
         {!messages.items.length && (
           <Txt className="center" style={{ padding: '30px 0' }}>
             メッセージはありません
