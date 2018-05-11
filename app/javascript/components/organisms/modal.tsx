@@ -5,16 +5,20 @@ import Txt from '../atoms/txt'
 import Button from '../atoms/button'
 
 interface Props {
-  handleSubmit
-  inputRef
+  closeModal: Function
+  handleSubmit: Function
+  inputRef: any
+  isOpen: boolean
+  label: string
 }
-const Modal = (props: Props) => {
+const Modal = ({ closeModal, label, ...props }: Props) => {
   return (
     <Root>
       <div className="contents">
-        <Txt style={{ marginBottom: 10 }}>ルーム名を入力してください</Txt>
+        <Txt style={{ marginBottom: 10 }}>{label}</Txt>
         <Input {...props} />
         <Button
+          onClick={closeModal}
           style={{
             position: 'absolute',
             top: 10,

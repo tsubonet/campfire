@@ -2,10 +2,17 @@ import * as React from 'react'
 import styled from 'styled-components'
 import Button from '../atoms/button'
 
-const SideHeading = () => {
+interface Props {
+  openModal: Function
+}
+interface State {
+  isOpen: boolean
+}
+
+const SideHeading = ({ openModal }: Props) => {
   return (
     <Root>
-      <Button>+</Button>
+      <Button onClick={openModal}>+</Button>
     </Root>
   )
 }

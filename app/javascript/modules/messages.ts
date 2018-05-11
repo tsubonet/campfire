@@ -96,7 +96,7 @@ export function requestMessages() {
   }
 }
 
-export function getOldMessagesAction(id, messages) {
+export function getOldMessagesSync(id, messages) {
   return {
     type: 'REQUEST_OLD_MESSAGES',
     payload: {

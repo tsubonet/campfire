@@ -8,18 +8,19 @@ import Side from '../organisms/side'
 import MessagesList from '../organisms/messages_list'
 import MessageForm from '../organisms/message_form'
 import { RootState } from '../../packs/entry'
-import { Messages, addMessage } from '../../modules/messages'
+import { Messages, addMessage, getOldMessagesSync } from '../../modules/messages'
 import { Room, setRoomAsync } from '../../modules/room'
 import { postRoomAsync } from '../../modules/rooms'
-
-import Modal from '../organisms/modal'
 
 interface Props {
   messages: Messages
   room: Room
   rooms: Array<Room>
   match: any
-  dispatch: Function
+  addMessage(message): void
+  setRoomAsync(id: number): void
+  postRoomAsync(content: string): void
+  getOldMessagesSync(id: number, messages: Messages): void
 }
 interface State {
   windowH: number
@@ -28,7 +29,6 @@ declare let App: any
 
 class ChatRoomPage extends React.Component<Props, State> {
   private inputMessageElement
-  private inputRoomElement
 
   constructor(props) {
     super(props)
@@ -51,7 +51,7 @@ class ChatRoomPage extends React.Component<Props, State> {
           console.log('disconnected')
         },
         received: data => {
-          this.props.dispatch(addMessage(data.message))
+          this.props.addMessage(data.message)
         },
       }
     )
@@ -73,7 +73,7 @@ class ChatRoomPage extends React.Component<Props, State> {
 
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.id === this.props.match.params.id) return
-    this.props.dispatch(setRoomAsync(this.props.match.params.id))
+    this.props.setRoomAsync(this.props.match.params.id)
     this.disconnectActionCable()
     this.connectActionCable(this.props.match.params.id)
   }
@@ -99,27 +99,16 @@ class ChatRoomPage extends React.Component<Props, State> {
     }
   }
 
-  async postRoom(e) {
-    if (e.keyCode === 13) {
-      e.preventDefault()
-      const content = this.inputRoomElement.value
-      if (content === '') return
-      this.inputRoomElement.value = ''
-      this.inputRoomElement.focus()
-      this.props.dispatch(postRoomAsync(content))
-    }
-  }
-
   render() {
     return (
       <Root style={{ height: this.state.windowH }}>
-        <Side rooms={this.props.rooms} />
+        <Side rooms={this.props.rooms} postRoomAsync={this.props.postRoomAsync} />
         <Main>
           <RoomName>ルーム名: {this.props.room.name}</RoomName>
           <MessagesList
             room={this.props.room}
             messages={this.props.messages}
-            dispatch={this.props.dispatch}
+            getOldMessagesSync={this.props.getOldMessagesSync}
           />
           <MessageForm
             room={this.props.room}
@@ -127,10 +116,6 @@ class ChatRoomPage extends React.Component<Props, State> {
             inputRef={el => (this.inputMessageElement = el)}
           />
         </Main>
-        <Modal
-          handleSubmit={this.postRoom.bind(this)}
-          inputRef={el => (this.inputRoomElement = el)}
-        />
       </Root>
     )
   }
@@ -144,7 +129,24 @@ const mapStateToProps = ({ messages, room, rooms }: RootState) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(ChatRoomPage))
+const mapDispatchToProps = dispatch => {
+  return {
+    setRoomAsync: (id: number) => {
+      dispatch(setRoomAsync(id))
+    },
+    getOldMessagesSync: (id: number, messages: Messages) => {
+      dispatch(getOldMessagesSync(id, messages))
+    },
+    postRoomAsync: (name: string) => {
+      dispatch(postRoomAsync(name))
+    },
+    addMessage: (message: string) => {
+      dispatch(addMessage(message))
+    },
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ChatRoomPage))
 
 const Root = styled.div`
   display: flex;

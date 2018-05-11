@@ -1,7 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import debounce from 'lodash/debounce'
-import { Messages, getOldMessagesAction } from '../../modules/messages'
+import { Messages } from '../../modules/messages'
 import { Room } from '../../modules/room'
 import Message from './message'
 import Txt from '../atoms/txt'
@@ -9,7 +9,7 @@ import Txt from '../atoms/txt'
 interface Props {
   messages: Messages
   room: Room
-  dispatch: Function
+  getOldMessagesSync(id: number, messages: Messages): void
 }
 interface State {
   windowH: number
@@ -41,7 +41,7 @@ export default class MessagesList extends React.Component<Props, State> {
     this.messageBox.current.addEventListener(
       'scroll',
       debounce(async () => {
-        const { messages, room, dispatch } = this.props
+        const { messages, room } = this.props
 
         // console.log('this.messageBox.current.scrollHeight', this.messageBox.current.scrollHeight)
         // console.log('this.messageBox.current.scrollTop', this.messageBox.current.scrollTop)
@@ -52,7 +52,7 @@ export default class MessagesList extends React.Component<Props, State> {
         if (!triggerFlag && messages.hasNext && this.messageBox.current.scrollTop === 0) {
           triggerFlag = true
           this.savedElm = this.messageBox.current.querySelector('ul').lastChild
-          dispatch(getOldMessagesAction(room.id, messages))
+          this.props.getOldMessagesSync(room.id, messages)
           // const scrollY = elm.getBoundingClientRect().top
           // console.log('elm.getBoundingClientRect().top', scrollY)
           // const scrollY2 = elm.scrollHeight
