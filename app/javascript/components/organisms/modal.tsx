@@ -2,6 +2,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 import Input from '../atoms/input'
 import Txt from '../atoms/txt'
+import Button from '../atoms/button'
 
 interface Props {
   handleSubmit
@@ -13,7 +14,15 @@ const Modal = (props: Props) => {
       <div className="contents">
         <Txt style={{ marginBottom: 10 }}>ルーム名を入力してください</Txt>
         <Input {...props} />
-        <button>×</button>
+        <Button
+          style={{
+            position: 'absolute',
+            top: 10,
+            right: 10,
+          }}
+        >
+          ×
+        </Button>
       </div>
     </Root>
   )
@@ -43,11 +52,5 @@ const Root = styled.div`
     /* min-height: 300px; */
     border-radius: 3px;
     padding: 50px 20px;
-  }
-  button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
   }
 `

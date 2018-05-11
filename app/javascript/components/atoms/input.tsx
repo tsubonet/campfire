@@ -2,7 +2,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 
 const Input = ({ handleSubmit, inputRef, ...props }) => {
-  return <StyledInput type="text" onKeyDown={handleSubmit} innerRef={inputRef} />
+  return <StyledInput type="text" onKeyDown={handleSubmit} innerRef={inputRef} {...props} />
 }
 
 export default Input

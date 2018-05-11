@@ -2,7 +2,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 
 const Button = ({ children, ...props }) => {
-  return <StyledButton>{children}</StyledButton>
+  return <StyledButton {...props}>{children}</StyledButton>
 }
 
 export default Button
