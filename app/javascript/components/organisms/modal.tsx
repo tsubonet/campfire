@@ -1,6 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import Input from '../atoms/input'
+import Txt from '../atoms/txt'
 
 interface Props {
   handleSubmit
@@ -10,6 +11,7 @@ const Modal = (props: Props) => {
   return (
     <Root>
       <div className="contents">
+        <Txt style={{ marginBottom: 10 }}>ルーム名を入力してください</Txt>
         <Input {...props} />
         <button>×</button>
       </div>
@@ -30,17 +32,17 @@ const Root = styled.div`
   overflow-y: auto;
   display: flex;
   justify-content: center;
-  /* align-items: center; */
-  align-items: flex-start; /*モーダルがclientHeightより大きければ、flex-start。小さければ center  */
+  align-items: center;
+  /*align-items: flex-start; モーダルがclientHeightより大きければ、flex-start。小さければ center  */
   z-index: 9999;
   background-color: rgba(0, 0, 0, 0.6);
   .contents {
     position: relative;
     background-color: rgb(255, 255, 255);
-    width: 90%;
-    min-height: 300px;
+    width: 50%;
+    /* min-height: 300px; */
     border-radius: 3px;
-    padding: 35px 20px;
+    padding: 50px 20px;
   }
   button {
     position: absolute;
