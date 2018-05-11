@@ -13,8 +13,17 @@ interface Props {
 }
 const Modal = ({ closeModal, label, ...props }: Props) => {
   return (
-    <Root>
-      <div className="contents">
+    <Root
+      onClick={_ => {
+        closeModal()
+      }}
+    >
+      <div
+        className="contents"
+        onClick={e => {
+          e.stopPropagation()
+        }}
+      >
         <Txt style={{ marginBottom: 10 }}>{label}</Txt>
         <Input {...props} />
         <Button
