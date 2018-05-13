@@ -14,7 +14,7 @@ class RoomsController < ApplicationController
       render json: response_data, status: :created
     else
       response_data = {
-        txt: record.errors.full_messages,
+        txt: room.errors.full_messages,
       }
       render json: response_data, status: :unprocessable_entity
     end

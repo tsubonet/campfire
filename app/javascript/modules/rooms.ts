@@ -34,7 +34,11 @@ export function postRoomAsync(name, history) {
       body: JSON.stringify({ name }),
     })
     const json = await res.json()
-    dispatch(addRoom(json.room))
-    history.push(`/rooms/${json.room.id}`)
+    if (res.status === 201) {
+      dispatch(addRoom(json.room))
+      history.push(`/rooms/${json.room.id}`)
+    } else {
+      console.log(json)
+    }
   }
 }

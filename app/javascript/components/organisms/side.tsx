@@ -24,8 +24,12 @@ class Side extends React.Component<Props, State> {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.isOpen === this.state.isOpen) return
-    if (this.state.isOpen) {
+    // roomsが追加されたときにモーダルを閉じる
+    if (prevProps.rooms.length !== this.props.rooms.length) {
+      this.closeModal()
+    }
+    // モーダルを開いたときにinputをフォーカスする
+    if (this.state.isOpen && prevState.isOpen !== this.state.isOpen) {
       this.inputRoomElement.focus()
     }
   }
@@ -46,9 +50,7 @@ class Side extends React.Component<Props, State> {
     if (e.keyCode === 13) {
       e.preventDefault()
       const content = this.inputRoomElement.value
-      if (content === '') return
       this.props.postRoomAsync(content, this.props.history)
-      this.closeModal()
     }
   }
 
