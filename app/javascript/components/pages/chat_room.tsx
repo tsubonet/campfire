@@ -24,7 +24,7 @@ interface Props {
   setRoomAsync(id: number): void
   postRoomAsync(content: string, history): void
   postRoomReset(): void
-  sortRoom(id: number): void
+  sortRoom(room: Room): void
 }
 interface State {
   windowH: number
@@ -100,7 +100,7 @@ class ChatRoomPage extends React.Component<Props, State> {
           'Content-Type': 'application/json',
         },
       })
-      this.props.sortRoom(this.props.room.id)
+      this.props.sortRoom(this.props.room)
     }
   }
 
@@ -150,8 +150,8 @@ const mapDispatchToProps = dispatch => {
     postRoomReset: () => {
       dispatch(postRoomReset())
     },
-    sortRoom: id => {
-      dispatch(sortRoom(id))
+    sortRoom: (room: Room) => {
+      dispatch(sortRoom(room))
     },
     fetchOldMessagesSync: (id: number, messages: Messages) => {
       dispatch(fetchOldMessagesSync(id, messages))

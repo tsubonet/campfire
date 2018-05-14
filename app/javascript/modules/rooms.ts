@@ -1,12 +1,14 @@
 import { Action } from '../actions'
 import { Room } from '../modules/room'
-import { sleep } from '../utils/index'
+import { Rooms } from '../modules/rooms'
+import { sleep } from '../components/utils'
 
 // Actions
 export const POST_ROOM_REQUEST = 'POST_ROOM_REQUEST'
 export const POST_ROOM_SUCCESS = 'POST_ROOM_SUCCESS'
 export const POST_ROOM_FAILURE = 'POST_ROOM_FAILURE'
 export const POST_ROOM_RESET = 'POST_ROOM_RESET'
+export const SORT_ROOM = 'SORT_ROOM'
 
 export interface Rooms {
   items: Array<Room>
@@ -43,6 +45,14 @@ export default function reducer(state: Rooms = initialState, action: Action): Ro
         loading: false,
         errors: null,
       }
+    case SORT_ROOM:
+      return {
+        ...state,
+        items: [
+          action.payload.room,
+          ...[...state.items].filter(item => item.id !== action.payload.room.id),
+        ],
+      }
     default:
       return state
   }
@@ -77,11 +87,11 @@ export function postRoomReset() {
   }
 }
 
-export function sortRoom(id) {
+export function sortRoom(room) {
   return {
-    type: POST_ROOM_RESET,
+    type: SORT_ROOM,
     payload: {
-      id,
+      room,
     },
   }
 }
