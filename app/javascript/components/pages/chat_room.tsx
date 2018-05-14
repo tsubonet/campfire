@@ -32,7 +32,7 @@ interface State {
 declare let App: any
 
 class ChatRoomPage extends React.Component<Props, State> {
-  private inputMessageElement
+  private inputMessageElement: HTMLTextAreaElement
 
   constructor(props) {
     super(props)

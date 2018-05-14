@@ -16,7 +16,7 @@ interface State {
   isOpen: boolean
 }
 class Side extends React.Component<Props, State> {
-  private inputRoomElement
+  private inputRoomElement: HTMLInputElement
 
   constructor(props) {
     super(props)

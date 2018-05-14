@@ -39,12 +39,12 @@ class RoomsController < ApplicationController
   end
 
   def dummy
-    @rooms = Room.all
+    @rooms = {items: Room.all, loading: false}
   end
 
   private
-  def room_params
-    params.permit(:name)
-  end
+    def room_params
+      params.permit(:name)
+    end
 
 end
