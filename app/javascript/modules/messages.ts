@@ -19,6 +19,8 @@ export interface Message {
   id: number
   content: string
   room_id: number
+  created_at
+  updated_at
 }
 
 export interface Messages {

@@ -5,6 +5,7 @@ import { Messages } from '../../modules/messages'
 import { Room } from '../../modules/room'
 import Message from './message'
 import Txt from '../atoms/txt'
+import Time from '../atoms/time'
 
 interface Props {
   messages: Messages
@@ -108,7 +109,8 @@ export default class MessagesList extends React.Component<Props, State> {
           {messages.items.map((item, i) => {
             return (
               <Message key={i} id={`_${item.id}`}>
-                {item.content}
+                <Time>{item.created_at}</Time>
+                <Txt>{item.content}</Txt>
               </Message>
             )
           })}
