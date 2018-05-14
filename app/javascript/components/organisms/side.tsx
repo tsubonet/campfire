@@ -1,14 +1,15 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { Room } from '../../modules/room'
+import { Rooms } from '../../modules/rooms'
 import SideHeading from '../molecules/side_heading'
 import RoomList from '../molecules/room_list'
 import Modal from '../organisms/modal'
 
 interface Props {
-  rooms: Array<Room>
+  rooms: Rooms
   history: any
   postRoomAsync(content: string, history): void
+  postRoomReset(): void
 }
 interface State {
   isOpen: boolean
@@ -25,7 +26,7 @@ class Side extends React.Component<Props, State> {
 
   componentDidUpdate(prevProps, prevState) {
     // roomsが追加されたときにモーダルを閉じる
-    if (prevProps.rooms.length !== this.props.rooms.length) {
+    if (prevProps.rooms.items.length !== this.props.rooms.items.length) {
       this.closeModal()
     }
     // モーダルを開いたときにinputをフォーカスする
@@ -44,6 +45,7 @@ class Side extends React.Component<Props, State> {
     this.setState(prev => {
       return { isOpen: false }
     })
+    this.props.postRoomReset()
   }
 
   postRoom(e) {
@@ -55,12 +57,14 @@ class Side extends React.Component<Props, State> {
   }
 
   render() {
+    const { rooms } = this.props
     return (
       <Root>
         <SideHeading openModal={_ => this.openModal()} />
-        <RoomList rooms={this.props.rooms} />
+        <RoomList items={rooms.items} />
         {this.state.isOpen && (
           <Modal
+            errors={rooms.errors}
             label="ルーム名を入力してください"
             closeModal={_ => this.closeModal()}
             isOpen={this.state.isOpen}

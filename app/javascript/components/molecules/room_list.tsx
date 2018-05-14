@@ -4,12 +4,12 @@ import { Room } from '../../modules/room'
 import NavLink from '../atoms/nav_link'
 
 interface Props {
-  rooms: Array<Room>
+  items: Array<Room>
 }
-const RoomList = ({ rooms }: Props) => {
+const RoomList = ({ items }: Props) => {
   return (
     <Root>
-      {rooms.map((room, idx) => {
+      {items.map((room, idx) => {
         return (
           <Li key={idx}>
             <NavLink to={`/rooms/${room.id}`} label={room.name} />

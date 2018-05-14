@@ -20,8 +20,10 @@ class RoomsController < ApplicationController
     end
   end
 
+  # GET /rooms/1
+  # GET /rooms/1.json
   def show
-    @rooms = Room.all
+    @rooms = {items: Room.all, loading: false}
 
     @room = Room.find(params[:id] || 1)
     @messages = module_get_messages(@room)

@@ -10,8 +10,9 @@ interface Props {
   inputRef: any
   isOpen: boolean
   label: string
+  errors: Array<string>
 }
-const Modal = ({ closeModal, label, ...props }: Props) => {
+const Modal = ({ closeModal, label, errors, ...props }: Props) => {
   return (
     <Root
       onClick={_ => {
@@ -24,6 +25,17 @@ const Modal = ({ closeModal, label, ...props }: Props) => {
           e.stopPropagation()
         }}
       >
+        {(() => {
+          if (errors) {
+            return errors.map((error, i) => {
+              return (
+                <Txt key={i} style={{ color: 'red', marginBottom: 10 }}>
+                  {error}
+                </Txt>
+              )
+            })
+          }
+        })()}
         <Txt style={{ marginBottom: 10 }}>{label}</Txt>
         <Input {...props} />
         <Button

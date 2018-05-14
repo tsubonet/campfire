@@ -2,24 +2,65 @@ import { Action } from '../actions'
 import { Room } from '../modules/room'
 
 // Actions
-export const ADD_ROOM = 'ADD_ROOM'
+export const POST_ROOM_SUCCESS = 'POST_ROOM_SUCCESS'
+export const POST_ROOM_FAILURE = 'POST_ROOM_FAILURE'
+export const POST_ROOM_RESET = 'POST_ROOM_RESET'
 
-export default function reducer(state: Array<Room> = [], action: Action): Array<Room> {
+export interface Rooms {
+  items: Array<Room>
+  loading: boolean
+  errors: Array<string>
+}
+const initialState = {
+  items: [],
+  loading: false,
+  errors: null,
+}
+export default function reducer(state: Rooms = initialState, action: Action): Rooms {
   switch (action.type) {
-    case ADD_ROOM:
-      return [...state, action.payload.room]
+    case POST_ROOM_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        items: [...state.items, action.payload.room],
+      }
+    case POST_ROOM_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        errors: action.error,
+      }
+    case POST_ROOM_RESET:
+      return {
+        ...state,
+        loading: false,
+        errors: [],
+      }
     default:
       return state
   }
 }
 
 // Action Creators
-export function addRoom(room) {
+export function postRoomSuccess(room) {
   return {
-    type: ADD_ROOM,
+    type: POST_ROOM_SUCCESS,
     payload: {
       room,
     },
+  }
+}
+
+export function postRoomFailure(error) {
+  return {
+    type: POST_ROOM_FAILURE,
+    error,
+  }
+}
+
+export function postRoomReset() {
+  return {
+    type: POST_ROOM_RESET,
   }
 }
 
@@ -35,10 +76,10 @@ export function postRoomAsync(name, history) {
     })
     const json = await res.json()
     if (res.status === 201) {
-      dispatch(addRoom(json.room))
+      dispatch(postRoomSuccess(json.room))
       history.push(`/rooms/${json.room.id}`)
     } else {
-      console.log(json)
+      dispatch(postRoomFailure(json.txt))
     }
   }
 }

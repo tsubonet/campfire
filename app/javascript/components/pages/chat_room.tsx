@@ -11,17 +11,18 @@ import { RootState } from '../../packs/entry'
 
 import { Messages, addMessage, getOldMessagesSync } from '../../modules/messages'
 import { Room, setRoomAsync } from '../../modules/room'
-import { postRoomAsync } from '../../modules/rooms'
+import { Rooms, postRoomAsync, postRoomReset } from '../../modules/rooms'
 
 interface Props {
   messages: Messages
   room: Room
-  rooms: Array<Room>
+  rooms: Rooms
   match: any
   history: any
   addMessage(message): void
   setRoomAsync(id: number): void
   postRoomAsync(content: string, history): void
+  postRoomReset(): void
   getOldMessagesSync(id: number, messages: Messages): void
 }
 interface State {
@@ -107,6 +108,7 @@ class ChatRoomPage extends React.Component<Props, State> {
         <Side
           rooms={this.props.rooms}
           postRoomAsync={this.props.postRoomAsync}
+          postRoomReset={this.props.postRoomReset}
           history={this.props.history}
         />
         <Main>
@@ -148,6 +150,9 @@ const mapDispatchToProps = dispatch => {
     },
     addMessage: (message: string) => {
       dispatch(addMessage(message))
+    },
+    postRoomReset: () => {
+      dispatch(postRoomReset())
     },
   }
 }
