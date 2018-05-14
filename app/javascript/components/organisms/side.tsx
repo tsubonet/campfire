@@ -31,7 +31,7 @@ class Side extends React.Component<Props, State> {
     }
     // モーダルを開いたときにinputをフォーカスする
     if (this.state.isOpen && prevState.isOpen !== this.state.isOpen) {
-      this.inputRoomElement.focus()
+      //this.inputRoomElement.focus()
     }
   }
 
@@ -64,6 +64,7 @@ class Side extends React.Component<Props, State> {
         <RoomList items={rooms.items} />
         {this.state.isOpen && (
           <Modal
+            loading={rooms.loading}
             errors={rooms.errors}
             label="ルーム名を入力してください"
             closeModal={_ => this.closeModal()}

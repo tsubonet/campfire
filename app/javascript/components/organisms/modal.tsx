@@ -11,8 +11,9 @@ interface Props {
   isOpen: boolean
   label: string
   errors?: Array<string>
+  loading: boolean
 }
-const Modal = ({ closeModal, label, errors, ...props }: Props) => {
+const Modal = ({ closeModal, label, errors, loading, ...props }: Props) => {
   return (
     <Root
       onClick={_ => {
@@ -24,6 +25,11 @@ const Modal = ({ closeModal, label, errors, ...props }: Props) => {
           e.stopPropagation()
         }}
       >
+        {loading && (
+          <Txt className="center" style={{ marginBottom: 10 }}>
+            loading....
+          </Txt>
+        )}
         {(() => {
           if (errors) {
             return errors.map((error, i) => {
