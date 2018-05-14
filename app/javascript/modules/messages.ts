@@ -39,26 +39,29 @@ const initialState = {
 export default function reducer(state: Messages = initialState, action: Action): Messages {
   switch (action.type) {
     case POST_MESSAGE:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         items: [action.payload.message, ...state.items],
-      })
+      }
 
     case SET_MESSAGES:
-      return Object.assign({}, state, action.payload.messages)
+      return action.payload.messages
 
     case REQUEST_OLD_MESSAGES:
     case REQUEST_MESSAGES:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: true,
-      })
+      }
 
     case FETCH_OLD_MESSAGES:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         items: [...state.items, ...action.payload.messages.items],
         hasNext: action.payload.messages.hasNext,
         currentPage: action.payload.messages.currentPage,
         loading: false,
-      })
+      }
 
     default:
       return state
@@ -74,7 +77,7 @@ export function setMessages(messages) {
     },
   }
 }
-export function postMessage(message) {
+export function receiveMessage(message) {
   return {
     type: POST_MESSAGE,
     payload: {

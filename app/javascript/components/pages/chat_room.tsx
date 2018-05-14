@@ -9,7 +9,7 @@ import MessagesList from '../organisms/messages_list'
 import MessageForm from '../organisms/message_form'
 import { RootState } from '../../packs/entry'
 
-import { Messages, postMessage, fetchOldMessagesSync } from '../../modules/messages'
+import { Messages, receiveMessage, fetchOldMessagesSync } from '../../modules/messages'
 import { Room, setRoomAsync } from '../../modules/room'
 import { Rooms, postRoomAsync, postRoomReset } from '../../modules/rooms'
 
@@ -19,7 +19,7 @@ interface Props {
   rooms: Rooms
   match: any
   history: any
-  postMessage(message): void
+  receiveMessage(message): void
   fetchOldMessagesSync(id: number, messages: Messages): void
   setRoomAsync(id: number): void
   postRoomAsync(content: string, history): void
@@ -54,7 +54,7 @@ class ChatRoomPage extends React.Component<Props, State> {
           console.log('disconnected')
         },
         received: data => {
-          this.props.postMessage(data.message)
+          this.props.receiveMessage(data.message)
         },
       }
     )
@@ -142,17 +142,17 @@ const mapDispatchToProps = dispatch => {
     setRoomAsync: (id: number) => {
       dispatch(setRoomAsync(id))
     },
-    fetchOldMessagesSync: (id: number, messages: Messages) => {
-      dispatch(fetchOldMessagesSync(id, messages))
-    },
-    postRoomAsync: (name: string, history) => {
+    postRoomAsync: (name: string, history: any) => {
       dispatch(postRoomAsync(name, history))
-    },
-    postMessage: (message: string) => {
-      dispatch(postMessage(message))
     },
     postRoomReset: () => {
       dispatch(postRoomReset())
+    },
+    fetchOldMessagesSync: (id: number, messages: Messages) => {
+      dispatch(fetchOldMessagesSync(id, messages))
+    },
+    receiveMessage: (message: string) => {
+      dispatch(receiveMessage(message))
     },
   }
 }
