@@ -20,9 +20,11 @@
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.9",
+    "react-transition-group": "^2.3.1",
     "react-virtualized": "^9.18.5",
     "recompose": "^0.27.0",
     "redux": "^4.0.0",
+    "redux-form": "^7.3.0",
     "redux-logger": "^3.0.6",
     "redux-observable": "^0.18.0",
     "redux-thunk": "^2.2.0",
@@ -33,12 +35,12 @@
     "typescript": "^2.8.3"
   },
   "devDependencies": {
-    "@storybook/react": "^3.4.3",
-    "webpack-dev-server": "2.11.2",
     "@storybook/addon-actions": "^3.4.3",
     "@storybook/addon-links": "^3.4.3",
     "@storybook/addons": "^3.4.3",
+    "@storybook/react": "^3.4.3",
     "babel-core": "^6.26.3",
-    "babel-runtime": "^6.26.0"
+    "babel-runtime": "^6.26.0",
+    "webpack-dev-server": "2.11.2"
   }
 }
