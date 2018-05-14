@@ -9,7 +9,7 @@ import Txt from '../atoms/txt'
 interface Props {
   messages: Messages
   room: Room
-  getOldMessagesSync(id: number, messages: Messages): void
+  fetchOldMessagesSync(id: number, messages: Messages): void
 }
 interface State {
   windowH: number
@@ -52,7 +52,7 @@ export default class MessagesList extends React.Component<Props, State> {
         if (!triggerFlag && messages.hasNext && this.messageBox.current.scrollTop === 0) {
           triggerFlag = true
           this.savedElm = this.messageBox.current.querySelector('ul').lastChild
-          this.props.getOldMessagesSync(room.id, messages)
+          this.props.fetchOldMessagesSync(room.id, messages)
           // const scrollY = elm.getBoundingClientRect().top
           // console.log('elm.getBoundingClientRect().top', scrollY)
           // const scrollY2 = elm.scrollHeight

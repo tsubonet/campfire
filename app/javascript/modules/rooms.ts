@@ -28,7 +28,7 @@ export default function reducer(state: Rooms = initialState, action: Action): Ro
       return {
         ...state,
         loading: false,
-        items: [...state.items, action.payload.room],
+        items: [action.payload.room, ...state.items],
       }
     case POST_ROOM_FAILURE:
       return {

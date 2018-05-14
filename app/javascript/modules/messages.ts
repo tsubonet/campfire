@@ -8,14 +8,14 @@ import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/map'
 
 // Actions
-export const ADD_MESSAGE = 'ADD_MESSAGE'
+export const POST_MESSAGE = 'POST_MESSAGE'
 export const SET_MESSAGES = 'SET_MESSAGES'
 export const REQUEST_MESSAGES = 'REQUEST_MESSAGES'
-export const GET_OLD_MESSAGES = 'GET_OLD_MESSAGES'
+export const FETCH_OLD_MESSAGES = 'FETCH_OLD_MESSAGES'
 export const REQUEST_OLD_MESSAGES = 'REQUEST_OLD_MESSAGES'
 
 // Reducer
-export interface Item {
+export interface Message {
   id: number
   content: string
   room_id: number
@@ -23,7 +23,7 @@ export interface Item {
 
 export interface Messages {
   isFetching: boolean
-  items: Array<Item>
+  items: Array<Message>
   hasNext: boolean
   currentPage: number
   loading: boolean
@@ -38,7 +38,7 @@ const initialState = {
 }
 export default function reducer(state: Messages = initialState, action: Action): Messages {
   switch (action.type) {
-    case ADD_MESSAGE:
+    case POST_MESSAGE:
       return Object.assign({}, state, {
         items: [action.payload.message, ...state.items],
       })
@@ -52,7 +52,7 @@ export default function reducer(state: Messages = initialState, action: Action):
         loading: true,
       })
 
-    case GET_OLD_MESSAGES:
+    case FETCH_OLD_MESSAGES:
       return Object.assign({}, state, {
         items: [...state.items, ...action.payload.messages.items],
         hasNext: action.payload.messages.hasNext,
@@ -74,17 +74,17 @@ export function setMessages(messages) {
     },
   }
 }
-export function addMessage(message) {
+export function postMessage(message) {
   return {
-    type: ADD_MESSAGE,
+    type: POST_MESSAGE,
     payload: {
       message,
     },
   }
 }
-export function getOldMessages(messages) {
+export function fetchOldMessages(messages) {
   return {
-    type: GET_OLD_MESSAGES,
+    type: FETCH_OLD_MESSAGES,
     payload: {
       messages,
     },
@@ -96,7 +96,7 @@ export function requestMessages() {
   }
 }
 
-export function getOldMessagesSync(id, messages) {
+export function fetchOldMessagesSync(id, messages) {
   return {
     type: 'REQUEST_OLD_MESSAGES',
     payload: {
@@ -114,7 +114,7 @@ export function getOldMessagesSync(id, messages) {
   //     },
   //   })
   //   const json = await res.json()
-  //   dispatch(getOldMessages(json.messages))
+  //   dispatch(fetchOldMessages(json.messages))
   // }
 }
 
@@ -136,6 +136,6 @@ export function messagesEpic(action$) {
       )
       return res.json()
     })
-    .map(action => getOldMessages(action.messages))
+    .map(action => fetchOldMessages(action.messages))
   //.do(action => console.log(action))
 }

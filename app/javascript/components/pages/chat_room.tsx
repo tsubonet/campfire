@@ -9,7 +9,7 @@ import MessagesList from '../organisms/messages_list'
 import MessageForm from '../organisms/message_form'
 import { RootState } from '../../packs/entry'
 
-import { Messages, addMessage, getOldMessagesSync } from '../../modules/messages'
+import { Messages, postMessage, fetchOldMessagesSync } from '../../modules/messages'
 import { Room, setRoomAsync } from '../../modules/room'
 import { Rooms, postRoomAsync, postRoomReset } from '../../modules/rooms'
 
@@ -19,11 +19,11 @@ interface Props {
   rooms: Rooms
   match: any
   history: any
-  addMessage(message): void
+  postMessage(message): void
+  fetchOldMessagesSync(id: number, messages: Messages): void
   setRoomAsync(id: number): void
   postRoomAsync(content: string, history): void
   postRoomReset(): void
-  getOldMessagesSync(id: number, messages: Messages): void
 }
 interface State {
   windowH: number
@@ -54,7 +54,7 @@ class ChatRoomPage extends React.Component<Props, State> {
           console.log('disconnected')
         },
         received: data => {
-          this.props.addMessage(data.message)
+          this.props.postMessage(data.message)
         },
       }
     )
@@ -116,7 +116,7 @@ class ChatRoomPage extends React.Component<Props, State> {
           <MessagesList
             room={this.props.room}
             messages={this.props.messages}
-            getOldMessagesSync={this.props.getOldMessagesSync}
+            fetchOldMessagesSync={this.props.fetchOldMessagesSync}
           />
           <MessageForm
             room={this.props.room}
@@ -142,14 +142,14 @@ const mapDispatchToProps = dispatch => {
     setRoomAsync: (id: number) => {
       dispatch(setRoomAsync(id))
     },
-    getOldMessagesSync: (id: number, messages: Messages) => {
-      dispatch(getOldMessagesSync(id, messages))
+    fetchOldMessagesSync: (id: number, messages: Messages) => {
+      dispatch(fetchOldMessagesSync(id, messages))
     },
     postRoomAsync: (name: string, history) => {
       dispatch(postRoomAsync(name, history))
     },
-    addMessage: (message: string) => {
-      dispatch(addMessage(message))
+    postMessage: (message: string) => {
+      dispatch(postMessage(message))
     },
     postRoomReset: () => {
       dispatch(postRoomReset())
