@@ -21,6 +21,7 @@ const Modal = ({ closeModal, label, errors, loading, ...props }: Props) => {
       }}
     >
       <Contents
+        className="modal-contents"
         onClick={e => {
           e.stopPropagation()
         }}

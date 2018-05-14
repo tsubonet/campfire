@@ -4,6 +4,7 @@ import { Rooms } from '../../modules/rooms'
 import SideHeading from '../molecules/side_heading'
 import RoomList from '../molecules/room_list'
 import Modal from '../organisms/modal'
+import { CSSTransition } from 'react-transition-group'
 
 interface Props {
   rooms: Rooms
@@ -62,7 +63,18 @@ class Side extends React.Component<Props, State> {
       <Root>
         <SideHeading openModal={_ => this.openModal()} />
         <RoomList items={rooms.items} />
-        {this.state.isOpen && (
+        <CSSTransition
+          in={this.state.isOpen}
+          timeout={300}
+          classNames="fade"
+          unmountOnExit
+          onEntered={() => {
+            console.log('entered')
+          }}
+          onExited={() => {
+            console.log('exited')
+          }}
+        >
           <Modal
             loading={rooms.loading}
             errors={rooms.errors}
@@ -72,7 +84,7 @@ class Side extends React.Component<Props, State> {
             handleSubmit={this.postRoom.bind(this)}
             inputRef={el => (this.inputRoomElement = el)}
           />
-        )}
+        </CSSTransition>
       </Root>
     )
   }
