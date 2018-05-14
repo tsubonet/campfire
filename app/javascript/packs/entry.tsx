@@ -9,12 +9,12 @@ import thunk from 'redux-thunk'
 import { createEpicMiddleware } from 'redux-observable'
 import epics from '../epics'
 
-import room, { Room } from '../modules/room'
-import rooms from '../modules/rooms'
+import selectedRoom, { SelectedRoom } from '../modules/selected_room'
+import rooms, { Room } from '../modules/rooms'
 import messages, { Messages } from '../modules/messages'
 
 export interface RootState {
-  room: Room
+  selectedRoom: SelectedRoom
   rooms: Room[]
   messages: Messages
 }
@@ -30,7 +30,7 @@ const App = (props, railsContext) => {
   const rootReducer = combineReducers({
     messages,
     rooms,
-    room,
+    selectedRoom,
     router: routerReducer,
   })
   const enhancer = compose(applyMiddleware(...middlewares))

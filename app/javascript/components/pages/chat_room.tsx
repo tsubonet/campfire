@@ -10,18 +10,18 @@ import MessageForm from '../organisms/message_form'
 import { RootState } from '../../packs/entry'
 
 import { Messages, receiveMessage, fetchOldMessagesSync } from '../../modules/messages'
-import { Room, setRoomAsync } from '../../modules/room'
-import { Rooms, postRoomAsync, postRoomReset, sortRoom } from '../../modules/rooms'
+import { Room, Rooms, postRoomAsync, postRoomReset, sortRoom } from '../../modules/rooms'
+import { SelectedRoom, setRoomAsync } from '../../modules/selected_room'
 
 interface Props {
   messages: Messages
-  room: Room
+  selectedRoom: SelectedRoom
   rooms: Rooms
   match: any
   history: any
   receiveMessage(message): void
   fetchOldMessagesSync(id: number, messages: Messages): void
-  setRoomAsync(id: number): void
+  setRoomAsync(id: number, wait?: number): void
   postRoomAsync(content: string, history): void
   postRoomReset(): void
   sortRoom(room: Room): void
@@ -67,9 +67,9 @@ class ChatRoomPage extends React.Component<Props, State> {
 
   componentDidMount() {
     console.log('componentDidMount')
-    this.props.setRoomAsync(this.props.match.params.id || 1)
+    this.props.setRoomAsync(this.props.match.params.id || 1, 1000)
 
-    this.connectActionCable(this.props.room.id)
+    this.connectActionCable(this.props.selectedRoom.item.id)
     window.addEventListener(
       'resize',
       debounce(() => {
@@ -90,62 +90,77 @@ class ChatRoomPage extends React.Component<Props, State> {
   }
 
   async postMessage(e) {
+    const { selectedRoom, sortRoom } = this.props
     if (e.keyCode === 13) {
       e.preventDefault()
       const content = this.inputMessageElement.value
       if (content === '') return
       this.inputMessageElement.value = ''
       this.inputMessageElement.focus()
-      const response = await fetch(`/rooms/${this.props.room.id}/messages`, {
+      const response = await fetch(`/rooms/${selectedRoom.item.id}/messages`, {
         method: 'POST',
         body: JSON.stringify({ message: { content } }),
         headers: {
           'Content-Type': 'application/json',
         },
       })
-      this.props.sortRoom(this.props.room)
+      sortRoom(selectedRoom.item)
     }
   }
 
   render() {
+    const {
+      rooms,
+      messages,
+      selectedRoom,
+      postRoomAsync,
+      postRoomReset,
+      fetchOldMessagesSync,
+    } = this.props
     return (
       <Root style={{ height: this.state.windowH }}>
         <Side
-          rooms={this.props.rooms}
-          postRoomAsync={this.props.postRoomAsync}
-          postRoomReset={this.props.postRoomReset}
+          rooms={rooms}
+          postRoomAsync={postRoomAsync}
+          postRoomReset={postRoomReset}
           history={this.props.history}
         />
         <Main>
-          <RoomName>ルーム名: {this.props.room.name}</RoomName>
-          <MessagesList
-            room={this.props.room}
-            messages={this.props.messages}
-            fetchOldMessagesSync={this.props.fetchOldMessagesSync}
-          />
-          <MessageForm
-            room={this.props.room}
-            handleSubmit={this.postMessage.bind(this)}
-            inputRef={el => (this.inputMessageElement = el)}
-          />
+          {selectedRoom.loading ? (
+            <Loading>loading...</Loading>
+          ) : (
+            <React.Fragment>
+              <RoomName>ルーム名: {selectedRoom.item.name}</RoomName>
+              <MessagesList
+                room={selectedRoom.item}
+                messages={messages}
+                fetchOldMessagesSync={fetchOldMessagesSync}
+              />
+              <MessageForm
+                room={selectedRoom.item}
+                handleSubmit={this.postMessage.bind(this)}
+                inputRef={el => (this.inputMessageElement = el)}
+              />
+            </React.Fragment>
+          )}
         </Main>
       </Root>
     )
   }
 }
 
-const mapStateToProps = ({ messages, room, rooms }: RootState) => {
+const mapStateToProps = ({ messages, rooms, selectedRoom }: RootState) => {
   return {
     messages,
-    room,
     rooms,
+    selectedRoom,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    setRoomAsync: (id: number) => {
-      dispatch(setRoomAsync(id))
+    setRoomAsync: (id: number, wait: number) => {
+      dispatch(setRoomAsync(id, wait))
     },
     postRoomAsync: (name: string, history: any) => {
       dispatch(postRoomAsync(name, history))
@@ -173,10 +188,17 @@ const Root = styled.div`
 const Main = styled.div`
   width: calc(100% - 200px);
   background: #fff;
+  position: relative;
 `
 const RoomName = styled.div`
   border-bottom: 1px solid #cccccc;
   padding: 10px;
   height: 40px;
   font-weight: bold;
+`
+const Loading = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `

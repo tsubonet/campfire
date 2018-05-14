@@ -23,10 +23,18 @@ class RoomsController < ApplicationController
   # GET /rooms/1
   # GET /rooms/1.json
   def show
-    @rooms = {items: Room.all, loading: false}
+    @rooms = { 
+      items: Room.all, 
+      loading: false,
+      errors: nil 
+    }
 
-    @room = Room.find(params[:id] || 1)
-    @messages = module_get_messages(@room)
+    room = Room.find(params[:id] || 1)
+    @room = {
+      item: room,
+      loading: false
+    }
+    @messages = module_get_messages(room)
 
     #puts "#######################"
     #puts @room.as_json(:include => @messages)
@@ -39,7 +47,6 @@ class RoomsController < ApplicationController
   end
 
   def dummy
-    @rooms = {items: Room.all, loading: false}
   end
 
   private

@@ -24,7 +24,6 @@ export interface Message {
 }
 
 export interface Messages {
-  isFetching: boolean
   items: Array<Message>
   hasNext: boolean
   currentPage: number
@@ -32,7 +31,6 @@ export interface Messages {
 }
 
 const initialState = {
-  isFetching: false,
   items: [],
   hasNext: false,
   currentPage: 1,

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { Room } from '../../modules/room'
+import { Room } from '../../modules/rooms'
 import NavLink from '../atoms/nav_link'
 
 interface Props {

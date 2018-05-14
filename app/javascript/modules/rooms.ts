@@ -1,5 +1,4 @@
 import { Action } from '../actions'
-import { Room } from '../modules/room'
 import { Rooms } from '../modules/rooms'
 import { sleep } from '../components/utils'
 
@@ -10,6 +9,10 @@ export const POST_ROOM_FAILURE = 'POST_ROOM_FAILURE'
 export const POST_ROOM_RESET = 'POST_ROOM_RESET'
 export const SORT_ROOM = 'SORT_ROOM'
 
+export interface Room {
+  id?: number
+  name?: string
+}
 export interface Rooms {
   items: Array<Room>
   loading: boolean
