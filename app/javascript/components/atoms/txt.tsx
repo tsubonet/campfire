@@ -1,7 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 
-const Txt = ({ children, ...props }) => {
+const Txt = ({ tag: Tag = 'p', children, ...props }) => {
   return <StyledTxt {...props}>{children}</StyledTxt>
 }
 

@@ -10,7 +10,7 @@ interface Props {
   inputRef: any
   isOpen: boolean
   label: string
-  errors: Array<string>
+  errors?: Array<string>
 }
 const Modal = ({ closeModal, label, errors, ...props }: Props) => {
   return (
@@ -19,8 +19,7 @@ const Modal = ({ closeModal, label, errors, ...props }: Props) => {
         closeModal()
       }}
     >
-      <div
-        className="contents"
+      <Contents
         onClick={e => {
           e.stopPropagation()
         }}
@@ -48,7 +47,7 @@ const Modal = ({ closeModal, label, errors, ...props }: Props) => {
         >
           ×
         </Button>
-      </div>
+      </Contents>
     </Root>
   )
 }
@@ -71,13 +70,14 @@ const Root = styled.div`
   /*align-items: flex-start; モーダルがclientHeightより大きければ、flex-start。小さければ center  */
   z-index: 9999;
   background-color: rgba(0, 0, 0, 0.6);
-  .contents {
-    cursor: default;
-    position: relative;
-    background-color: rgb(255, 255, 255);
-    width: 50%;
-    /* min-height: 300px; */
-    border-radius: 3px;
-    padding: 50px 20px;
-  }
+`
+
+const Contents = styled.div`
+  cursor: default;
+  position: relative;
+  background-color: rgb(255, 255, 255);
+  width: 50%;
+  /* min-height: 300px; */
+  border-radius: 3px;
+  padding: 50px 20px;
 `
