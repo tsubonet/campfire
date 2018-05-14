@@ -6,6 +6,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@fortawesome/fontawesome": "^1.1.8",
     "@rails/webpacker": "3.4",
     "@types/react": "^16.3.12",
     "@types/react-dom": "^16.0.5",

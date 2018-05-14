@@ -66,6 +66,9 @@ class ChatRoomPage extends React.Component<Props, State> {
   }
 
   componentDidMount() {
+    console.log('componentDidMount')
+    this.props.setRoomAsync(this.props.match.params.id || 1)
+
     this.connectActionCable(this.props.room.id)
     window.addEventListener(
       'resize',

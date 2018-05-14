@@ -1,5 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import Button from '../atoms/button'
 
 interface Props {
@@ -12,6 +13,8 @@ interface State {
 const SideHeading = ({ openModal }: Props) => {
   return (
     <Root>
+      <Link to="/sandbox">sandbox</Link>
+      {'　'}
       <Button onClick={openModal}>+</Button>
     </Root>
   )
