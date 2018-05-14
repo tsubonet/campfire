@@ -11,7 +11,7 @@ import { RootState } from '../../packs/entry'
 
 import { Messages, receiveMessage, fetchOldMessagesSync } from '../../modules/messages'
 import { Room, setRoomAsync } from '../../modules/room'
-import { Rooms, postRoomAsync, postRoomReset } from '../../modules/rooms'
+import { Rooms, postRoomAsync, postRoomReset, sortRoom } from '../../modules/rooms'
 
 interface Props {
   messages: Messages
@@ -24,6 +24,7 @@ interface Props {
   setRoomAsync(id: number): void
   postRoomAsync(content: string, history): void
   postRoomReset(): void
+  sortRoom(id: number): void
 }
 interface State {
   windowH: number
@@ -99,6 +100,7 @@ class ChatRoomPage extends React.Component<Props, State> {
           'Content-Type': 'application/json',
         },
       })
+      this.props.sortRoom(this.props.room.id)
     }
   }
 
@@ -147,6 +149,9 @@ const mapDispatchToProps = dispatch => {
     },
     postRoomReset: () => {
       dispatch(postRoomReset())
+    },
+    sortRoom: id => {
+      dispatch(sortRoom(id))
     },
     fetchOldMessagesSync: (id: number, messages: Messages) => {
       dispatch(fetchOldMessagesSync(id, messages))

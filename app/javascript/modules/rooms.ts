@@ -1,5 +1,6 @@
 import { Action } from '../actions'
 import { Room } from '../modules/room'
+import { sleep } from '../utils/index'
 
 // Actions
 export const POST_ROOM_REQUEST = 'POST_ROOM_REQUEST'
@@ -75,7 +76,15 @@ export function postRoomReset() {
     type: POST_ROOM_RESET,
   }
 }
-const sleep = msec => new Promise(resolve => setTimeout(resolve, msec))
+
+export function sortRoom(id) {
+  return {
+    type: POST_ROOM_RESET,
+    payload: {
+      id,
+    },
+  }
+}
 
 export function postRoomAsync(name, history) {
   return async dispatch => {
