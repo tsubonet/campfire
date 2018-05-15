@@ -46,7 +46,7 @@ export function setRoomSuccess(room) {
   }
 }
 
-export function setRoomAsync(id, wait) {
+export function selectRoomAsync(id, wait) {
   return async dispatch => {
     if (wait) {
       dispatch(setRoomRequest())

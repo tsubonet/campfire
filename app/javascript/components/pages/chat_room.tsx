@@ -4,42 +4,29 @@ import { withRouter } from 'react-router'
 import styled from 'styled-components'
 import debounce from 'lodash/debounce'
 
-import Side from '../organisms/side'
+import CommonTemplate from '../templates/common_template'
 import MessagesList from '../organisms/messages_list'
 import MessageForm from '../organisms/message_form'
 import { RootState } from '../../packs/entry'
 
 import { Messages, receiveMessage, fetchOldMessagesSync } from '../../modules/messages'
-import { Room, Rooms, postRoomAsync, postRoomReset, sortRoom } from '../../modules/rooms'
-import { SelectedRoom, setRoomAsync } from '../../modules/selected_room'
+import { Room, sortRoom } from '../../modules/rooms'
+import { SelectedRoom, selectRoomAsync } from '../../modules/selected_room'
 
 interface Props {
   messages: Messages
   selectedRoom: SelectedRoom
-  rooms: Rooms
   match: any
-  history: any
   receiveMessage(message): void
   fetchOldMessagesSync(id: number, messages: Messages): void
-  setRoomAsync(id: number, wait?: number): void
-  postRoomAsync(content: string, history): void
-  postRoomReset(): void
+  selectRoomAsync(id: number, wait?: number): void
   sortRoom(room: Room): void
 }
-interface State {
-  windowH: number
-}
+
 declare let App: any
 
-class ChatRoomPage extends React.Component<Props, State> {
+class ChatRoomPage extends React.Component<Props, {}> {
   private inputMessageElement: HTMLTextAreaElement
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      windowH: window.innerHeight,
-    }
-  }
 
   connectActionCable(room_id) {
     App.room = App.cable.subscriptions.create(
@@ -66,23 +53,17 @@ class ChatRoomPage extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    console.log('componentDidMount')
-    this.props.setRoomAsync(this.props.match.params.id || 1, 500)
-
-    this.connectActionCable(this.props.selectedRoom.item.id)
-    window.addEventListener(
-      'resize',
-      debounce(() => {
-        this.setState({ windowH: window.innerHeight })
-      }, 1000)
-    )
+    const { match, selectRoomAsync, selectedRoom } = this.props
+    selectRoomAsync(match.params.id || 1, 500)
+    this.connectActionCable(selectedRoom.item.id)
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.match.params.id === this.props.match.params.id) return
-    this.props.setRoomAsync(this.props.match.params.id)
+    const { match, selectRoomAsync } = this.props
+    if (prevProps.match.params.id === match.params.id) return
+    selectRoomAsync(match.params.id)
     this.disconnectActionCable()
-    this.connectActionCable(this.props.match.params.id)
+    this.connectActionCable(match.params.id)
   }
 
   UNSAFE_componentWillMount() {
@@ -109,64 +90,42 @@ class ChatRoomPage extends React.Component<Props, State> {
   }
 
   render() {
-    const {
-      rooms,
-      messages,
-      selectedRoom,
-      postRoomAsync,
-      postRoomReset,
-      fetchOldMessagesSync,
-    } = this.props
+    const { messages, selectedRoom, fetchOldMessagesSync } = this.props
     return (
-      <Root style={{ height: this.state.windowH }}>
-        <Side
-          rooms={rooms}
-          postRoomAsync={postRoomAsync}
-          postRoomReset={postRoomReset}
-          history={this.props.history}
-        />
-        <Main>
-          {selectedRoom.loading ? (
-            <Loading>loading...</Loading>
-          ) : (
-            <React.Fragment>
-              <RoomName>ルーム名: {selectedRoom.item.name}</RoomName>
-              <MessagesList
-                room={selectedRoom.item}
-                messages={messages}
-                fetchOldMessagesSync={fetchOldMessagesSync}
-              />
-              <MessageForm
-                room={selectedRoom.item}
-                handleSubmit={this.postMessage.bind(this)}
-                inputRef={el => (this.inputMessageElement = el)}
-              />
-            </React.Fragment>
-          )}
-        </Main>
-      </Root>
+      <CommonTemplate>
+        {selectedRoom.loading ? (
+          <Loading>loading...</Loading>
+        ) : (
+          <React.Fragment>
+            <RoomName>ルーム名: {selectedRoom.item.name}</RoomName>
+            <MessagesList
+              room={selectedRoom.item}
+              messages={messages}
+              fetchOldMessagesSync={fetchOldMessagesSync}
+            />
+            <MessageForm
+              room={selectedRoom.item}
+              handleSubmit={this.postMessage.bind(this)}
+              inputRef={el => (this.inputMessageElement = el)}
+            />
+          </React.Fragment>
+        )}
+      </CommonTemplate>
     )
   }
 }
 
-const mapStateToProps = ({ messages, rooms, selectedRoom }: RootState) => {
+const mapStateToProps = ({ messages, selectedRoom }: RootState) => {
   return {
     messages,
-    rooms,
     selectedRoom,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    setRoomAsync: (id: number, wait: number) => {
-      dispatch(setRoomAsync(id, wait))
-    },
-    postRoomAsync: (name: string, history: any) => {
-      dispatch(postRoomAsync(name, history))
-    },
-    postRoomReset: () => {
-      dispatch(postRoomReset())
+    selectRoomAsync: (id: number, wait: number) => {
+      dispatch(selectRoomAsync(id, wait))
     },
     sortRoom: (room: Room) => {
       dispatch(sortRoom(room))
@@ -182,14 +141,6 @@ const mapDispatchToProps = dispatch => {
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ChatRoomPage))
 
-const Root = styled.div`
-  display: flex;
-`
-const Main = styled.div`
-  width: calc(100% - 200px);
-  background: #fff;
-  position: relative;
-`
 const RoomName = styled.div`
   border-bottom: 1px solid #cccccc;
   padding: 10px;
