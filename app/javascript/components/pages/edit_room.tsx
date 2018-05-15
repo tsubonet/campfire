@@ -20,7 +20,7 @@ class EditRoomPage extends React.Component<Props, {}> {
   componentDidMount() {
     const { match, selectRoomAsync, selectedRoom } = this.props
     const targetRoomId = match.params.id || 1
-    selectRoomAsync(targetRoomId, 500)
+    selectRoomAsync(targetRoomId)
   }
 
   componentDidUpdate(prevProps) {

@@ -46,6 +46,16 @@ class RoomsController < ApplicationController
     end
   end
 
+  # GET /rooms/1/edit
+  # GET /rooms/1/edit.json
+  def edit
+    @rooms = { 
+      items: Room.all, 
+      loading: false,
+      errors: nil 
+    }
+  end
+
   def dummy
   end
 
