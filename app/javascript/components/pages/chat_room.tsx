@@ -67,7 +67,7 @@ class ChatRoomPage extends React.Component<Props, State> {
 
   componentDidMount() {
     console.log('componentDidMount')
-    this.props.setRoomAsync(this.props.match.params.id || 1, 1000)
+    this.props.setRoomAsync(this.props.match.params.id || 1, 500)
 
     this.connectActionCable(this.props.selectedRoom.item.id)
     window.addEventListener(

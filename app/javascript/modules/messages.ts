@@ -19,8 +19,8 @@ export interface Message {
   id: number
   content: string
   room_id: number
-  created_at
-  updated_at
+  created_at: string
+  updated_at: string
 }
 
 export interface Messages {
@@ -101,7 +101,7 @@ export function requestMessages() {
 
 export function fetchOldMessagesSync(id, messages) {
   return {
-    type: 'REQUEST_OLD_MESSAGES',
+    type: REQUEST_OLD_MESSAGES,
     payload: {
       id,
       messages,
@@ -120,8 +120,6 @@ export function fetchOldMessagesSync(id, messages) {
   //   dispatch(fetchOldMessages(json.messages))
   // }
 }
-
-const sleep = msec => new Promise(resolve => setTimeout(resolve, msec))
 
 export function messagesEpic(action$) {
   return action$

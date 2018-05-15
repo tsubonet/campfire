@@ -13,7 +13,7 @@ interface State {
 const SideHeading = ({ openModal }: Props) => {
   return (
     <Root>
-      <Link to="/sandbox">sandbox</Link>
+      <Link to="/sandbox">s</Link>
       {'　'}
       <Button onClick={openModal}>+</Button>
     </Root>
