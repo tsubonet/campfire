@@ -54,16 +54,18 @@ class ChatRoomPage extends React.Component<Props, {}> {
 
   componentDidMount() {
     const { match, selectRoomAsync, selectedRoom } = this.props
-    selectRoomAsync(match.params.id || 1, 500)
-    this.connectActionCable(selectedRoom.item.id)
+    const targetRoomId = match.params.id || 1
+    selectRoomAsync(targetRoomId, 500)
+    this.connectActionCable(targetRoomId)
   }
 
   componentDidUpdate(prevProps) {
     const { match, selectRoomAsync } = this.props
-    if (prevProps.match.params.id === match.params.id) return
-    selectRoomAsync(match.params.id)
+    const targetRoomId = match.params.id
+    if (prevProps.match.params.id === targetRoomId) return
+    selectRoomAsync(targetRoomId)
     this.disconnectActionCable()
-    this.connectActionCable(match.params.id)
+    this.connectActionCable(targetRoomId)
   }
 
   UNSAFE_componentWillMount() {

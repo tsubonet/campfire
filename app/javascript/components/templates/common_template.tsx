@@ -18,8 +18,6 @@ interface State {
   windowH: number
 }
 class CommonTemplate extends React.Component<Props, State> {
-  private inputMessageElement: HTMLTextAreaElement
-
   constructor(props) {
     super(props)
     this.state = {

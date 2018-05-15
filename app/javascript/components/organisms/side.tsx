@@ -32,7 +32,7 @@ class Side extends React.Component<Props, State> {
     }
     // モーダルを開いたときにinputをフォーカスする
     if (this.state.isOpen && prevState.isOpen !== this.state.isOpen) {
-      //this.inputRoomElement.focus()
+      this.inputRoomElement.focus()
     }
   }
 
