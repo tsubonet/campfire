@@ -2,9 +2,9 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import styled from 'styled-components'
-import debounce from 'lodash/debounce'
 
 import CommonTemplate from '../templates/common_template'
+import ChatHeader from '../organisms/chat_header'
 import MessagesList from '../organisms/messages_list'
 import MessageForm from '../organisms/message_form'
 import { RootState } from '../../packs/entry'
@@ -17,6 +17,7 @@ interface Props {
   messages: Messages
   selectedRoom: SelectedRoom
   match: any
+  history: any
   receiveMessage(message): void
   fetchOldMessagesSync(id: number, messages: Messages): void
   selectRoomAsync(id: number, wait?: number): void
@@ -92,14 +93,14 @@ class ChatRoomPage extends React.Component<Props, {}> {
   }
 
   render() {
-    const { messages, selectedRoom, fetchOldMessagesSync } = this.props
+    const { history, messages, selectedRoom, fetchOldMessagesSync } = this.props
     return (
       <CommonTemplate>
         {selectedRoom.loading ? (
           <Loading>loading...</Loading>
         ) : (
           <React.Fragment>
-            <RoomName>ルーム名: {selectedRoom.item.name}</RoomName>
+            <ChatHeader room={selectedRoom.item} history={history} />
             <MessagesList
               room={selectedRoom.item}
               messages={messages}
@@ -143,12 +144,6 @@ const mapDispatchToProps = dispatch => {
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ChatRoomPage))
 
-const RoomName = styled.div`
-  border-bottom: 1px solid #cccccc;
-  padding: 10px;
-  height: 40px;
-  font-weight: bold;
-`
 const Loading = styled.div`
   position: absolute;
   top: 50%;
