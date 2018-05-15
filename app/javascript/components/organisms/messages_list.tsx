@@ -15,7 +15,6 @@ interface Props {
 interface State {
   windowH: number
 }
-
 export default class MessagesList extends React.Component<Props, State> {
   private messageBox
   private savedElm
@@ -43,6 +42,7 @@ export default class MessagesList extends React.Component<Props, State> {
       'scroll',
       debounce(async () => {
         const { messages, room } = this.props
+        if (this.messageBox.current === null) return
 
         // console.log('this.messageBox.current.scrollHeight', this.messageBox.current.scrollHeight)
         // console.log('this.messageBox.current.scrollTop', this.messageBox.current.scrollTop)
