@@ -56,6 +56,24 @@ class RoomsController < ApplicationController
     }
   end
 
+  # DELETE /rooms/1
+  # DELETE /rooms/1.json
+  def destroy
+    room = Room.find(params[:id])
+    if room.destroy
+      response_data = {
+        txt: ['削除しました！'],
+      }
+      render json: response_data, status: :ok
+    else
+      response_data = {
+        txt: ['削除できませんでした！'],
+      }
+      render json: response_data, status: :unprocessable_entity
+    end
+  end
+
+
   def dummy
   end
 

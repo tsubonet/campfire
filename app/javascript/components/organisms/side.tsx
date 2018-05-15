@@ -57,12 +57,16 @@ class Side extends React.Component<Props, State> {
     }
   }
 
+  destroyRoom(id) {
+    alert(id)
+  }
+
   render() {
     const { rooms } = this.props
     return (
       <Root>
         <SideHeading openModal={_ => this.openModal()} />
-        <RoomList items={rooms.items} />
+        <RoomList items={rooms.items} destroyRoom={id => this.destroyRoom(id)} />
         <CSSTransition
           in={this.state.isOpen}
           timeout={300}
