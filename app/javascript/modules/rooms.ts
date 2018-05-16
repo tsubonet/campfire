@@ -148,7 +148,7 @@ export function destroyRoomAsync(id, history) {
     if (res.status === 204) {
       dispatch(destroyRoomSuccess(id))
       // TODO
-      if (location.pathname === `/rooms/${id}`) {
+      if (location.pathname.match(/\/rooms\/(\d*)/)[1] === `${id}`) {
         history.push('/rooms/1')
       }
     }
