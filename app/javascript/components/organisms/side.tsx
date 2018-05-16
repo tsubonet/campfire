@@ -1,7 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import { Rooms } from '../../modules/rooms'
-import { SelectedRoom } from '../../modules/selected_room'
 import SideHeading from '../molecules/side_heading'
 import RoomList from '../molecules/room_list'
 import Modal from '../organisms/modal'
@@ -9,7 +8,6 @@ import { CSSTransition } from 'react-transition-group'
 
 interface Props {
   rooms: Rooms
-  selectedRoom: SelectedRoom
   postRoomAsync(content: string): void
   postRoomReset(): void
   destroyRoomAsync(id: number): void
