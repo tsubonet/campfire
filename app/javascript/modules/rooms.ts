@@ -8,6 +8,7 @@ export const POST_ROOM_SUCCESS = 'POST_ROOM_SUCCESS'
 export const POST_ROOM_FAILURE = 'POST_ROOM_FAILURE'
 export const POST_ROOM_RESET = 'POST_ROOM_RESET'
 export const SORT_ROOM = 'SORT_ROOM'
+export const DESTROY_ROOM_SUCCESS = 'DESTROY_ROOM_SUCCESS'
 
 export interface Room {
   id?: number
@@ -56,6 +57,11 @@ export default function reducer(state: Rooms = initialState, action: Action): Ro
           ...[...state.items].filter(item => item.id !== action.payload.room.id),
         ],
       }
+    case DESTROY_ROOM_SUCCESS:
+      return {
+        ...state,
+        items: [...state.items].filter(item => item.id !== action.payload.id),
+      }
     default:
       return state
   }
@@ -99,6 +105,15 @@ export function sortRoom(room) {
   }
 }
 
+export function destroyRoomSuccess(id) {
+  return {
+    type: DESTROY_ROOM_SUCCESS,
+    payload: {
+      id,
+    },
+  }
+}
+
 export function postRoomAsync(name, history) {
   return async dispatch => {
     dispatch(postRoomRequest())
@@ -117,6 +132,21 @@ export function postRoomAsync(name, history) {
       history.push(`/rooms/${json.room.id}`)
     } else {
       dispatch(postRoomFailure(json.txt))
+    }
+  }
+}
+
+export function destroyRoomAsync(id) {
+  return async dispatch => {
+    const res = await fetch(`/rooms/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
+    if (res.status === 204) {
+      dispatch(destroyRoomSuccess(id))
     }
   }
 }

@@ -6,13 +6,16 @@ import debounce from 'lodash/debounce'
 
 import Side from '../organisms/side'
 import { RootState } from '../../packs/entry'
-import { Rooms, postRoomAsync, postRoomReset } from '../../modules/rooms'
+import { Rooms, postRoomAsync, postRoomReset, destroyRoomAsync } from '../../modules/rooms'
+import { SelectedRoom } from '../../modules/selected_room'
 
 interface Props {
   rooms: Rooms
+  selectedRoom: SelectedRoom
   history: any
   postRoomAsync(content: string, history): void
   postRoomReset(): void
+  destroyRoomAsync(id: number): void
 }
 interface State {
   windowH: number
@@ -35,14 +38,24 @@ class CommonTemplate extends React.Component<Props, State> {
   }
 
   render() {
-    const { rooms, postRoomAsync, postRoomReset, history, children } = this.props
+    const {
+      rooms,
+      selectedRoom,
+      postRoomAsync,
+      postRoomReset,
+      destroyRoomAsync,
+      history,
+      children,
+    } = this.props
     return (
       <Root style={{ height: this.state.windowH }}>
         <Side
           rooms={rooms}
+          selectedRoom={selectedRoom}
           postRoomAsync={postRoomAsync}
           postRoomReset={postRoomReset}
           history={history}
+          destroyRoomAsync={destroyRoomAsync}
         />
         <Main>{children}</Main>
       </Root>
@@ -50,9 +63,10 @@ class CommonTemplate extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = ({ rooms }: RootState) => {
+const mapStateToProps = ({ rooms, selectedRoom }: RootState) => {
   return {
     rooms,
+    selectedRoom,
   }
 }
 
@@ -63,6 +77,9 @@ const mapDispatchToProps = dispatch => {
     },
     postRoomReset: () => {
       dispatch(postRoomReset())
+    },
+    destroyRoomAsync(id: number) {
+      dispatch(destroyRoomAsync(id))
     },
   }
 }

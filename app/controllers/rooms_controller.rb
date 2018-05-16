@@ -61,10 +61,8 @@ class RoomsController < ApplicationController
   def destroy
     room = Room.find(params[:id])
     if room.destroy
-      response_data = {
-        txt: ['削除しました！'],
-      }
-      render json: response_data, status: :ok
+      head :no_content
+      return
     else
       response_data = {
         txt: ['削除できませんでした！'],

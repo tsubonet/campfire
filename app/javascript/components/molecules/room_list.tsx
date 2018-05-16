@@ -5,7 +5,7 @@ import NavLink from '../atoms/nav_link'
 
 interface Props {
   items: Array<Room>
-  destroyRoom: Function
+  destroyRoomAsync(id: number): void
 }
 
 class RoomList extends React.Component<Props> {
@@ -22,13 +22,17 @@ class RoomList extends React.Component<Props> {
   }
 
   render() {
-    const { items, destroyRoom } = this.props
+    const { items, destroyRoomAsync } = this.props
     return (
       <Root innerRef={this.RoomListRef}>
         {items.map((room, idx) => {
           return (
             <Li key={idx}>
-              <NavLink to={`/rooms/${room.id}`} label={room.name} destroyRoom={destroyRoom} />
+              <NavLink
+                to={`/rooms/${room.id}`}
+                label={room.name}
+                destroyRoomAsync={destroyRoomAsync}
+              />
             </Li>
           )
         })}

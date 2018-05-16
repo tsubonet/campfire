@@ -1,6 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import { Rooms } from '../../modules/rooms'
+import { SelectedRoom } from '../../modules/selected_room'
 import SideHeading from '../molecules/side_heading'
 import RoomList from '../molecules/room_list'
 import Modal from '../organisms/modal'
@@ -8,9 +9,11 @@ import { CSSTransition } from 'react-transition-group'
 
 interface Props {
   rooms: Rooms
+  selectedRoom: SelectedRoom
   history: any
   postRoomAsync(content: string, history): void
   postRoomReset(): void
+  destroyRoomAsync(id: number): void
 }
 interface State {
   isOpen: boolean
@@ -26,12 +29,26 @@ class Side extends React.Component<Props, State> {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // roomsが追加されたときにモーダルを閉じる
-    if (prevProps.rooms.items.length !== this.props.rooms.items.length) {
-      this.closeModal()
+    // roomsが追加されたとき
+    if (prevProps.rooms.items.length < this.props.rooms.items.length) {
+      // モーダルを閉じる
+      if (prevState.isOpen) {
+        this.closeModal()
+      }
     }
-    // モーダルを開いたときにinputをフォーカスする
+
+    // roomsが削除されたとき
+    // if (prevProps.rooms.items.length > this.props.rooms.items.length) {
+    //   console.log(location.pathname)
+    //   console.log(this.props.selectedRoom.item.id)
+    //   if (location.pathname === `/rooms/${this.props.selectedRoom.item.id}`) {
+    //     this.props.history.push('/rooms/1')
+    //   }
+    // }
+
+    // モーダルを開いたとき
     if (this.state.isOpen && prevState.isOpen !== this.state.isOpen) {
+      // inputをフォーカスする
       this.inputRoomElement.focus()
     }
   }
@@ -57,16 +74,12 @@ class Side extends React.Component<Props, State> {
     }
   }
 
-  destroyRoom(id) {
-    alert(id)
-  }
-
   render() {
-    const { rooms } = this.props
+    const { rooms, destroyRoomAsync } = this.props
     return (
       <Root>
         <SideHeading openModal={_ => this.openModal()} />
-        <RoomList items={rooms.items} destroyRoom={id => this.destroyRoom(id)} />
+        <RoomList items={rooms.items} destroyRoomAsync={destroyRoomAsync} />
         <CSSTransition
           in={this.state.isOpen}
           timeout={300}
