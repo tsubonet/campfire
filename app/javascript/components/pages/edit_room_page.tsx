@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 import CommonTemplate from '../templates/common_template'
 import ChatHeader from '../organisms/chat_header'
+import EditRoomForm from '../organisms/edit_room_form'
 import { RootState } from '../../packs/entry'
 
 import { SelectedRoom, selectRoomAsync } from '../../modules/selected_room'
@@ -30,6 +31,11 @@ class EditRoomPage extends React.Component<Props, {}> {
     selectRoomAsync(targetRoomId)
   }
 
+  submit = values => {
+    // print the form values to the console
+    console.log(values)
+  }
+
   render() {
     const { selectedRoom, history } = this.props
     return (
@@ -39,6 +45,7 @@ class EditRoomPage extends React.Component<Props, {}> {
         ) : (
           <React.Fragment>
             <ChatHeader room={selectedRoom.item} history={history} />
+            <EditRoomForm onSubmit={this.submit} />
           </React.Fragment>
         )}
       </CommonTemplate>

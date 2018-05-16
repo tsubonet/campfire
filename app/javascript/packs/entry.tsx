@@ -5,6 +5,7 @@ import ReactOnRails from 'react-on-rails'
 import createHistory from 'history/createBrowserHistory'
 import Router from '../components/router'
 import { compose, createStore, combineReducers, applyMiddleware } from 'redux'
+import { reducer as formReducer } from 'redux-form'
 import thunk from 'redux-thunk'
 import { createEpicMiddleware } from 'redux-observable'
 import epics from '../epics'
@@ -31,6 +32,7 @@ const App = (props, railsContext) => {
     messages,
     rooms,
     selectedRoom,
+    form: formReducer,
     router: routerReducer,
   })
   const enhancer = compose(applyMiddleware(...middlewares))
