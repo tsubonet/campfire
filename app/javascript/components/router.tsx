@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import ChatRoomPage from './pages/chat_room'
-import EditRoomPage from './pages/edit_room'
+import ChatRoomPage from './pages/chat_room_page'
+import EditRoomPage from './pages/edit_room_page'
 import SandboxPage from './pages/sandbox'
 import './utils/global_style'
 
