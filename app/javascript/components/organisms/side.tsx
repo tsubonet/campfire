@@ -10,8 +10,7 @@ import { CSSTransition } from 'react-transition-group'
 interface Props {
   rooms: Rooms
   selectedRoom: SelectedRoom
-  history: any
-  postRoomAsync(content: string, history): void
+  postRoomAsync(content: string): void
   postRoomReset(): void
   destroyRoomAsync(id: number): void
 }
@@ -37,15 +36,6 @@ class Side extends React.Component<Props, State> {
       }
     }
 
-    // roomsが削除されたとき
-    // if (prevProps.rooms.items.length > this.props.rooms.items.length) {
-    //   console.log(location.pathname)
-    //   console.log(this.props.selectedRoom.item.id)
-    //   if (location.pathname === `/rooms/${this.props.selectedRoom.item.id}`) {
-    //     this.props.history.push('/rooms/1')
-    //   }
-    // }
-
     // モーダルを開いたとき
     if (this.state.isOpen && prevState.isOpen !== this.state.isOpen) {
       // inputをフォーカスする
@@ -70,7 +60,7 @@ class Side extends React.Component<Props, State> {
     if (e.keyCode === 13) {
       e.preventDefault()
       const content = this.inputRoomElement.value
-      this.props.postRoomAsync(content, this.props.history)
+      this.props.postRoomAsync(content)
     }
   }
 

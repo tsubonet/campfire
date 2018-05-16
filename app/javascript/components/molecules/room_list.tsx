@@ -16,6 +16,7 @@ class RoomList extends React.Component<Props> {
   }
 
   componentDidUpdate(prevProps) {
+    // rommsに変更があれば
     if (prevProps.items !== this.props.items) {
       this.RoomListRef.current.scrollTop = 0
     }

@@ -12,8 +12,7 @@ import { SelectedRoom } from '../../modules/selected_room'
 interface Props {
   rooms: Rooms
   selectedRoom: SelectedRoom
-  history: any
-  postRoomAsync(content: string, history): void
+  postRoomAsync(content: string): void
   postRoomReset(): void
   destroyRoomAsync(id: number): void
 }
@@ -44,7 +43,6 @@ class CommonTemplate extends React.Component<Props, State> {
       postRoomAsync,
       postRoomReset,
       destroyRoomAsync,
-      history,
       children,
     } = this.props
     return (
@@ -54,7 +52,6 @@ class CommonTemplate extends React.Component<Props, State> {
           selectedRoom={selectedRoom}
           postRoomAsync={postRoomAsync}
           postRoomReset={postRoomReset}
-          history={history}
           destroyRoomAsync={destroyRoomAsync}
         />
         <Main>{children}</Main>
@@ -70,16 +67,16 @@ const mapStateToProps = ({ rooms, selectedRoom }: RootState) => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, props) => {
   return {
-    postRoomAsync: (name: string, history: any) => {
-      dispatch(postRoomAsync(name, history))
+    postRoomAsync: (name: string) => {
+      dispatch(postRoomAsync(name, props.history))
     },
     postRoomReset: () => {
       dispatch(postRoomReset())
     },
     destroyRoomAsync(id: number) {
-      dispatch(destroyRoomAsync(id))
+      dispatch(destroyRoomAsync(id, props.history))
     },
   }
 }

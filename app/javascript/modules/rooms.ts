@@ -136,8 +136,8 @@ export function postRoomAsync(name, history) {
   }
 }
 
-export function destroyRoomAsync(id) {
-  return async dispatch => {
+export function destroyRoomAsync(id, history) {
+  return async (dispatch, getStore) => {
     const res = await fetch(`/rooms/${id}`, {
       method: 'DELETE',
       headers: {
@@ -147,6 +147,10 @@ export function destroyRoomAsync(id) {
     })
     if (res.status === 204) {
       dispatch(destroyRoomSuccess(id))
+      // TODO
+      if (location.pathname === `/rooms/${id}`) {
+        history.push('/rooms/1')
+      }
     }
   }
 }
