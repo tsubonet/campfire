@@ -56,6 +56,25 @@ class RoomsController < ApplicationController
     }
   end
 
+  # PATCH /rooms/1
+  # PATCH /rooms/1.json
+  def update
+    room = Room.find(params[:id])
+
+    if room.update(room_params)
+      response_data = {
+        room: room,
+        txt: ['更新しました！'],
+      }
+      render json: response_data, status: :ok
+    else
+      response_data = {
+        txt: room.errors.full_messages,
+      }
+      render json: response_data, status: :unprocessable_entity
+    end
+  end
+
   # DELETE /rooms/1
   # DELETE /rooms/1.json
   def destroy

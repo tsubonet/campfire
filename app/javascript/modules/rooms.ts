@@ -1,14 +1,19 @@
 import { Action } from '../actions'
 import { Rooms } from '../modules/rooms'
 import { sleep } from '../components/utils'
+import { SubmissionError } from 'redux-form'
 
 // Actions
 export const POST_ROOM_REQUEST = 'POST_ROOM_REQUEST'
 export const POST_ROOM_SUCCESS = 'POST_ROOM_SUCCESS'
 export const POST_ROOM_FAILURE = 'POST_ROOM_FAILURE'
+
 export const POST_ROOM_RESET = 'POST_ROOM_RESET'
+
 export const SORT_ROOM = 'SORT_ROOM'
 export const DESTROY_ROOM_SUCCESS = 'DESTROY_ROOM_SUCCESS'
+
+export const UPDATE_ROOM_SUCCESS = 'UPDATE_ROOM_SUCCESS'
 
 export interface Room {
   id?: number

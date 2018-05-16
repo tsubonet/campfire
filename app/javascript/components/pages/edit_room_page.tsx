@@ -2,6 +2,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import styled from 'styled-components'
+import { SubmissionError } from 'redux-form'
 
 import CommonTemplate from '../templates/common_template'
 import ChatHeader from '../organisms/chat_header'
@@ -9,31 +10,42 @@ import EditRoomForm from '../organisms/edit_room_form'
 import { RootState } from '../../packs/entry'
 
 import { SelectedRoom, selectRoomAsync } from '../../modules/selected_room'
+import { Room, sortRoom } from '../../modules/rooms'
 
 interface Props {
   selectedRoom: SelectedRoom
   match: any
   history: any
   selectRoomAsync(id: number, wait?: number): void
+  sortRoom(room: Room): void
 }
 
 class EditRoomPage extends React.Component<Props, {}> {
   componentDidMount() {
-    const { match, selectRoomAsync, selectedRoom } = this.props
+    const { match, selectRoomAsync } = this.props
     const targetRoomId = match.params.id || 1
     selectRoomAsync(targetRoomId)
   }
 
-  componentDidUpdate(prevProps) {
-    const { match, selectRoomAsync } = this.props
-    const targetRoomId = match.params.id
-    if (prevProps.match.params.id === targetRoomId) return
-    selectRoomAsync(targetRoomId)
-  }
-
-  submit = values => {
-    // print the form values to the console
-    console.log(values)
+  submit = async values => {
+    const res = await fetch(`/rooms/${this.props.selectedRoom.item.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({ name: values.name }),
+    })
+    const json = await res.json()
+    if (res.status === 200) {
+      this.props.sortRoom(json.room)
+      this.props.history.push(`/rooms/${this.props.selectedRoom.item.id}`)
+    } else {
+      throw new SubmissionError({
+        name: '',
+        _error: json.txt.join(''),
+      })
+    }
   }
 
   render() {
@@ -45,7 +57,7 @@ class EditRoomPage extends React.Component<Props, {}> {
         ) : (
           <React.Fragment>
             <ChatHeader room={selectedRoom.item} history={history} />
-            <EditRoomForm onSubmit={this.submit} />
+            <EditRoomForm onSubmit={this.submit} selectedRoom={selectedRoom} />
           </React.Fragment>
         )}
       </CommonTemplate>
@@ -59,10 +71,13 @@ const mapStateToProps = ({ selectedRoom }: RootState) => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, props) => {
   return {
     selectRoomAsync: (id: number, wait: number) => {
       dispatch(selectRoomAsync(id, wait))
+    },
+    sortRoom: (room: Room) => {
+      dispatch(sortRoom(room))
     },
   }
 }

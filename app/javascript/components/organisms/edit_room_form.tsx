@@ -1,30 +1,45 @@
 import * as React from 'react'
 import { Field, reduxForm } from 'redux-form'
+import styled from 'styled-components'
+import RenderField from '../molecules/render_field'
 
-let EditRoomForm = props => {
-  const { handleSubmit } = props
+const EditRoomForm = props => {
+  const { selectedRoom, invalid, error, handleSubmit, pristine, reset, submitting } = props
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="firstName">First Name</label>
-        <Field name="firstName" component="input" type="text" />
-      </div>
-      <div>
-        <label htmlFor="lastName">Last Name</label>
-        <Field name="lastName" component="input" type="text" />
-      </div>
-      <div>
-        <label htmlFor="email">Email</label>
-        <Field name="email" component="input" type="email" />
-      </div>
-      <button type="submit">Submit</button>
-    </form>
+    <Root>
+      <form onSubmit={handleSubmit}>
+        {error && <strong>{error}</strong>}
+        <Field
+          name="name"
+          type="text"
+          component={RenderField}
+          label="name"
+          initialValue={selectedRoom.item.name}
+        />
+
+        <button type="submit" disabled={invalid || pristine || submitting}>
+          Submit
+        </button>
+      </form>
+    </Root>
   )
 }
 
-EditRoomForm = reduxForm({
-  // a unique name for the form
+export const validate = values => {
+  const errors: { name? } = {}
+  if (!values.name) {
+    errors.name = 'Required'
+  } else if (values.name.length > 8) {
+    errors.name = 'Must be 8 characters or less'
+  }
+  return errors
+}
+
+export default reduxForm({
   form: 'editRoom',
+  validate,
 })(EditRoomForm)
 
-export default EditRoomForm
+const Root = styled.div`
+  padding: 20px;
+`
