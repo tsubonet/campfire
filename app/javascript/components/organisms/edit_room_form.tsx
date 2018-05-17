@@ -1,23 +1,18 @@
 import * as React from 'react'
 import { Field, reduxForm } from 'redux-form'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 import RenderField from '../molecules/render_field'
 
 const EditRoomForm = props => {
-  const { selectedRoom, invalid, error, handleSubmit, pristine, reset, submitting } = props
+  const { invalid, error, handleSubmit, pristine, reset, submitting } = props
   return (
     <Root>
       <form onSubmit={handleSubmit}>
         {error && <strong>{error}</strong>}
-        <Field
-          name="name"
-          type="text"
-          component={RenderField}
-          label="name"
-          initialValue={selectedRoom.item.name}
-        />
+        <Field name="name" type="text" component={RenderField} label="name" />
 
-        <button type="submit" disabled={invalid || pristine || submitting}>
+        <button type="submit" disabled={invalid || submitting}>
           Submit
         </button>
       </form>
@@ -37,6 +32,7 @@ export const validate = values => {
 
 export default reduxForm({
   form: 'editRoom',
+  enableReinitialize: true,
   validate,
 })(EditRoomForm)
 

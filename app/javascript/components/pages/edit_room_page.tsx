@@ -16,6 +16,7 @@ interface Props {
   selectedRoom: SelectedRoom
   match: any
   history: any
+  initialValues
   selectRoomAsync(id: number, wait?: number): void
   sortRoom(room: Room): void
 }
@@ -49,7 +50,7 @@ class EditRoomPage extends React.Component<Props, {}> {
   }
 
   render() {
-    const { selectedRoom, history } = this.props
+    const { initialValues, selectedRoom, history } = this.props
     return (
       <CommonTemplate>
         {selectedRoom.loading ? (
@@ -57,7 +58,7 @@ class EditRoomPage extends React.Component<Props, {}> {
         ) : (
           <React.Fragment>
             <ChatHeader room={selectedRoom.item} history={history} />
-            <EditRoomForm onSubmit={this.submit} selectedRoom={selectedRoom} />
+            <EditRoomForm onSubmit={this.submit} initialValues={initialValues} />
           </React.Fragment>
         )}
       </CommonTemplate>
@@ -68,6 +69,7 @@ class EditRoomPage extends React.Component<Props, {}> {
 const mapStateToProps = ({ selectedRoom }: RootState) => {
   return {
     selectedRoom,
+    initialValues: selectedRoom.item,
   }
 }
 
