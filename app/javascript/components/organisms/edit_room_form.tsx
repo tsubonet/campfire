@@ -4,14 +4,12 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import RenderField from '../molecules/render_field'
 
-const EditRoomForm = props => {
-  const { invalid, error, handleSubmit, pristine, reset, submitting } = props
+const EditRoomForm = ({ invalid, error, handleSubmit, pristine, reset, submitting }) => {
   return (
     <Root>
       <form onSubmit={handleSubmit}>
         {error && <strong>{error}</strong>}
         <Field name="name" type="text" component={RenderField} label="name" />
-
         <button type="submit" disabled={invalid || submitting}>
           Submit
         </button>
