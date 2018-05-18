@@ -1,7 +1,7 @@
 class MessageBroadcastJob < ApplicationJob
   queue_as :default
-  def perform(message)
-    RoomChannel.broadcast_to("room_channel_#{message.room_id}", message: ActiveSupport::JSON.decode(render_message(message)))
+  def perform(message, action)
+    RoomChannel.broadcast_to("room_channel_#{message.room_id}", {action: action, message: ActiveSupport::JSON.decode(render_message(message))})
   end
 
   private

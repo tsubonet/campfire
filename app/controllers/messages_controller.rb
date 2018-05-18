@@ -20,12 +20,8 @@ class MessagesController < ApplicationController
   def destroy
     message = Message.find(params[:id])
     if message.destroy
-      #head :no_content
-      #return
-      response_data = {
-        message: message
-      }
-      render json: response_data, status: :ok
+      head :no_content
+      return
     else
       response_data = {
         txt: ['削除できませんでした！'],

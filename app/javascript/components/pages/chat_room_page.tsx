@@ -51,8 +51,8 @@ class ChatRoomPage extends React.Component<Props, {}> {
         },
         received: data => {
           console.log('data', data)
-          if (data.action === 'delete') {
-            this.props.destroyMessage(data.id)
+          if (data.action === 'destroy') {
+            this.props.destroyMessage(data.message.id)
           } else {
             this.props.receiveMessage(data.message)
           }

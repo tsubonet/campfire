@@ -1,5 +1,6 @@
 class Message < ApplicationRecord
   belongs_to :room, touch: true
-  after_commit { MessageBroadcastJob.perform_later self }
+  after_create_commit { MessageBroadcastJob.perform_later(self, "create") }
+  after_destroy { MessageBroadcastJob.perform_later(self.clone, "destroy") }
   default_scope -> { order(created_at: :desc) }
 end

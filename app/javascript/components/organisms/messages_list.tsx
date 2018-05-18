@@ -89,18 +89,15 @@ export default class MessagesList extends React.Component<Props, State> {
     this.messageBox.current.scrollTop = this.messageBox.current.scrollHeight
   }
 
-  async destroyMessage(item) {
-    console.log(item)
-
-    App.room.perform('delete', item)
-    // const res = await fetch(`/messages/${id}`, {
-    //   method: 'DELETE',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Accept: 'application/json',
-    //   },
-    // })
-    //const json = await res.json()
+  destroyMessage(item) {
+    //App.room.perform('delete', item)
+    const res = fetch(`/messages/${item.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
   }
 
   render() {
