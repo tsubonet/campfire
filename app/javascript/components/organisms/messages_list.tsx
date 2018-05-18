@@ -76,6 +76,8 @@ export default class MessagesList extends React.Component<Props, State> {
 
   componentDidUpdate(prevProps) {
     const { messages } = this.props
+
+    // OLDのMessagesをfetchしたとき
     if (prevProps.messages.currentPage !== messages.currentPage) {
       const scrollY3 =
         this.savedElm.offsetTop -
@@ -85,7 +87,11 @@ export default class MessagesList extends React.Component<Props, State> {
       this.messageBox.current.scrollTop = scrollY3
       return
     }
-    if (prevProps.messages.loading !== messages.loading) return
+
+    // messageを削除したとき
+    if (prevProps.messages.items.length > messages.items.length) return
+
+    //if (prevProps.messages.loading !== messages.loading) return
     this.messageBox.current.scrollTop = this.messageBox.current.scrollHeight
   }
 
@@ -137,9 +143,8 @@ export default class MessagesList extends React.Component<Props, State> {
 }
 
 const Root = styled.div`
-  height: 400px;
   overflow-y: auto;
-  padding: 10px;
+  padding: 30px;
 `
 const List = styled.ul`
   display: flex;
