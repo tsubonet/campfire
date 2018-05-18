@@ -1,8 +1,13 @@
 import * as React from 'react'
 import styled from 'styled-components'
 
-const Message = ({ children, ...props }) => {
-  return <Root>{children}</Root>
+const Message = ({ destroyMessage, children, ...props }) => {
+  return (
+    <Root>
+      {children}
+      <button onClick={destroyMessage}>×</button>
+    </Root>
+  )
 }
 
 export default Message

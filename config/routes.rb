@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root to: 'rooms#show'
   get "sandbox" => 'rooms#dummy'
 
-  resources :rooms do
+  resources :rooms, shallow: true do
     resources :messages do
       collection do
         get 'old'

@@ -9,6 +9,7 @@ import 'rxjs/add/operator/map'
 
 // Actions
 export const POST_MESSAGE = 'POST_MESSAGE'
+export const DESTROY_MESSAGE = 'DESTROY_MESSAGE'
 export const SET_MESSAGES = 'SET_MESSAGES'
 export const REQUEST_MESSAGES = 'REQUEST_MESSAGES'
 export const FETCH_OLD_MESSAGES = 'FETCH_OLD_MESSAGES'
@@ -42,6 +43,12 @@ export default function reducer(state: Messages = initialState, action: Action):
       return {
         ...state,
         items: [action.payload.message, ...state.items],
+      }
+
+    case DESTROY_MESSAGE:
+      return {
+        ...state,
+        items: [...state.items].filter(item => item.id !== action.payload.id),
       }
 
     case SET_MESSAGES:
@@ -82,6 +89,14 @@ export function receiveMessage(message) {
     type: POST_MESSAGE,
     payload: {
       message,
+    },
+  }
+}
+export function destroyMessage(id) {
+  return {
+    type: DESTROY_MESSAGE,
+    payload: {
+      id,
     },
   }
 }

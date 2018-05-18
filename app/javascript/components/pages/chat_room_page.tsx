@@ -9,7 +9,12 @@ import MessagesList from '../organisms/messages_list'
 import MessageForm from '../organisms/message_form'
 import { RootState } from '../../packs/entry'
 
-import { Messages, receiveMessage, fetchOldMessagesSync } from '../../modules/messages'
+import {
+  Messages,
+  receiveMessage,
+  destroyMessage,
+  fetchOldMessagesSync,
+} from '../../modules/messages'
 import { Room, Rooms, sortRoom } from '../../modules/rooms'
 import { SelectedRoom, selectRoomAsync } from '../../modules/selected_room'
 
@@ -20,6 +25,7 @@ interface Props {
   match: any
   history: any
   receiveMessage(message): void
+  destroyMessage(id): void
   fetchOldMessagesSync(id: number, messages: Messages): void
   selectRoomAsync(id: number, wait?: number): void
   sortRoom(room: Room): void
@@ -44,8 +50,12 @@ class ChatRoomPage extends React.Component<Props, {}> {
           console.log('disconnected')
         },
         received: data => {
-          //console.log('data', data)
-          this.props.receiveMessage(data.message)
+          console.log('data', data)
+          if (data.action === 'delete') {
+            this.props.destroyMessage(data.id)
+          } else {
+            this.props.receiveMessage(data.message)
+          }
         },
       }
     )
@@ -141,6 +151,9 @@ const mapDispatchToProps = dispatch => {
     },
     receiveMessage: (message: string) => {
       dispatch(receiveMessage(message))
+    },
+    destroyMessage: (id: number) => {
+      dispatch(destroyMessage(id))
     },
   }
 }

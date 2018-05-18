@@ -8,10 +8,30 @@ class MessagesController < ApplicationController
     message.save
   end
 
+  
   def old
     room = Room.find(params[:room_id])
     messages = module_get_messages(room)
     render json: {messages: messages}, status: :ok
+  end
+
+  # DELETE /messages/1
+  # DELETE /messages/1.json
+  def destroy
+    message = Message.find(params[:id])
+    if message.destroy
+      #head :no_content
+      #return
+      response_data = {
+        message: message
+      }
+      render json: response_data, status: :ok
+    else
+      response_data = {
+        txt: ['削除できませんでした！'],
+      }
+      render json: response_data, status: :unprocessable_entity
+    end
   end
 
   private

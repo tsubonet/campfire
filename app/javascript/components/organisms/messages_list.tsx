@@ -15,6 +15,7 @@ interface Props {
 interface State {
   windowH: number
 }
+declare let App: any
 export default class MessagesList extends React.Component<Props, State> {
   private messageBox
   private savedElm
@@ -88,6 +89,20 @@ export default class MessagesList extends React.Component<Props, State> {
     this.messageBox.current.scrollTop = this.messageBox.current.scrollHeight
   }
 
+  async destroyMessage(item) {
+    console.log(item)
+
+    App.room.perform('delete', item)
+    // const res = await fetch(`/messages/${id}`, {
+    //   method: 'DELETE',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     Accept: 'application/json',
+    //   },
+    // })
+    //const json = await res.json()
+  }
+
   render() {
     const { messages } = this.props
     return (
@@ -108,7 +123,11 @@ export default class MessagesList extends React.Component<Props, State> {
         <List>
           {messages.items.map((item, i) => {
             return (
-              <Message key={i} id={`_${item.id}`}>
+              <Message
+                key={i}
+                id={`_${item.id}`}
+                destroyMessage={this.destroyMessage.bind(this, item)}
+              >
                 <Time>{item.created_at}</Time>
                 <Txt>{item.content}</Txt>
               </Message>
