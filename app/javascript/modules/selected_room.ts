@@ -4,8 +4,9 @@ import { setMessages } from '../modules/messages'
 import { sleep } from '../components/utils'
 
 // Actions
-export const SET_ROOM_REQUEST = 'SET_ROOM_REQUEST'
-export const SET_ROOM_SUCCESS = 'SET_ROOM_SUCCESS'
+export const SELECT_ROOM_REQUEST = 'SELECT_ROOM_REQUEST'
+export const SELECT_ROOM_SUCCESS = 'SELECT_ROOM_SUCCESS'
+export const SELECT_ROOM_ERROR = 'SELECT_ROOM_ERROR'
 
 // Reducer
 export interface SelectedRoom {
@@ -18,12 +19,12 @@ const initialState = {
 }
 export default function reducer(state: SelectedRoom = initialState, action: Action): SelectedRoom {
   switch (action.type) {
-    case SET_ROOM_REQUEST:
+    case SELECT_ROOM_REQUEST:
       return {
         ...state,
         loading: true,
       }
-    case SET_ROOM_SUCCESS:
+    case SELECT_ROOM_SUCCESS:
       return action.payload.room
     default:
       return state
@@ -31,15 +32,15 @@ export default function reducer(state: SelectedRoom = initialState, action: Acti
 }
 
 // Action Creators
-export function setRoomRequest() {
+export function selectRoomRequest() {
   return {
-    type: SET_ROOM_REQUEST,
+    type: SELECT_ROOM_REQUEST,
   }
 }
 
-export function setRoomSuccess(room) {
+export function selectRoomSuccess(room) {
   return {
-    type: SET_ROOM_SUCCESS,
+    type: SELECT_ROOM_SUCCESS,
     payload: {
       room,
     },
@@ -49,7 +50,7 @@ export function setRoomSuccess(room) {
 export function selectRoomAsync(id, wait) {
   return async dispatch => {
     if (wait) {
-      dispatch(setRoomRequest())
+      dispatch(selectRoomRequest())
     }
     const res = await fetch(`/rooms/${id}`, {
       headers: {
@@ -62,6 +63,6 @@ export function selectRoomAsync(id, wait) {
     }
     const json = await res.json()
     await dispatch(setMessages(json.messages))
-    dispatch(setRoomSuccess(json.room))
+    dispatch(selectRoomSuccess(json.room))
   }
 }
