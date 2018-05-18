@@ -68,7 +68,11 @@ export default function reducer(state: Rooms = initialState, action: Action): Ro
         items: [...state.items].filter(item => item.id !== action.payload.id),
       }
     default:
-      return state
+      return {
+        ...state,
+        loading: false,
+        errors: null,
+      }
   }
 }
 

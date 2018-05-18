@@ -25,17 +25,15 @@ class RoomsController < ApplicationController
   def show
     @rooms = { 
       items: Room.all, 
-      loading: false,
-      errors: nil 
     }
     if room = Room.find_by(id: params[:id])
       response_data = {
-        room: {
-          item: room,
-          loading: false
-        },
+        room: room,
         messages: module_get_messages(room)
       }
+      status= :ok
+    else 
+      status= :unprocessable_entity
     end
 
     #puts "#######################"
@@ -44,7 +42,7 @@ class RoomsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: response_data }
+      format.json { render json: response_data, status: status }
     end
   end
 
@@ -53,8 +51,6 @@ class RoomsController < ApplicationController
   def edit
     @rooms = { 
       items: Room.all, 
-      loading: false,
-      errors: nil 
     }
   end
 

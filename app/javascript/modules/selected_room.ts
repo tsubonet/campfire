@@ -25,7 +25,10 @@ export default function reducer(state: SelectedRoom = initialState, action: Acti
         loading: true,
       }
     case SELECT_ROOM_SUCCESS:
-      return action.payload.room
+      return {
+        item: action.payload.room,
+        loading: false,
+      }
     default:
       return state
   }
@@ -62,7 +65,12 @@ export function selectRoomAsync(id, wait) {
       await sleep(wait)
     }
     const json = await res.json()
-    await dispatch(setMessages(json.messages))
-    dispatch(selectRoomSuccess(json.room))
+    console.log(res)
+    if (res.status === 200) {
+      await dispatch(setMessages(json.messages))
+      dispatch(selectRoomSuccess(json.room))
+    } else {
+      console.log('error')
+    }
   }
 }
