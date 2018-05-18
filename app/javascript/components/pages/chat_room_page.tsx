@@ -44,6 +44,7 @@ class ChatRoomPage extends React.Component<Props, {}> {
           console.log('disconnected')
         },
         received: data => {
+          //console.log('data', data)
           this.props.receiveMessage(data.message)
         },
       }

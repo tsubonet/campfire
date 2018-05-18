@@ -65,7 +65,6 @@ export function selectRoomAsync(id, wait) {
       await sleep(wait)
     }
     const json = await res.json()
-    console.log(res)
     if (res.status === 200) {
       await dispatch(setMessages(json.messages))
       dispatch(selectRoomSuccess(json.room))
