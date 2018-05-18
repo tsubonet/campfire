@@ -10,12 +10,13 @@ import MessageForm from '../organisms/message_form'
 import { RootState } from '../../packs/entry'
 
 import { Messages, receiveMessage, fetchOldMessagesSync } from '../../modules/messages'
-import { Room, sortRoom } from '../../modules/rooms'
+import { Room, Rooms, sortRoom } from '../../modules/rooms'
 import { SelectedRoom, selectRoomAsync } from '../../modules/selected_room'
 
 interface Props {
   messages: Messages
   selectedRoom: SelectedRoom
+  rooms: Rooms
   match: any
   history: any
   receiveMessage(message): void
@@ -54,8 +55,8 @@ class ChatRoomPage extends React.Component<Props, {}> {
   }
 
   componentDidMount() {
-    const { match, selectRoomAsync, selectedRoom } = this.props
-    const targetRoomId = match.params.id || 1
+    const { match, selectRoomAsync, selectedRoom, rooms } = this.props
+    const targetRoomId = match.params.id || rooms.items[0].id
     selectRoomAsync(targetRoomId, 500)
     this.connectActionCable(targetRoomId)
   }
@@ -118,8 +119,9 @@ class ChatRoomPage extends React.Component<Props, {}> {
   }
 }
 
-const mapStateToProps = ({ messages, selectedRoom }: RootState) => {
+const mapStateToProps = ({ messages, rooms, selectedRoom }: RootState) => {
   return {
+    rooms,
     messages,
     selectedRoom,
   }

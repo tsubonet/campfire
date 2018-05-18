@@ -11,12 +11,12 @@ import { createEpicMiddleware } from 'redux-observable'
 import epics from '../epics'
 
 import selectedRoom, { SelectedRoom } from '../modules/selected_room'
-import rooms, { Room } from '../modules/rooms'
+import rooms, { Rooms } from '../modules/rooms'
 import messages, { Messages } from '../modules/messages'
 
 export interface RootState {
   selectedRoom: SelectedRoom
-  rooms: Room[]
+  rooms: Rooms
   messages: Messages
 }
 

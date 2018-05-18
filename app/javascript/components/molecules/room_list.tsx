@@ -33,6 +33,7 @@ class RoomList extends React.Component<Props> {
                 to={`/rooms/${room.id}`}
                 label={room.name}
                 destroyRoomAsync={destroyRoomAsync}
+                rootUrl={location.pathname === '/' && idx === 0 ? true : false}
               />
             </Li>
           )

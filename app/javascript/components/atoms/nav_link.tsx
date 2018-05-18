@@ -27,8 +27,9 @@ interface Props {
   showButton: Function
   hideButton: Function
   destroyRoom: any
+  rootUrl: boolean
 }
-const NavLink = ({ label, to, isAppear, showButton, hideButton, destroyRoom }: Props) => (
+const NavLink = ({ rootUrl, label, to, isAppear, showButton, hideButton, destroyRoom }: Props) => (
   <Route
     path={to}
     children={({ match, location }) => (
@@ -36,7 +37,7 @@ const NavLink = ({ label, to, isAppear, showButton, hideButton, destroyRoom }: P
         to={to}
         onMouseEnter={showButton}
         onMouseLeave={hideButton}
-        className={match || (location.pathname === '/' && to === '/rooms/1') ? 'active' : ''}
+        className={match || rootUrl ? 'active' : ''}
       >
         {label}
         {isAppear && <button onClick={destroyRoom}>×</button>}

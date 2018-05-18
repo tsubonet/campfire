@@ -28,13 +28,15 @@ class RoomsController < ApplicationController
       loading: false,
       errors: nil 
     }
-
-    room = Room.find(params[:id] || 1)
-    @room = {
-      item: room,
-      loading: false
-    }
-    @messages = module_get_messages(room)
+    if room = Room.find_by(id: params[:id])
+      response_data = {
+        room: {
+          item: room,
+          loading: false
+        },
+        messages: module_get_messages(room)
+      }
+    end
 
     #puts "#######################"
     #puts @room.as_json(:include => @messages)
@@ -42,7 +44,7 @@ class RoomsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: {room: @room, messages: @messages} }
+      format.json { render json: response_data }
     end
   end
 

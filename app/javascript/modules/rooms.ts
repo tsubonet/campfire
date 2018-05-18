@@ -142,7 +142,7 @@ export function postRoomAsync(name, history) {
 }
 
 export function destroyRoomAsync(id, history) {
-  return async (dispatch, getStore) => {
+  return async (dispatch, getState) => {
     const res = await fetch(`/rooms/${id}`, {
       method: 'DELETE',
       headers: {
@@ -153,8 +153,8 @@ export function destroyRoomAsync(id, history) {
     if (res.status === 204) {
       dispatch(destroyRoomSuccess(id))
       // TODO
-      if (location.pathname.match(/\/rooms\/(\d*)/)[1] === `${id}`) {
-        history.push('/rooms/1')
+      if (getState().selectedRoom.item.id === id) {
+        history.push(`/rooms/${getState().rooms.items[0].id}`)
       }
     }
   }

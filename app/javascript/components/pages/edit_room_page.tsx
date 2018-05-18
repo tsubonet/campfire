@@ -10,11 +10,12 @@ import EditRoomForm from '../organisms/edit_room_form'
 import { RootState } from '../../packs/entry'
 
 import { SelectedRoom, selectRoomAsync } from '../../modules/selected_room'
-import { Room, sortRoom } from '../../modules/rooms'
+import { Room, Rooms, sortRoom } from '../../modules/rooms'
 
 interface Props {
   selectedRoom: SelectedRoom
   match: any
+  rooms: Rooms
   history: any
   initialValues
   selectRoomAsync(id: number, wait?: number): void
@@ -23,8 +24,8 @@ interface Props {
 
 class EditRoomPage extends React.Component<Props, {}> {
   componentDidMount() {
-    const { match, selectRoomAsync } = this.props
-    const targetRoomId = match.params.id || 1
+    const { match, rooms, selectRoomAsync } = this.props
+    const targetRoomId = match.params.id || rooms.items[0].id
     selectRoomAsync(targetRoomId)
   }
 
@@ -66,8 +67,9 @@ class EditRoomPage extends React.Component<Props, {}> {
   }
 }
 
-const mapStateToProps = ({ selectedRoom }: RootState) => {
+const mapStateToProps = ({ selectedRoom, rooms }: RootState) => {
   return {
+    rooms,
     selectedRoom,
     initialValues: selectedRoom.item,
   }
