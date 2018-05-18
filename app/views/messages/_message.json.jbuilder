@@ -1,1 +1,1 @@
-json.extract! message, :id, :content, :created_at, :updated_at
+json.extract! message, :id, :content, :room_id, :created_at, :updated_at
