@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import Time from './time.tsx'
+import Time from './time'
 
 storiesOf('Atoms/Time', module)
   .add('デフォルト', () => <Time>2018-05-18T11:52:29.241Z</Time>)
