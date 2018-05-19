@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { Provider } from 'react-redux'
@@ -10,4 +10,4 @@ const initialValues = {
   id: 1,
   name: 'aaaa',
 }
-//storiesOf('Organisms/EditRoomForm', module).add('デフォルト', () => ({}))
+storiesOf('Organisms/EditRoomForm', module).add('デフォルト', () => ({}))
