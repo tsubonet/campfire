@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as moment from 'moment'
 import 'moment/locale/ja'
-import { containPresenter } from '../utils/hoc.js'
+import { containPresenter } from '../utils/hoc'
 
 export const TimePresenter = props => <time {...props} />
 
