@@ -11,6 +11,7 @@ interface Props {
   messages: Messages
   room: Room
   fetchOldMessagesSync(id: number, messages: Messages): void
+  destroyMessage(item)
 }
 interface State {
   windowH: number
@@ -95,19 +96,8 @@ export default class MessagesList extends React.Component<Props, State> {
     this.messageBox.current.scrollTop = this.messageBox.current.scrollHeight
   }
 
-  destroyMessage(item) {
-    //App.room.perform('delete', item)
-    const res = fetch(`/messages/${item.id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    })
-  }
-
   render() {
-    const { messages } = this.props
+    const { messages, destroyMessage } = this.props
     return (
       <Root innerRef={this.messageBox} style={{ height: this.state.windowH - 40 - 103 }}>
         {!messages.items.length && (
@@ -126,11 +116,7 @@ export default class MessagesList extends React.Component<Props, State> {
         <List>
           {messages.items.map((item, i) => {
             return (
-              <Message
-                key={i}
-                id={`_${item.id}`}
-                destroyMessage={this.destroyMessage.bind(this, item)}
-              >
+              <Message key={i} id={`_${item.id}`} destroyMessage={destroyMessage}>
                 <Time>{item.created_at}</Time>
                 <Txt>{item.content}</Txt>
               </Message>

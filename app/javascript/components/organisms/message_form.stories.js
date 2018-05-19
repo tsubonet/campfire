@@ -14,7 +14,7 @@ const selectedRoom = {
 storiesOf('Organisms/MessageForm', module).add('デフォルト', () => (
   <MessageForm
     room={selectedRoom.item}
-    handleSubmit={action('click')}
+    handleSubmit={action('onKeyDown')}
     //inputRef={el => (this.inputMessageElement = el)}
   />
 ))

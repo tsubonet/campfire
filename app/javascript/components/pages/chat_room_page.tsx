@@ -104,6 +104,17 @@ class ChatRoomPage extends React.Component<Props, {}> {
     }
   }
 
+  destroyMessage(item) {
+    //App.room.perform('delete', item)
+    const res = fetch(`/messages/${item.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
+  }
+
   render() {
     const { history, messages, selectedRoom, fetchOldMessagesSync } = this.props
     return (
@@ -117,6 +128,7 @@ class ChatRoomPage extends React.Component<Props, {}> {
               room={selectedRoom.item}
               messages={messages}
               fetchOldMessagesSync={fetchOldMessagesSync}
+              destroyMessage={this.destroyMessage.bind(this)}
             />
             <MessageForm
               room={selectedRoom.item}
