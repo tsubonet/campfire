@@ -25,12 +25,58 @@ const messages = {
       content: 'bbbbb',
       created_at: '2018-05-18T11:52:29.241Z',
     },
+    {
+      id: 2,
+      content: 'bbbbb',
+      created_at: '2018-05-18T11:52:29.241Z',
+    },
+    {
+      id: 2,
+      content: 'bbbbb',
+      created_at: '2018-05-18T11:52:29.241Z',
+    },
+    {
+      id: 2,
+      content: 'bbbbb',
+      created_at: '2018-05-18T11:52:29.241Z',
+    },
+    {
+      id: 2,
+      content: 'bbbbb',
+      created_at: '2018-05-18T11:52:29.241Z',
+    },
+    {
+      id: 2,
+      content: 'bbbbb',
+      created_at: '2018-05-18T11:52:29.241Z',
+    },
+    {
+      id: 2,
+      content: 'bbbbb',
+      created_at: '2018-05-18T11:52:29.241Z',
+    },
+    {
+      id: 2,
+      content: 'bbbbb',
+      created_at: '2018-05-18T11:52:29.241Z',
+    },
+    {
+      id: 2,
+      content: 'bbbbb',
+      created_at: '2018-05-18T11:52:29.241Z',
+    },
+    {
+      id: 2,
+      content: 'bbbbb',
+      created_at: '2018-05-18T11:52:29.241Z',
+    },
   ],
 }
 storiesOf('Organisms/MessagesList', module).add('デフォルト', () => (
   <MessagesList
     room={selectedRoom.item}
     messages={messages}
-    fetchOldMessagesSync={action('click')}
+    fetchOldMessagesSync={action('fetchOld')}
+    destroyMessage={action('click')}
   />
 ))

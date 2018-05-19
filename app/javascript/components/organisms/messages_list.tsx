@@ -10,7 +10,7 @@ interface Props {
   messages: Messages
   room: Room
   fetchOldMessagesSync(id: number, messages: Messages): void
-  destroyMessage(item)
+  destroyMessage
 }
 interface State {
   windowH: number
