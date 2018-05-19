@@ -1,18 +1,13 @@
 import * as React from 'react'
 import { Provider } from 'react-redux'
-import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux'
+import { ConnectedRouter, routerReducer } from 'react-router-redux'
 import ReactOnRails from 'react-on-rails'
 import createHistory from 'history/createBrowserHistory'
 import Router from '../components/router'
-import { compose, createStore, combineReducers, applyMiddleware } from 'redux'
-import { reducer as formReducer } from 'redux-form'
-import thunk from 'redux-thunk'
-import { createEpicMiddleware } from 'redux-observable'
-import epics from '../epics'
-
-import selectedRoom, { SelectedRoom } from '../modules/selected_room'
-import rooms, { Rooms } from '../modules/rooms'
-import messages, { Messages } from '../modules/messages'
+import configureStore from '../store'
+import { SelectedRoom } from '../modules/selected_room'
+import { Rooms } from '../modules/rooms'
+import { Messages } from '../modules/messages'
 
 export interface RootState {
   selectedRoom: SelectedRoom
@@ -23,20 +18,7 @@ export interface RootState {
 const history = createHistory()
 
 const App = (props, railsContext) => {
-  const middlewares = [routerMiddleware(history), thunk, createEpicMiddleware(epics)]
-  if (process.env.NODE_ENV === 'development') {
-    const { logger } = require('redux-logger')
-    middlewares.push(logger)
-  }
-  const rootReducer = combineReducers({
-    messages,
-    rooms,
-    selectedRoom,
-    form: formReducer,
-    router: routerReducer,
-  })
-  const enhancer = compose(applyMiddleware(...middlewares))
-  const store = createStore(rootReducer, props, enhancer)
+  const store = configureStore(props)
 
   return (
     <Provider store={store}>

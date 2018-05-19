@@ -4,7 +4,7 @@ module.exports = (baseConfig, env) => {
   const config = genDefaultConfig(baseConfig, env)
 
   config.module.rules.push({
-    test: /\.tsx?$/,
+    test: /\.(tsx)?$/,
     exclude: /node_modules/,
     include: [/stories/, /components/],
     loader: 'ts-loader',
