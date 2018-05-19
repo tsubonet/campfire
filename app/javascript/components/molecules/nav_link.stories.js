@@ -5,12 +5,8 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import NavLink from './nav_link'
 import '../utils/global_style'
 
-storiesOf('Atoms/NavLink', module).add('デフォルト', () => (
+storiesOf('Molecules/NavLink', module).add('デフォルト', () => (
   <Router>
-    <NavLink
-      to={`/rooms/1`}
-      label="デフォルト"
-      destroyRoomAsync={action('ボタンがクリックされました')}
-    />
+    <NavLink to={`/rooms/1`} label="デフォルト" destroyRoomAsync={action('onclick')} />
   </Router>
 ))

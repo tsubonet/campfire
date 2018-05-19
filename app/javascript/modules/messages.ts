@@ -139,7 +139,7 @@ export function fetchOldMessagesSync(id, messages) {
 export function messagesEpic(action$) {
   return action$
     .ofType('REQUEST_OLD_MESSAGES')
-    .delay(1000)
+    .delay(2000)
     .mergeMap(async action => {
       const res = await fetch(
         `/rooms/${action.payload.id}/messages/old/?page=${action.payload.messages.currentPage + 1}`,

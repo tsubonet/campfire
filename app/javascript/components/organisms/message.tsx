@@ -1,11 +1,14 @@
 import * as React from 'react'
 import styled from 'styled-components'
+import Txt from '../atoms/txt'
+import Time from '../atoms/time'
 
-const Message = ({ destroyMessage, children, ...props }) => {
+const Message = ({ destroyMessage, item, ...props }) => {
   return (
-    <Root>
-      {children}
-      <button onClick={destroyMessage}>×</button>
+    <Root id={`_${item.id}`}>
+      <Time>{item.created_at}</Time>
+      <Txt>{item.content}</Txt>
+      <button onClick={destroyMessage.bind(this, item)}>×</button>
     </Root>
   )
 }

@@ -7,6 +7,6 @@ import '../utils/global_style'
 
 storiesOf('Molecules/SideHeading', module).add('デフォルト', () => (
   <Router>
-    <SideHeading openModal={action('ボタンがクリックされました')} />
+    <SideHeading openModal={action('onclick')} />
   </Router>
 ))

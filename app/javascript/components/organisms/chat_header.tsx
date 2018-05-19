@@ -3,17 +3,11 @@ import styled from 'styled-components'
 import Button from '../atoms/button'
 import Txt from '../atoms/txt'
 
-const ChatHeader = ({ room, history, ...props }) => {
+const ChatHeader = ({ room, transitEdit, ...props }) => {
   return (
     <Root>
       <Txt>ルーム名: {room.name}</Txt>
-      <Button
-        onClick={_ => {
-          history.push(`/rooms/${room.id}/edit`)
-        }}
-      >
-        Edit
-      </Button>
+      <Button onClick={transitEdit}>Edit</Button>
     </Root>
   )
 }

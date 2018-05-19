@@ -35,7 +35,7 @@ storiesOf('Organisms/Modal', module).add('デフォルト', () => (
       label="ルーム名を入力してください"
       closeModal={action('click')}
       isOpen={true}
-      handleSubmit={action('click')}
+      handleSubmit={action('onkeydown')}
       //inputRef={el => (this.inputRoomElement = el)}
     />
   </Router>

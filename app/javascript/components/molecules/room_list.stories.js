@@ -25,6 +25,6 @@ const items = [
 ]
 storiesOf('Molecules/RoomList', module).add('デフォルト', () => (
   <Router>
-    <RoomList items={items} destroyRoomAsync={action('ボタンがクリックされました')} />
+    <RoomList items={items} destroyRoomAsync={action('onclick')} />
   </Router>
 ))

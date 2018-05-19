@@ -13,9 +13,6 @@ const item = {
 }
 storiesOf('Organisms/Message', module).add('デフォルト', () => (
   <ul>
-    <Message id={`_${item.id}`} destroyMessage={action('クリックされました')}>
-      <Time>{item.created_at}</Time>
-      <Txt>{item.content}</Txt>
-    </Message>
+    <Message item={item} destroyMessage={action('onclick')} />
   </ul>
 ))

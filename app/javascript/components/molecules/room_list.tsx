@@ -1,7 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import { Room } from '../../modules/rooms'
-import NavLink from '../atoms/nav_link'
+import NavLink from '../molecules/nav_link'
 
 interface Props {
   items: Array<Room>

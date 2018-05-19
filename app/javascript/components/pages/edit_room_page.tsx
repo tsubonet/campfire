@@ -50,6 +50,11 @@ class EditRoomPage extends React.Component<Props, {}> {
     }
   }
 
+  transitEdit() {
+    const { history, selectedRoom } = this.props
+    history.push(`/rooms/${selectedRoom.item.id}/edit`)
+  }
+
   render() {
     const { initialValues, selectedRoom, history } = this.props
     return (
@@ -58,7 +63,7 @@ class EditRoomPage extends React.Component<Props, {}> {
           <Loading>loading...</Loading>
         ) : (
           <React.Fragment>
-            <ChatHeader room={selectedRoom.item} history={history} />
+            <ChatHeader room={selectedRoom.item} transitEdit={this.transitEdit.bind(this)} />
             <EditRoomForm onSubmit={this.submit} initialValues={initialValues} />
           </React.Fragment>
         )}

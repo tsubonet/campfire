@@ -115,6 +115,11 @@ class ChatRoomPage extends React.Component<Props, {}> {
     })
   }
 
+  transitEdit() {
+    const { history, selectedRoom } = this.props
+    history.push(`/rooms/${selectedRoom.item.id}/edit`)
+  }
+
   render() {
     const { history, messages, selectedRoom, fetchOldMessagesSync } = this.props
     return (
@@ -123,7 +128,7 @@ class ChatRoomPage extends React.Component<Props, {}> {
           <Loading>loading...</Loading>
         ) : (
           <React.Fragment>
-            <ChatHeader room={selectedRoom.item} history={history} />
+            <ChatHeader room={selectedRoom.item} transitEdit={this.transitEdit.bind(this)} />
             <MessagesList
               room={selectedRoom.item}
               messages={messages}
