@@ -10,7 +10,7 @@ storiesOf('Atoms/NavLink', module).add('デフォルト', () => (
     <NavLink
       to={`/rooms/1`}
       label="デフォルト"
-      destroyRoom={action('ボタンがクリックされました')}
+      destroyRoomAsync={action('ボタンがクリックされました')}
     />
   </Router>
 ))

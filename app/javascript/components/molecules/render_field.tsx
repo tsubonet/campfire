@@ -4,6 +4,7 @@ import Input from '../atoms/input'
 
 const RenderField = ({ input, label, type, meta: { touched, error } }) => (
   <Root>
+    {console.log(input)}
     <label>{label}</label>
     <div>
       <Input {...input} placeholder={label} type={type} />
