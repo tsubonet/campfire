@@ -1,23 +1,34 @@
-// import React from 'react'
-// import { Provider } from 'react-redux'
-// import { storiesOf } from '@storybook/react'
-// import { action } from '@storybook/addon-actions'
-// import CommonTemplate from './common_template'
-// import '../utils/global_style'
+import * as React from 'react'
+import { storiesOf } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
+import { Provider } from 'react-redux'
+import { ConnectedRouter, routerReducer } from 'react-router-redux'
+import createHistory from 'history/createBrowserHistory'
+import CommonTemplate from './common_template'
+import configureStore from '../../store'
+import '../utils/global_style'
 
-// import selectedRoom from '../../modules/selected_room'
-// import rooms from '../../modules/rooms'
-// import messages from '../../modules/messages'
-// import { compose, createStore, combineReducers, applyMiddleware } from 'redux'
-// const rootReducer = combineReducers({
-//   messages,
-//   rooms,
-//   selectedRoom,
-//   form: formReducer,
-//   router: routerReducer,
-// })
-// const store = createStore(rootReducer, props, enhancer)
+const props = {
+  rooms: {
+    items: [
+      {
+        id: 1,
+        name: 'room1',
+      },
+      {
+        id: 2,
+        name: 'room2',
+      },
+    ],
+  },
+}
+const history = createHistory()
+const store = configureStore(props)
 
-// storiesOf('Templates/CommonTemplate', module)
-//   .addDecorator(getStory => <Provider store={store}>{getStory()}</Provider>)
-//   .add('デフォルト', () => <CommonTemplate />)
+storiesOf('Templates/CommonTemplate', module)
+  .addDecorator(story => (
+    <Provider store={store}>
+      <ConnectedRouter history={history}>{story()}</ConnectedRouter>
+    </Provider>
+  ))
+  .add('デフォルト', () => <CommonTemplate />)

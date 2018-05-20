@@ -13,4 +13,6 @@ const initialValues = {
 }
 storiesOf('Organisms/EditRoomForm', module)
   .addDecorator(story => <Provider store={store}>{story()}</Provider>)
-  .add('デフォルト', () => <EditRoomForm />)
+  .add('デフォルト', () => (
+    <EditRoomForm onSubmit={action('onsubmit')} initialValues={initialValues} />
+  ))
