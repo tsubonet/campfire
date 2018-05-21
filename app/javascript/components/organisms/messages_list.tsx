@@ -91,7 +91,7 @@ export default class MessagesList extends React.Component<Props, State> {
     // messageを削除したとき
     if (prevProps.messages.items.length > messages.items.length) return
 
-    // old messageをfetchしたとき
+    // messageをfetchしてないとき
     if (prevProps.messages.loading !== messages.loading) return
 
     this.messageBox.current.scrollTop = this.messageBox.current.scrollHeight
