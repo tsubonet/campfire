@@ -18,14 +18,19 @@ export const rootReducer = combineReducers({
   router: routerReducer,
 })
 
+declare let window: any
 export default function configureStore(initialState) {
   const middlewares = [routerMiddleware(history), thunk, createEpicMiddleware(epics)]
   if (process.env.NODE_ENV === 'development') {
     const { logger } = require('redux-logger')
     middlewares.push(logger)
   }
+  const composeEnhancers =
+    process.env.NODE_ENV === 'development'
+      ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+      : compose
 
-  const enhancer = compose(applyMiddleware(...middlewares))
+  const enhancer = composeEnhancers(applyMiddleware(...middlewares))
   const store = createStore(rootReducer, initialState, enhancer)
 
   return store
