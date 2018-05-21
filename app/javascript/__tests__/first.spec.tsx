@@ -1,7 +1,11 @@
-import React, { Component } from 'react'
+import * as React from 'react'
 import { shallow } from 'enzyme'
 
-class Sample extends Component {
+interface Props {
+  onWillMountHandle
+  onClickHandle
+}
+class Sample extends React.Component<Props> {
   constructor(props) {
     super(props)
   }

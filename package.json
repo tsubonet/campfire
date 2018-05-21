@@ -3,8 +3,13 @@
   "private": true,
   "jest": {
     "roots": ["<rootDir>/app/javascript/"],
-    "setupTestFrameworkScriptFile": "<rootDir>/app/javascript/__tests__/setup/setup_enzyme.js",
-    "testPathIgnorePatterns": ["<rootDir>/app/javascript/__tests__/setup/"]
+    "setupTestFrameworkScriptFile": "<rootDir>/app/javascript/__tests__/setup/setup_enzyme.ts",
+    "testPathIgnorePatterns": ["<rootDir>/app/javascript/__tests__/setup/"],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
   },
   "scripts": {
     "storybook": "start-storybook -p 6006",
@@ -48,6 +53,7 @@
     "@storybook/addon-links": "^3.4.3",
     "@storybook/addons": "^3.4.3",
     "@storybook/react": "^3.4.3",
+    "@types/jest": "^22.2.3",
     "babel-core": "^6.26.3",
     "babel-jest": "^22.4.4",
     "babel-runtime": "^6.26.0",
@@ -56,6 +62,7 @@
     "enzyme-to-json": "^3.3.4",
     "jest": "^22.4.4",
     "react-test-renderer": "^16.3.2",
+    "ts-jest": "^22.4.6",
     "webpack-dev-server": "2.11.2"
   }
 }

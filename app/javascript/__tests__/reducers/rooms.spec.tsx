@@ -1,4 +1,4 @@
-import reducer from '../../modules/rooms.ts'
+import reducer from '../../modules/rooms'
 
 // const initialState = {
 //   year: new Date().getFullYear(),
