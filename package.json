@@ -2,12 +2,15 @@
   "name": "campfire",
   "private": true,
   "jest": {
-    "roots": ["<rootDir>/app/javascript/"]
+    "roots": ["<rootDir>/app/javascript/"],
+    "setupTestFrameworkScriptFile": "<rootDir>/app/javascript/__tests__/setup/setup_enzyme.js",
+    "testPathIgnorePatterns": ["<rootDir>/app/javascript/__tests__/setup/"]
   },
   "scripts": {
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.8",
