@@ -18,6 +18,8 @@ export const UPDATE_ROOM_SUCCESS = 'UPDATE_ROOM_SUCCESS'
 export interface Room {
   id?: number
   name?: string
+  created_at?: string
+  updated_at?: string
 }
 export interface Rooms {
   items: Array<Room>

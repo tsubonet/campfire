@@ -1,5 +1,5 @@
 export interface Action {
-  type: string
+  type?: string
   payload?: any
   error?: any
 }
