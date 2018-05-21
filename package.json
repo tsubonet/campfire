@@ -1,9 +1,13 @@
 {
   "name": "campfire",
   "private": true,
+  "jest": {
+    "roots": ["<rootDir>/app/javascript/"]
+  },
   "scripts": {
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "test": "jest"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.8",
