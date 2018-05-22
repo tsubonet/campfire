@@ -4,6 +4,6 @@ exports[`render test 1`] = `
 <button
   className="sc-bdVaJa hsxneG"
 >
-  ｓTest
+  Test
 </button>
 `;

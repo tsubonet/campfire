@@ -2,8 +2,8 @@
 
 exports[`render test 1`] = `
 <time
-  dateTime="Invalid date"
+  dateTime="2018-05-18T20:52"
 >
-  有効な時間表現ではありません
+  05月18日(金)20:52
 </time>
 `;
