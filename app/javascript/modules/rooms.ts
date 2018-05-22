@@ -1,3 +1,4 @@
+const BASE = process.env.BROWSER ? '' : `http://localhost:3000`
 import { Action } from '../actions'
 import { sleep } from '../components/utils'
 
@@ -126,7 +127,7 @@ export function destroyRoomSuccess(id) {
 export function postRoomAsync(name, history) {
   return async dispatch => {
     dispatch(postRoomRequest())
-    const res = await fetch(`/rooms/`, {
+    const res = await fetch(`${BASE}/rooms/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
