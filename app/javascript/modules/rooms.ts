@@ -1,4 +1,3 @@
-const BASE = process.env.BROWSER ? '' : `http://localhost:3000`
 import { Action } from '../actions'
 import { sleep } from '../components/utils'
 
@@ -127,7 +126,7 @@ export function destroyRoomSuccess(id) {
 export function postRoomAsync(name, history) {
   return async dispatch => {
     dispatch(postRoomRequest())
-    const res = await fetch(`${BASE}/rooms/`, {
+    const res = await fetch(`/rooms/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -137,9 +136,11 @@ export function postRoomAsync(name, history) {
     })
     await sleep(1000)
     const json = await res.json()
-    if (res.status === 201) {
+    if (res.status === 201 || res.status === 200) {
       dispatch(postRoomSuccess(json.room))
-      history.push(`/rooms/${json.room.id}`)
+      if (history) {
+        history.push(`/rooms/${json.room.id}`)
+      }
     } else {
       dispatch(postRoomFailure(json.txt))
     }

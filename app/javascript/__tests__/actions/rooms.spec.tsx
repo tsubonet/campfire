@@ -1,14 +1,12 @@
-import 'isomorphic-fetch'
 import * as configureStore from 'redux-mock-store'
-import createHistory from 'history/createBrowserHistory'
 import thunk from 'redux-thunk'
+import * as fetchMock from 'fetch-mock'
 import { postRoomRequest, postRoomSuccess, postRoomAsync } from '../../modules/rooms'
 
-const history = createHistory()
 const middlewares = [thunk]
 const mockStore = configureStore(middlewares)
 
-describe('rooms action', () => {
+describe('sync actions', () => {
   it('should dispatch postRoomRequest', () => {
     // Initialize mockstore with empty state
     const initialState = {}
@@ -47,21 +45,31 @@ describe('rooms action', () => {
   it('should dispatch postRoomReset')
   it('should dispatch sortRoom')
   it('should dispatch destroyRoomSuccess')
+})
+
+describe('async actions', () => {
+  afterEach(() => {
+    fetchMock.reset()
+    fetchMock.restore()
+  })
 
   it('should execute postRoomAsync', () => {
-    const store = mockStore({})
     const room = {
       id: 3,
       name: 'room3',
       created_at: '2018-05-21T13:34:39.881Z',
       updated_at: '2018-05-21T13:34:39.881Z',
     }
+    fetchMock.postOnce('/rooms/', {
+      body: { room },
+      headers: { 'content-type': 'application/json' },
+    })
+    const store = mockStore({})
+
     // Return the promise
-    return store.dispatch(postRoomAsync('a', history)).then(() => {
+    return store.dispatch(postRoomAsync('room3', null)).then(() => {
       const actions = store.getActions()
-      expect(actions[0]).toEqual(postRoomRequest())
-      expect(actions[1]).toEqual(postRoomSuccess(room))
-      expect(actions[2]).toEqual(postRoomSuccess(room))
+      expect(actions).toEqual([postRoomRequest(), postRoomSuccess(room)])
     })
   })
 })
