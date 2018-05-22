@@ -136,7 +136,7 @@ export function postRoomAsync(name, history) {
     })
     await sleep(1000)
     const json = await res.json()
-    if (res.status === 201 || res.status === 200) {
+    if (res.status === 201) {
       dispatch(postRoomSuccess(json.room))
       if (history) {
         history.push(`/rooms/${json.room.id}`)

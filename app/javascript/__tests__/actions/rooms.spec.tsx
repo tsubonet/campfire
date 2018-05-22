@@ -1,7 +1,12 @@
 import * as configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import * as fetchMock from 'fetch-mock'
-import { postRoomRequest, postRoomSuccess, postRoomAsync } from '../../modules/rooms'
+import {
+  postRoomRequest,
+  postRoomSuccess,
+  postRoomFailure,
+  postRoomAsync,
+} from '../../modules/rooms'
 
 const middlewares = [thunk]
 const mockStore = configureStore(middlewares)
@@ -63,6 +68,7 @@ describe('async actions', () => {
     fetchMock.postOnce('/rooms/', {
       body: { room },
       headers: { 'content-type': 'application/json' },
+      status: 201,
     })
     const store = mockStore({})
 
@@ -72,6 +78,23 @@ describe('async actions', () => {
       expect(actions).toEqual([postRoomRequest(), postRoomSuccess(room)])
     })
   })
-  it('should execute postRoomAsync Failure')
+
+  it('should execute postRoomAsync Failure', () => {
+    const error = {
+      txt: 'fail',
+    }
+    fetchMock.postOnce('/rooms/', {
+      body: error,
+      headers: { 'content-type': 'application/json' },
+      status: 422,
+    })
+    const store = mockStore({})
+    // Return the promise
+    return store.dispatch(postRoomAsync('room3', null)).then(() => {
+      const actions = store.getActions()
+      expect(actions).toEqual([postRoomRequest(), postRoomFailure(error.txt)])
+    })
+  })
+
   it('should execute destroyRoomAsync')
 })
