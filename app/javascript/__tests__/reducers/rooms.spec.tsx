@@ -1,6 +1,12 @@
 import reducers, { Rooms } from '../../modules/rooms'
 
-const rooms: Rooms = {
+const initialState = {
+  items: [],
+  loading: false,
+  errors: null,
+}
+
+const existingState: Rooms = {
   items: [
     {
       id: 1,
@@ -20,152 +26,94 @@ const rooms: Rooms = {
 }
 describe('rooms reducer', () => {
   it('should return the initial state', () => {
-    expect(reducers(undefined, {})).toEqual({
-      items: [],
-      loading: false,
-      errors: null,
-    })
+    expect(reducers(undefined, {})).toEqual(initialState)
   })
 
   it('should handle POST_ROOM_REQUEST', () => {
-    const state = reducers({ ...rooms }, { type: 'POST_ROOM_REQUEST' })
-    expect(state).toEqual({
-      items: [
-        {
-          id: 1,
-          name: 'room1',
-          created_at: '2018-05-21T02:54:20.295Z',
-          updated_at: '2018-05-21T02:58:13.659Z',
-        },
-        {
-          id: 2,
-          name: 'room2',
-          created_at: '2018-05-19T13:09:25.090Z',
-          updated_at: '2018-05-20T05:24:08.351Z',
-        },
-      ],
+    expect(reducers(existingState, { type: 'POST_ROOM_REQUEST' })).toEqual({
+      ...existingState,
       loading: true,
-      errors: null,
     })
   })
 
   it('should handle POST_ROOM_SUCCESS', () => {
-    const state = reducers(
-      { ...rooms },
-      {
+    const room = {
+      id: 3,
+      name: 'room3',
+      created_at: '2018-05-21T13:34:39.881Z',
+      updated_at: '2018-05-21T13:34:39.881Z',
+    }
+    expect(
+      reducers(existingState, {
         type: 'POST_ROOM_SUCCESS',
         payload: {
-          room: {
-            id: 3,
-            name: 'room3',
-            created_at: '2018-05-21T13:34:39.881Z',
-            updated_at: '2018-05-21T13:34:39.881Z',
-          },
+          room,
         },
-      }
-    )
-    expect(state).toEqual({
-      items: [
-        {
-          id: 3,
-          name: 'room3',
-          created_at: '2018-05-21T13:34:39.881Z',
-          updated_at: '2018-05-21T13:34:39.881Z',
-        },
-        {
-          id: 1,
-          name: 'room1',
-          created_at: '2018-05-21T02:54:20.295Z',
-          updated_at: '2018-05-21T02:58:13.659Z',
-        },
-        {
-          id: 2,
-          name: 'room2',
-          created_at: '2018-05-19T13:09:25.090Z',
-          updated_at: '2018-05-20T05:24:08.351Z',
-        },
-      ],
+      })
+    ).toEqual({
+      ...existingState,
       loading: false,
-      errors: null,
+      items: [room, ...existingState.items],
     })
   })
 
   it('should handle POST_ROOM_FAILURE', () => {
-    const state = reducers(
-      { ...rooms },
-      {
+    expect(
+      reducers(existingState, {
         type: 'POST_ROOM_FAILURE',
         error: 'error text',
-      }
-    )
-    expect(state).toEqual({
-      items: [
-        {
-          id: 1,
-          name: 'room1',
-          created_at: '2018-05-21T02:54:20.295Z',
-          updated_at: '2018-05-21T02:58:13.659Z',
-        },
-        {
-          id: 2,
-          name: 'room2',
-          created_at: '2018-05-19T13:09:25.090Z',
-          updated_at: '2018-05-20T05:24:08.351Z',
-        },
-      ],
+      })
+    ).toEqual({
+      ...existingState,
       loading: false,
       errors: 'error text',
     })
   })
 
   it('should handle POST_ROOM_RESET', () => {
-    const state = reducers(
-      { ...rooms },
-      {
+    expect(
+      reducers(existingState, {
         type: 'POST_ROOM_RESET',
-      }
-    )
-    expect(state).toEqual({
-      items: [
-        {
-          id: 1,
-          name: 'room1',
-          created_at: '2018-05-21T02:54:20.295Z',
-          updated_at: '2018-05-21T02:58:13.659Z',
-        },
-        {
-          id: 2,
-          name: 'room2',
-          created_at: '2018-05-19T13:09:25.090Z',
-          updated_at: '2018-05-20T05:24:08.351Z',
-        },
-      ],
+      })
+    ).toEqual({
+      ...existingState,
       loading: false,
       errors: null,
     })
   })
+
+  it('should handle SORT_ROOM', () => {
+    const room = {
+      id: 3,
+      name: 'room3',
+      created_at: '2018-05-21T13:34:39.881Z',
+      updated_at: '2018-05-21T13:34:39.881Z',
+    }
+    expect(
+      reducers(existingState, {
+        type: 'SORT_ROOM',
+        payload: {
+          room,
+        },
+      })
+    ).toEqual({
+      ...existingState,
+      items: [room, ...[...existingState.items].filter(item => item.id !== room.id)],
+    })
+  })
+
+  it('should handle DESTROY_ROOM_SUCCESS', () => {
+    const id = 2
+    expect(
+      reducers(existingState, {
+        type: 'DESTROY_ROOM_SUCCESS',
+        payload: {
+          id,
+        },
+      })
+    ).toEqual({
+      ...existingState,
+      items: [...[...existingState.items].filter(item => item.id !== id)],
+    })
+  })
 })
-
-// const initialState = {
-//   year: new Date().getFullYear(),
-//   month: new Date().getMonth() + 1,
-//   date: new Date().getDate(),
-// }
-
-// describe('date reducer', () => {
-//   it('should have initial state', () => {
-//     expect(reducer(undefined, {})).toEqual(initialState)
-//   })
-
-//   it('should handle GET_DATE', () => {
-//     expect(
-//       reducer(
-//         {},
-//         {
-//           type: 'GET_DATE',
-//           date: { year: 2018, month: 1, day: 1 },
-//         }
-//       )
-//     ).toEqual({ year: 2018, month: 1, day: 1 })
-//   })
-// })
