@@ -1,7 +1,5 @@
 import { Action } from '../actions'
-import { Rooms } from '../modules/rooms'
 import { sleep } from '../components/utils'
-import { SubmissionError } from 'redux-form'
 
 // Actions
 export const POST_ROOM_REQUEST = 'POST_ROOM_REQUEST'

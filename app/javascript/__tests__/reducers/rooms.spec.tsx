@@ -90,8 +90,60 @@ describe('rooms reducer', () => {
     })
   })
 
-  it('should handle GET_POST_FAIL')
-  it('should handle GET_POST_START')
+  it('should handle POST_ROOM_FAILURE', () => {
+    const state = reducers(
+      { ...rooms },
+      {
+        type: 'POST_ROOM_FAILURE',
+        error: 'error text',
+      }
+    )
+    expect(state).toEqual({
+      items: [
+        {
+          id: 1,
+          name: 'room1',
+          created_at: '2018-05-21T02:54:20.295Z',
+          updated_at: '2018-05-21T02:58:13.659Z',
+        },
+        {
+          id: 2,
+          name: 'room2',
+          created_at: '2018-05-19T13:09:25.090Z',
+          updated_at: '2018-05-20T05:24:08.351Z',
+        },
+      ],
+      loading: false,
+      errors: 'error text',
+    })
+  })
+
+  it('should handle POST_ROOM_RESET', () => {
+    const state = reducers(
+      { ...rooms },
+      {
+        type: 'POST_ROOM_RESET',
+      }
+    )
+    expect(state).toEqual({
+      items: [
+        {
+          id: 1,
+          name: 'room1',
+          created_at: '2018-05-21T02:54:20.295Z',
+          updated_at: '2018-05-21T02:58:13.659Z',
+        },
+        {
+          id: 2,
+          name: 'room2',
+          created_at: '2018-05-19T13:09:25.090Z',
+          updated_at: '2018-05-20T05:24:08.351Z',
+        },
+      ],
+      loading: false,
+      errors: null,
+    })
+  })
 })
 
 // const initialState = {
