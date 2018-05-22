@@ -53,7 +53,7 @@ describe('async actions', () => {
     fetchMock.restore()
   })
 
-  it('should execute postRoomAsync', () => {
+  it('should execute postRoomAsync Success', () => {
     const room = {
       id: 3,
       name: 'room3',
@@ -72,4 +72,6 @@ describe('async actions', () => {
       expect(actions).toEqual([postRoomRequest(), postRoomSuccess(room)])
     })
   })
+  it('should execute postRoomAsync Failure')
+  it('should execute destroyRoomAsync')
 })
