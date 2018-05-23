@@ -32,6 +32,7 @@ const props = {
 const history = createHistory()
 const store = configureStore(props)
 
+declare let window
 window.App = window.App || {}
 window.App.cable = window.App.cable || {}
 //window.App.cable.subscriptions.create = action('mock')

@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { Provider } from 'react-redux'
@@ -9,7 +9,7 @@ import NavLink from './nav_link'
 import '../utils/global_style'
 
 const history = createHistory()
-const store = configureStore()
+const store = configureStore({})
 
 storiesOf('Molecules/NavLink', module)
   .addDecorator(story => (

@@ -6,7 +6,7 @@ import EditRoomForm from './edit_room_form'
 import configureStore from '../../store'
 import '../utils/global_style'
 
-const store = configureStore()
+const store = configureStore({})
 const initialValues = {
   id: 1,
   name: 'aaaa',
