@@ -1,12 +1,8 @@
 {
-  "rulesDirectory": [
-    "tslint-plugin-prettier"
-  ],
-  "extends": [
-    "tslint-config-standard",
-    "tslint-config-prettier"
-  ],
+  "rulesDirectory": ["tslint-plugin-prettier"],
+  "extends": ["tslint-config-standard", "tslint-config-prettier"],
   "rules": {
+    //"no-unused-variable": true,
     "prettier": [
       true,
       {
