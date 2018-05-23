@@ -26,8 +26,9 @@
     "*.{css,scss,tsx}": [
       "stylelint"
     ],
-    "*.{ts,tsx}": [
-      "tslint"
+    "*.{ts,tsx}":  [
+      "tslint --fix",
+      "git add"
     ]
   },
   "scripts": {

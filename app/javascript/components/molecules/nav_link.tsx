@@ -1,7 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import { Route, Link } from 'react-router-dom'
-import { compose, withState, withHandlers } from 'recompose';
+import { compose, withState, withHandlers } from 'recompose'
 
 const Enhance = compose(
   withState('isAppear', 'updateToggle', false),
@@ -50,7 +50,6 @@ export default Enhance(NavLink)
 
 const StyledLink = styled(Link)`
   position: relative;
-
   color: #1a1a1a;
   text-decoration: none;
   padding: 15px;
