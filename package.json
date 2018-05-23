@@ -27,7 +27,7 @@
       "stylelint"
     ],
     "*.{ts,tsx}":  [
-      "tslint --fix",
+      "tslint",
       "git add"
     ]
   },
