@@ -2,32 +2,25 @@
   "name": "campfire",
   "private": true,
   "jest": {
-    "roots": [
-      "<rootDir>/app/javascript/"
-    ],
+    "roots": ["<rootDir>/app/javascript/"],
     "setupTestFrameworkScriptFile": "<rootDir>/app/javascript/__tests__/setup/setup_enzyme.ts",
-    "testPathIgnorePatterns": [
-      "<rootDir>/app/javascript/__tests__/setup/"
-    ],
+    "testPathIgnorePatterns": ["<rootDir>/app/javascript/__tests__/setup/"],
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
+    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
+  },
+  "lint-staged": {
+    "*.{css,scss}": ["stylelint"]
   },
   "scripts": {
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "lint:css": "stylelint './app/javascript/components/**/*.tsx'",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "precommit": "lint-staged"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.8",
@@ -73,7 +66,9 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.4",
     "fetch-mock": "^6.4.2",
+    "husky": "^0.14.3",
     "jest": "^22.4.4",
+    "lint-staged": "^7.1.2",
     "react-test-renderer": "^16.3.2",
     "redux-mock-store": "^1.5.1",
     "stylelint": "^9.2.1",
