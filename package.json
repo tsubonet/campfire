@@ -12,7 +12,7 @@
     "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
   },
   "lint-staged": {
-    "*.{css,scss}": ["stylelint"]
+    "*.{css,scss,tsx}": ["stylelint"]
   },
   "scripts": {
     "storybook": "start-storybook -p 6006",
