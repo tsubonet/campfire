@@ -2,30 +2,18 @@
   "name": "campfire",
   "private": true,
   "jest": {
-    "roots": [
-      "<rootDir>/app/javascript/"
-    ],
+    "roots": ["<rootDir>/app/javascript/"],
     "setupTestFrameworkScriptFile": "<rootDir>/app/javascript/__tests__/setup/setup_enzyme.ts",
-    "testPathIgnorePatterns": [
-      "<rootDir>/app/javascript/__tests__/setup/"
-    ],
+    "testPathIgnorePatterns": ["<rootDir>/app/javascript/__tests__/setup/"],
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
+    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
   },
   "lint-staged": {
-    "*.{css,scss,tsx}": [
-      "stylelint"
-    ]
+    "*.{css,scss,tsx}": ["stylelint"],
+    "*.{ts,tsx}": ["tslint"]
   },
   "scripts": {
     "storybook": "start-storybook -p 6006",
