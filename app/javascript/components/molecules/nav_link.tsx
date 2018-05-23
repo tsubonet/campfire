@@ -15,7 +15,7 @@ const Enhance = compose(
     destroyRoom: props => event => {
       event.preventDefault()
       event.stopPropagation()
-      props.destroyRoomAsync(parseInt(props.to.replace('/rooms/', ''), 10))
+      props.destroyRoomAsync(parseInt(props.to.replace('/roomss/', ''), 10))
     },
   })
 )
