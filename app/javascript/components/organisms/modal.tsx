@@ -74,9 +74,10 @@ const Root = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /*align-items: flex-start; モーダルがclientHeightより大きければ、flex-start。小さければ center  */
   z-index: 9999;
   background-color: rgba(0, 0, 0, 0.6);
+
+  /* align-items: flex-start; モーダルがclientHeightより大きければ、flex-start。小さければ center  */
 `
 
 const Contents = styled.div`
@@ -84,7 +85,8 @@ const Contents = styled.div`
   position: relative;
   background-color: rgb(255, 255, 255);
   width: 50%;
-  /* min-height: 300px; */
   border-radius: 3px;
   padding: 50px 20px;
+
+  /* min-height: 300px; */
 `

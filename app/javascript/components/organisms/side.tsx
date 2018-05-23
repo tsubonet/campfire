@@ -100,6 +100,5 @@ export default Side
 const Root = styled.div`
   width: 200px;
   background: #f2f2f2;
-  border-right: 1px solid #cccccc;
-}
+  border-right: 1px solid #ccc;
 `

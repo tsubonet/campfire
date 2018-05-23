@@ -55,12 +55,15 @@ const StyledLink = styled(Link)`
   padding: 15px;
   display: block;
   transition: background 0.2s linear 0s;
+
   &.active {
     background: #ccc;
   }
+
   &:hover:not(.active) {
     background: #fff;
   }
+
   button {
     position: absolute;
     right: 10px;

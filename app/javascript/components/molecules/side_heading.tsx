@@ -25,8 +25,7 @@ export default SideHeading
 const Root = styled.div`
   height: 40px;
   background: #fff;
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid #ccc;
   padding: 10px;
   text-align: right;
-}
 `

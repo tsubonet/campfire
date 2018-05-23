@@ -15,7 +15,7 @@ const ChatHeader = ({ room, transitEdit, ...props }) => {
 export default ChatHeader
 
 const Root = styled.div`
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid #ccc;
   padding: 10px;
   height: 40px;
   font-weight: bold;

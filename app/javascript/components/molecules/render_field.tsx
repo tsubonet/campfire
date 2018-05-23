@@ -16,6 +16,7 @@ export default RenderField
 
 const Root = styled.div`
   display: flex;
+
   & > *:first-child {
     width: 100px;
     text-align: right;
