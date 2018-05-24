@@ -1,0 +1,7 @@
+{
+  // Set prettier
+  //"editor.formatOnSave": true,
+  //"javascript.format.enable": false,
+  // Set tslint
+  "tslint.autoFixOnSave": true
+}

@@ -1,5 +1,105 @@
 {
   "name": "campfire",
   "private": true,
-  "dependencies": {}
+  "jest": {
+    "roots": [
+      "<rootDir>/app/javascript/"
+    ],
+    "setupTestFrameworkScriptFile": "<rootDir>/app/javascript/__tests__/setup/setup_enzyme.ts",
+    "testPathIgnorePatterns": [
+      "<rootDir>/app/javascript/__tests__/setup/"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  },
+  "lint-staged": {
+    "*.{css,scss,tsx}": [
+      "stylelint"
+    ],
+    "*.{ts,tsx}":  [
+      "tslint",
+      "git add"
+    ]
+  },
+  "scripts": {
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "lint:css": "stylelint './app/javascript/components/**/*.tsx'",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "precommit": "lint-staged"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome": "^1.1.8",
+    "@rails/webpacker": "3.4",
+    "@types/react": "^16.3.12",
+    "@types/react-dom": "^16.0.5",
+    "@types/react-redux": "^5.0.16",
+    "babel-preset-react": "^6.24.1",
+    "history": "^4.7.2",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.1",
+    "prop-types": "^15.6.1",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-on-rails": "^10.1.4",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.9",
+    "react-transition-group": "^2.3.1",
+    "react-virtualized": "^9.18.5",
+    "recompose": "^0.27.0",
+    "redux": "^4.0.0",
+    "redux-form": "^7.3.0",
+    "redux-logger": "^3.0.6",
+    "redux-observable": "^0.18.0",
+    "redux-thunk": "^2.2.0",
+    "rxjs": "^6.0.0",
+    "rxjs-compat": "^6.0.0",
+    "styled-components": "^3.2.6",
+    "ts-loader": "3.5.0",
+    "typescript": "^2.8.3"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^3.4.3",
+    "@storybook/addon-links": "^3.4.3",
+    "@storybook/addons": "^3.4.3",
+    "@storybook/react": "^3.4.3",
+    "@types/jest": "^22.2.3",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^22.4.4",
+    "babel-runtime": "^6.26.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.4",
+    "eslint": "^4.19.1",
+    "fetch-mock": "^6.4.2",
+    "husky": "^0.14.3",
+    "jest": "^22.4.4",
+    "lint-staged": "^7.1.2",
+    "prettier": "^1.12.1",
+    "react-test-renderer": "^16.3.2",
+    "redux-mock-store": "^1.5.1",
+    "stylelint": "^9.2.1",
+    "stylelint-config-recommended": "^2.1.0",
+    "stylelint-config-standard": "^18.2.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.3.1",
+    "ts-jest": "^22.4.6",
+    "tslint": "^5.10.0",
+    "tslint-config-prettier": "^1.13.0",
+    "tslint-config-standard": "^7.0.0",
+    "tslint-plugin-prettier": "^1.3.0",
+    "webpack-dev-server": "2.11.2"
+  }
 }

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render test 1`] = `
+<time
+  dateTime="2018-05-18T20:52"
+>
+  05月18日(金)20:52
+</time>
+`;
