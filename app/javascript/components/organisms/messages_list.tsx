@@ -10,7 +10,7 @@ interface Props {
   messages: Messages
   room: Room
   fetchOldMessagesSync(id: number, messages: Messages): void
-  destroyMessage
+  destroyMessage()
 }
 interface State {
   windowH: number
@@ -59,11 +59,11 @@ export default class MessagesList extends React.Component<Props, State> {
           // console.log('elm.getBoundingClientRect().top', scrollY)
           // const scrollY2 = elm.scrollHeight
           // console.log('elm.scrollHeight', scrollY2)
-          //const scrollY3 =
+          // const scrollY3 =
           //  this.savedElm.offsetTop - this.messageBox.current.offsetTop - this.messageBox.current.clientHeight + 24
-          //console.log('elm.offsetTop', scrollY3)
-          //this.messageBox.current.scrollTop = scrollY3
-          //console.log('aaaaaaaaaaaaaaaaaaa')
+          // console.log('elm.offsetTop', scrollY3)
+          // this.messageBox.current.scrollTop = scrollY3
+          // console.log('aaaaaaaaaaaaaaaaaaa')
         }
 
         if (this.messageBox.current.scrollTop > 20) {
@@ -80,10 +80,7 @@ export default class MessagesList extends React.Component<Props, State> {
     // OLDのMessagesをfetchしたとき
     if (prevProps.messages.currentPage !== messages.currentPage) {
       const scrollY3 =
-        this.savedElm.offsetTop -
-        this.messageBox.current.offsetTop -
-        this.messageBox.current.clientHeight +
-        24
+        this.savedElm.offsetTop - this.messageBox.current.offsetTop - this.messageBox.current.clientHeight + 24
       this.messageBox.current.scrollTop = scrollY3
       return
     }
@@ -112,7 +109,7 @@ export default class MessagesList extends React.Component<Props, State> {
           </Txt>
         )}
         {
-          //messages.hasNext && <button onClick={this.fetchOldMessages.bind(this)}>前の記事を読み込む</button>
+          // messages.hasNext && <button onClick={this.fetchOldMessages.bind(this)}>前の記事を読み込む</button>
         }
         <List>
           {messages.items.map((item, i) => {

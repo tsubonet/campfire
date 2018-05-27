@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { SubmissionError } from 'redux-form'
 
 import CommonTemplate from '../templates/common_template'
+import FoundationHOC from '../templates/foundation_hoc'
 import ChatHeader from '../organisms/chat_header'
 import EditRoomForm from '../organisms/edit_room_form'
 
@@ -55,7 +56,7 @@ class EditRoomTemplate extends React.Component<Props, {}> {
   render() {
     const { initialValues, selectedRoom, history } = this.props
     return (
-      <CommonTemplate>
+      <div>
         {selectedRoom.loading ? (
           <Loading>loading...</Loading>
         ) : (
@@ -64,12 +65,12 @@ class EditRoomTemplate extends React.Component<Props, {}> {
             <EditRoomForm onSubmit={this.submit} initialValues={initialValues} />
           </React.Fragment>
         )}
-      </CommonTemplate>
+      </div>
     )
   }
 }
 
-export default EditRoomTemplate
+export default FoundationHOC(EditRoomTemplate)
 
 const Loading = styled.div`
   position: absolute;
