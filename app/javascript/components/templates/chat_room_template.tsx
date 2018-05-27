@@ -32,7 +32,7 @@ class ChatRoomTemplate extends React.Component<Props, {}> {
     App.room = App.cable.subscriptions.create(
       {
         channel: 'RoomChannel',
-        roomId,
+        room_id: roomId,
       },
       {
         connected: function() {

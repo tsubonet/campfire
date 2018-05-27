@@ -35,7 +35,7 @@ const store = configureStore(props)
 declare let window
 window.App = window.App || {}
 window.App.cable = window.App.cable || {}
-//window.App.cable.subscriptions.create = action('mock')
+// window.App.cable.subscriptions.create = action('mock')
 
 storiesOf('Pages/ChatRoomPage', module)
   .addDecorator(story => (
